@@ -817,42 +817,27 @@
 
     const planId = planSelect ? planSelect.value : "1_mes"; 
     const metodoId = metodoSelect ? metodoSelect.value : "paypal"; 
-    
-    // Nombre de usuario exacto de tu bot sin el '@'
     const botUsername = "ViralBoomBot"; 
 
     if (metodoId === "stars") {
-        // Mapeamos las palabras clave para que SendPulse las capte a través del parámetro
-        const comandosPlan = {
-            "1_mes": "stars1mes",
-            "3_meses": "stars3meses",
-            "6_meses": "stars6meses",
-            "12_meses": "stars12meses"
-        };
-
-        const textoComando = comandosPlan[planId] || "stars1mes";
-
-        // Usamos "startapp" en lugar de "start". 
-        // Esto envía el parámetro directamente a la sesión activa del bot sin resetear el chat.
-        const deepLink = `tg://resolve?domain=${botUsername}&startapp=${textoComando}`;
+        // Alerta informativa nativa de Telegram (se ve mucho más profesional que un alert común)
+        const mensajeInstrucciones = "Para completar tu suscripción con Telegram Stars, la aplicación se cerrará. Por favor, envía el comando /premium en el chat del bot y selecciona tu plan.";
         
-        console.log("Enviando comando mediante startapp nativo:", deepLink);
-
-        if (tg && typeof tg.openTelegramLink === 'function') {
-            try {
-                // Abre el enlace profundo de forma nativa dentro de la interfaz
-                tg.openTelegramLink(deepLink);
-            } catch (err) {
-                console.error("Error con openTelegramLink, usando fallback:", err);
-                window.location.href = deepLink;
-            }
+        if (tg && typeof tg.showAlert === 'function') {
+            tg.showAlert(mensajeInstrucciones, () => {
+                // Cuando el usuario presiona "OK", lo redirigimos al bot de forma limpia y cerramos la app
+                const linkBotInstrucciones = `https://t.me/${botUsername}`;
+                if (typeof tg.openTelegramLink === 'function') {
+                    tg.openTelegramLink(linkBotInstrucciones);
+                } else {
+                    window.location.href = linkBotInstrucciones;
+                }
+                tg.close();
+            });
         } else {
-            window.location.href = deepLink;
-        }
-
-        // Cerramos la Mini App inmediatamente para que el usuario regrese al chat
-        if (tg && typeof tg.close === 'function') {
-            tg.close();
+            // Fallback si lo prueban fuera de la interfaz nativa
+            alert(mensajeInstrucciones);
+            window.location.href = `https://t.me/${botUsername}`;
         }
 
     } else {
