@@ -817,13 +817,9 @@
 
     const planId = planSelect ? planSelect.value : "1_mes"; 
     const metodoId = metodoSelect ? metodoSelect.value : "paypal"; 
-    
-    // CAMBIA ESTO por el usuario exacto de tu bot sin el '@'
-    const botUsername = "ViralBoomBot"; 
 
     if (metodoId === "stars") {
-        // En lugar de un JSON complejo que rompe los enlaces, usamos una palabra clave simple
-        // que SendPulse pueda leer fácilmente como un mensaje de texto normal.
+        // Definimos las palabras clave exactas para SendPulse
         const comandosPlan = {
             "1_mes": "comprar_stars_1mes",
             "3_meses": "comprar_stars_3meses",
@@ -833,26 +829,19 @@
 
         const textoComando = comandosPlan[planId] || "comprar_stars_1mes";
 
-        // Usamos la API nativa de Telegram para abrir un enlace hacia el propio bot.
-        // Al usar 'tg.openTelegramLink', forzamos a Telegram a reaccionar.
-        const linkBot = `https://t.me/${botUsername}?text=${encodeURIComponent(textoComando)}`;
-        
-        console.log("Redirigiendo al bot con el comando:", textoComando);
+        console.log("Invocando switchInlineQuery con comando:", textoComando);
 
-        if (tg && typeof tg.openTelegramLink === 'function') {
+        if (tg && typeof tg.switchInlineQuery === 'function') {
             try {
-                tg.openTelegramLink(linkBot);
+                // Esto cierra la Mini App y escribe automáticamente el texto en el chat actual del usuario.
+                // El segundo parámetro vacío `[]` le dice a Telegram que lo inyecte en el chat activo del bot.
+                tg.switchInlineQuery(textoComando, ['users', 'bots', 'channels', 'groups']);
             } catch (err) {
-                console.error("Error con openTelegramLink, usando fallback:", err);
-                window.location.href = linkBot;
+                console.error("Error con switchInlineQuery:", err);
+                alert("Por favor, escribe manualmente en el chat: " + textoComando);
             }
         } else {
-            window.location.href = linkBot;
-        }
-
-        // Cerramos la Mini App manualmente para que el usuario vea el chat del bot
-        if (tg && typeof tg.close === 'function') {
-            tg.close();
+            alert("Por favor, escribe manualmente en el chat: " + textoComando);
         }
 
     } else {
