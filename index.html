@@ -804,7 +804,7 @@
         }
 
 /// Función unificada que ejecuta la acción al presionar "MEJORAR CON PREMIUM"
-function procesarPagoPremium(e) {
+        function procesarPagoPremium(e) {
     if (e && e.preventDefault) e.preventDefault();
 
     const tg = window.Telegram ? window.Telegram.WebApp : null;
@@ -815,42 +815,51 @@ function procesarPagoPremium(e) {
     const planSelect = document.getElementById("billing-plan-select");
     const metodoSelect = document.getElementById("billing-method");
 
-    // Aseguramos valores por defecto limpios
-    const planId = planSelect ? planSelect.value : "1mes"; 
+    // Aseguramos valores por defecto limpios (coincidiendo con los values del select: "1_mes")
+    const planId = planSelect ? planSelect.value : "1_mes"; 
     const metodoId = metodoSelect ? metodoSelect.value : "paypal"; 
     const botUsername = "ViralBoomBot";
 
     if (metodoId === "stars") {
-        // 1. Forzamos un parámetro en minúsculas y totalmente alfanumérico básico
-        // Nota: Asegúrate de que tu bot en el backend busque exactamente este formato.
-        const parametroClean = `plan_${planId}_stars`.replace(/[^a-zA-Z0-9]/g, "").toLowerCase(); 
-        const deepLinkStars = `https://t.me/${botUsername}?start=${parametroClean}`;
+        // Mapas de comandos limpios (alfanuméricos estrictos) para evitar que regex los rompa
+        const comandosStars = {
+            "1_mes": "factura1messtars",
+            "3_meses": "factura3mesesstars",
+            "6_meses": "factura6mesesstars",
+            "12_meses": "factura1anostars"
+        };
+
+        const parametroClean = comandosStars[planId] || "factura1messtars";
         
-        console.log("Enviando enlace definitivo:", deepLinkStars);
+        // Usamos el protocolo nativo interno "tg://resolve" para obligar al cliente de Telegram
+        // a enviar el comando /start con el parámetro de forma 100% automática.
+        const nativeDeepLink = `tg://resolve?domain=${botUsername}&start=${parametroClean}`;
+        const webFallbackLink = `https://t.me/${botUsername}?start=${parametroClean}`;
         
-        // 2. Ejecución de apertura con comprobación estricta
+        console.log("Enviando comando Stars nativo:", nativeDeepLink);
+        
         let linkAbierto = false;
         
+        // Intentamos abrir por el canal nativo de la Mini App (evita que se limpie el comando)
         if (tg && typeof tg.openTelegramLink === 'function') {
             try {
-                tg.openTelegramLink(deepLinkStars);
+                tg.openTelegramLink(nativeDeepLink);
                 linkAbierto = true;
             } catch (err) {
-                console.error("Error en openTelegramLink:", err);
+                console.error("Error en openTelegramLink nativo, usando fallback web:", err);
             }
         }
         
-        // Si el método nativo falló o no existe, usamos el fallback de navegación
+        // Si no está en la App o falló, usamos redirección web clásica
         if (!linkAbierto) {
             try {
-                window.top.location.href = deepLinkStars;
+                window.top.location.href = webFallbackLink;
             } catch (err) {
-                window.location.href = deepLinkStars;
+                window.location.href = webFallbackLink;
             }
         }
 
-        // 3. SOLO cerramos la app si estamos seguros de que estamos en Telegram móvil
-        // Le damos 800ms para asegurar que el sistema operativo procese la apertura del chat
+        // Le damos un margen de 800ms al sistema para procesar el envío antes de cerrar la Mini App
         if (tg && typeof tg.close === 'function') {
             setTimeout(() => {
                 tg.close();
