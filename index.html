@@ -685,6 +685,9 @@
                 <option value="usdt">Binance Corporate Pay (USDT TRC20)</option>
             </select>
         </div>
+<div id="billing-plans-container" class="plans-grid">
+    <!-- Las tarjetas se generarán dinámicamente aquí mediante JavaScript -->
+</div>
 
         <div class="billing-card" style="padding:15px; background:rgba(5,6,12,0.9); border:1px solid rgba(255,255,255,0.1); margin-bottom: 20px;">
             <label style="color:#fff; font-family:'Orbitron'; font-size:0.75rem; letter-spacing: 1px; display: block; margin-bottom: 8px;">[02] SELECCIONAR PLAN DE ACCESO:</label>
@@ -738,8 +741,8 @@
 
         function actualizarPreciosPlanes() {
     const metodoSelect = document.getElementById("billing-method");
-    const planSelect = document.getElementById("billing-plan-select");
-    if (!metodoSelect || !planSelect) return;
+    const plansContainer = document.getElementById("billing-plans-container");
+    if (!metodoSelect || !plansContainer) return;
 
     const divisa = metodoSelect.value;
     
@@ -751,36 +754,51 @@
         "12_meses": 37.92
     };
 
-    let opcionesHTML = "";
+    // Función auxiliar para obtener el texto del precio según el método
+    const obtenerDetallesPlan = (planKey) => {
+        const eur = preciosEUR[planKey];
+        if (divisa === "stars") {
+            const stars = Math.round(eur / 0.0229);
+            return { precio: `${stars} ⭐`, beneficio: "Ahorro Criptográfico" };
+        } else if (divisa === "usdt") {
+            return { precio: `${eur.toFixed(2)} USDT`, beneficio: "Pago Seguro Crypto" };
+        } else {
+            return { precio: `${eur.toFixed(2)}€`, beneficio: "Pago Seguro Instantáneo" };
+        }
+    };
 
-    if (divisa === "stars") {
-        const euroAStars = (eur) => Math.round(eur / 0.0229);
-        opcionesHTML = `
-            <option value="1_mes">1 Mes por ${euroAStars(preciosEUR["1_mes"])} ⭐ [¡Dcto. 5% inc! - Ahorro Criptográfico]</option>
-            <option value="3_meses">3 Meses por ${euroAStars(preciosEUR["3_meses"])} ⭐ [¡Dcto. 10% inc! - Recomendado]</option>
-            <option value="6_meses">6 Meses por ${euroAStars(preciosEUR["6_meses"])} ⭐ [¡Dcto. 15% inc! - Acceso Extendido]</option>
-            <option value="12_meses">12 Meses por ${euroAStars(preciosEUR["12_meses"])} ⭐ [¡Dcto. 20% inc! - Máxima Eficiencia]</option>
-        `;
-    } else if (divisa === "usdt") {
-        opcionesHTML = `
-            <option value="1_mes">1 Mes por ${preciosEUR["1_mes"].toFixed(2)} USDT [¡Dcto. 5% inc!]</option>
-            <option value="3_meses">3 Meses por ${preciosEUR["3_meses"].toFixed(2)} USDT [¡Dcto. 10% inc!]</option>
-            <option value="6_meses">6 Meses por ${preciosEUR["6_meses"].toFixed(2)} USDT [¡Dcto. 15% inc!]</option>
-            <option value="12_meses">12 Meses por ${preciosEUR["12_meses"].toFixed(2)} USDT [¡Dcto. 20% inc!]</option>
-        `;
-    } else { // PayPal / EUR
-        opcionesHTML = `
-            <option value="1_mes">1 Mes por ${preciosEUR["1_mes"].toFixed(2)}€ [¡Dcto. 5% inc!]</option>
-            <option value="3_meses">3 Meses por ${preciosEUR["3_meses"].toFixed(2)}€ [¡Dcto. 10% inc!]</option>
-            <option value="6_meses">6 Meses por ${preciosEUR["6_meses"].toFixed(2)}€ [¡Dcto. 15% inc!]</option>
-            <option value="12_meses">12 Meses por ${preciosEUR["12_meses"].toFixed(2)}€ [¡Dcto. 20% inc!]</option>
-        `;
-    }
+    const planes = [
+        { id: "1_mes", nombre: "1 Mes", dcto: "¡Dcto. 5% inc!" },
+        { id: "3_meses", nombre: "3 Meses", dcto: "¡Dcto. 10% inc!", badge: "Recomendado" },
+        { id: "6_meses", nombre: "6 Meses", dcto: "¡Dcto. 15% inc!", badge: "Acceso Extendido" },
+        { id: "12_meses", nombre: "12 Meses", dcto: "¡Dcto. 20% inc!", badge: "Máxima Eficiencia" }
+    ];
 
-    planSelect.innerHTML = opcionesHTML;
+    let tarjetasHTML = "";
+
+    planes.forEach((p, index) => {
+        const detalles = obtenerDetallesPlan(p.id);
+        // El primero se marcará como seleccionado por defecto (checked)
+        const isChecked = index === 0 ? "checked" : "";
+        
+        tarjetasHTML += `
+            <label class="plan-card">
+                <input type="radio" name="billing-plan" value="${p.id}" ${isChecked} id="plan-${p.id}">
+                <div class="plan-card-content">
+                    ${p.badge ? `<span class="plan-badge">${p.badge}</span>` : ""}
+                    <h3 class="plan-title">${p.nombre}</h3>
+                    <p class="plan-price">${detalles.precio}</p>
+                    <span class="plan-discount">${p.dcto}</span>
+                    <span class="plan-info">${detalles.beneficio}</span>
+                </div>
+            </label>
+        `;
+    });
+
+    plansContainer.innerHTML = tarjetasHTML;
 }
 
-// Escuchar los cambios de método para actualizar los textos inmediatamente en pantalla
+// Escuchar los cambios de método para actualizar las tarjetas inmediatamente en pantalla
 document.addEventListener("DOMContentLoaded", () => {
     const metodoSelect = document.getElementById("billing-method");
     if (metodoSelect) {
