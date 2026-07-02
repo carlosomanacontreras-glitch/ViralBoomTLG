@@ -815,56 +815,37 @@
     const planSelect = document.getElementById("billing-plan-select");
     const metodoSelect = document.getElementById("billing-method");
 
-    // Aseguramos valores por defecto limpios (coincidiendo con los values del select: "1_mes")
+    // Aseguramos valores por defecto limpios
     const planId = planSelect ? planSelect.value : "1_mes"; 
     const metodoId = metodoSelect ? metodoSelect.value : "paypal"; 
-    const botUsername = "ViralBoomBot";
 
     if (metodoId === "stars") {
-        // Mapas de comandos limpios (alfanuméricos estrictos) para evitar que regex los rompa
-        const comandosStars = {
-            "1_mes": "factura1messtars",
-            "3_meses": "factura3mesesstars",
-            "6_meses": "factura6mesesstars",
-            "12_meses": "factura1anostars"
+        // Estructuramos el JSON tal como lo va a recibir e interpretar SendPulse
+        const datosPago = {
+            action: "pago_iniciado",
+            plan: planId // Enviará exactamente "1_mes", "3_meses", "6_meses" o "12_meses"
         };
 
-        const parametroClean = comandosStars[planId] || "factura1messtars";
-        
-        // Usamos el protocolo nativo interno "tg://resolve" para obligar al cliente de Telegram
-        // a enviar el comando /start con el parámetro de forma 100% automática.
-        const nativeDeepLink = `tg://resolve?domain=${botUsername}&start=${parametroClean}`;
-        const webFallbackLink = `https://t.me/${botUsername}?start=${parametroClean}`;
-        
-        console.log("Enviando comando Stars nativo:", nativeDeepLink);
-        
-        let linkAbierto = false;
-        
-        // Intentamos abrir por el canal nativo de la Mini App (evita que se limpie el comando)
-        if (tg && typeof tg.openTelegramLink === 'function') {
+        // Convertimos el objeto a una cadena de texto JSON limpia
+        const jsonPayload = JSON.stringify(datosPago);
+
+        console.log("Enviando payload de Stars al bot:", jsonPayload);
+
+        // Verificamos que la Mini App tenga soporte para sendData
+        if (tg && typeof tg.sendData === 'function') {
             try {
-                tg.openTelegramLink(nativeDeepLink);
-                linkAbierto = true;
+                // Envía los datos. IMPORTANTE: Esto cerrará la Mini App en automático.
+                tg.sendData(jsonPayload);
             } catch (err) {
-                console.error("Error en openTelegramLink nativo, usando fallback web:", err);
+                console.error("Error al ejecutar tg.sendData:", err);
+                alert("Error técnico al procesar Stars. Asegúrate de haber abierto la App desde un botón de teclado.");
             }
-        }
-        
-        // Si no está en la App o falló, usamos redirección web clásica
-        if (!linkAbierto) {
-            try {
-                window.top.location.href = webFallbackLink;
-            } catch (err) {
-                window.location.href = webFallbackLink;
-            }
+        } else {
+            // Caso extremo: Si prueban la Mini App desde un navegador web común fuera de Telegram
+            console.error("tg.sendData no está disponible en este entorno.");
+            alert("Los pagos con Telegram Stars solo están disponibles abriendo la app dentro de Telegram.");
         }
 
-        // Le damos un margen de 800ms al sistema para procesar el envío antes de cerrar la Mini App
-        if (tg && typeof tg.close === 'function') {
-            setTimeout(() => {
-                tg.close();
-            }, 800); 
-        }
     } else {
         // === ENLACE EXTERNO (PAYPAL / USDT) ===
         const urlPasarelaExterna = URL_GATEWAYS[metodoId] ? URL_GATEWAYS[metodoId][planId] : null;
