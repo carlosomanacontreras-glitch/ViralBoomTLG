@@ -804,7 +804,7 @@
         }
 
 /// Función unificada que ejecuta la acción al presionar "MEJORAR CON PREMIUM"
-        function procesarPagoPremium(e) {
+         function procesarPagoPremium(e) {
     if (e && e.preventDefault) e.preventDefault();
 
     const tg = window.Telegram ? window.Telegram.WebApp : null;
@@ -815,35 +815,44 @@
     const planSelect = document.getElementById("billing-plan-select");
     const metodoSelect = document.getElementById("billing-method");
 
-    // Aseguramos valores por defecto limpios
     const planId = planSelect ? planSelect.value : "1_mes"; 
     const metodoId = metodoSelect ? metodoSelect.value : "paypal"; 
+    
+    // CAMBIA ESTO por el usuario exacto de tu bot sin el '@'
+    const botUsername = "ViralBoomBot"; 
 
     if (metodoId === "stars") {
-        // Estructuramos el JSON tal como lo va a recibir e interpretar SendPulse
-        const datosPago = {
-            action: "pago_iniciado",
-            plan: planId // Enviará exactamente "1_mes", "3_meses", "6_meses" o "12_meses"
+        // En lugar de un JSON complejo que rompe los enlaces, usamos una palabra clave simple
+        // que SendPulse pueda leer fácilmente como un mensaje de texto normal.
+        const comandosPlan = {
+            "1_mes": "comprar_stars_1mes",
+            "3_meses": "comprar_stars_3meses",
+            "6_meses": "comprar_stars_6meses",
+            "12_meses": "comprar_stars_12meses"
         };
 
-        // Convertimos el objeto a una cadena de texto JSON limpia
-        const jsonPayload = JSON.stringify(datosPago);
+        const textoComando = comandosPlan[planId] || "comprar_stars_1mes";
 
-        console.log("Enviando payload de Stars al bot:", jsonPayload);
+        // Usamos la API nativa de Telegram para abrir un enlace hacia el propio bot.
+        // Al usar 'tg.openTelegramLink', forzamos a Telegram a reaccionar.
+        const linkBot = `https://t.me/${botUsername}?text=${encodeURIComponent(textoComando)}`;
+        
+        console.log("Redirigiendo al bot con el comando:", textoComando);
 
-        // Verificamos que la Mini App tenga soporte para sendData
-        if (tg && typeof tg.sendData === 'function') {
+        if (tg && typeof tg.openTelegramLink === 'function') {
             try {
-                // Envía los datos. IMPORTANTE: Esto cerrará la Mini App en automático.
-                tg.sendData(jsonPayload);
+                tg.openTelegramLink(linkBot);
             } catch (err) {
-                console.error("Error al ejecutar tg.sendData:", err);
-                alert("Error técnico al procesar Stars. Asegúrate de haber abierto la App desde un botón de teclado.");
+                console.error("Error con openTelegramLink, usando fallback:", err);
+                window.location.href = linkBot;
             }
         } else {
-            // Caso extremo: Si prueban la Mini App desde un navegador web común fuera de Telegram
-            console.error("tg.sendData no está disponible en este entorno.");
-            alert("Los pagos con Telegram Stars solo están disponibles abriendo la app dentro de Telegram.");
+            window.location.href = linkBot;
+        }
+
+        // Cerramos la Mini App manualmente para que el usuario vea el chat del bot
+        if (tg && typeof tg.close === 'function') {
+            tg.close();
         }
 
     } else {
