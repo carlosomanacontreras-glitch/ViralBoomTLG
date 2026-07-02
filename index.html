@@ -422,6 +422,114 @@
             color: var(--text-cyber);
             font-weight: 600;
         }
+        /* Contenedor principal */
+.premium-container {
+    width: 100%;
+    padding: 10px 0;
+    overflow: hidden;
+}
+
+/* Scroll horizontal perfectamente adaptado a móviles */
+.cards-horizontal-wrapper {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding: 15px 5px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Ocultar barra de scroll en navegadores */
+.cards-horizontal-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+/* Tarjeta futurista individual */
+.futuristic-card {
+    flex: 0 0 160px; /* Ancho compacto fijo para que entren varias en pantalla */
+    scroll-snap-align: start;
+    background: rgba(20, 24, 35, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 242, 254, 0.2);
+    border-radius: 16px;
+    padding: 14px 10px;
+    text-align: center;
+    position: relative;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Efecto de brillo si es la tarjeta destacada (Recomendado) */
+.futuristic-card.featured {
+    border-color: rgba(0, 242, 254, 0.8);
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.25), inset 0 0 10px rgba(0, 242, 254, 0.1);
+}
+
+/* Badge neón flotante */
+.card-badge {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, #00f2fe, #4facfe);
+    color: #000;
+    font-size: 9px;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(0, 242, 254, 0.4);
+}
+
+/* Títulos del plan */
+.card-plan-name {
+    font-size: 11px;
+    color: #00f2fe;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+    font-weight: 700;
+}
+
+.card-duration {
+    font-size: 18px;
+    color: #fff;
+    margin: 4px 0 8px 0;
+    font-weight: 800;
+}
+
+/* Área de precio */
+.card-price {
+    font-size: 16px;
+    color: #fff;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 6px 4px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+/* Descuento llamativo */
+.card-discount {
+    display: inline-block;
+    font-size: 11px;
+    color: #ff3366;
+    font-weight: 700;
+    background: rgba(255, 51, 102, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    animation: pulseGlow 2s infinite;
+}
+
+/* Animación sutil de pulso para el descuento */
+@keyframes pulseGlow {
+    0% { opacity: 0.8; }
+    50% { opacity: 1; text-shadow: 0 0 5px rgba(255, 51, 102, 0.5); }
+    100% { opacity: 0.8; }
+}
+
     </style>
 </head>
 <body>
@@ -685,15 +793,11 @@
                 <option value="usdt">Binance Corporate Pay (USDT TRC20)</option>
             </select>
         </div>
-<div id="billing-plans-container" class="plans-grid">
-    <!-- Las tarjetas se generarán dinámicamente aquí mediante JavaScript -->
+<div class="premium-container">
+    <div id="cards-wrapper" class="cards-horizontal-wrapper">
+        <!-- Las tarjetas se inyectan aquí dinámicamente -->
+    </div>
 </div>
-
-        <div class="billing-card" style="padding:15px; background:rgba(5,6,12,0.9); border:1px solid rgba(255,255,255,0.1); margin-bottom: 20px;">
-            <label style="color:#fff; font-family:'Orbitron'; font-size:0.75rem; letter-spacing: 1px; display: block; margin-bottom: 8px;">[02] SELECCIONAR PLAN DE ACCESO:</label>
-            <select id="billing-plan-select" style="width:100%; padding:12px; background:var(--surface); color:#fff; border:1px solid rgba(255,170,0,0.3); font-family:'Rajdhani'; font-size: 1rem; font-weight: 600; outline: none;">
-                </select>
-        </div>
 
         <button id="btn-request-premium-unified" class="btn btn-gold" style="width:100%; font-family: 'Orbitron'; letter-spacing: 1px; font-weight: bold; padding: 15px;" onclick="procesarPagoPremium(event)">
             🚀 MEJORAR CON PREMIUM
@@ -739,10 +843,10 @@
 
         let abrirEditorCampana, cerrarModalEditorAdmin, guardarCambiosEditorAdmin, ejecutarAccionIndividual, ejecutarAccionMasiva, cargarCampanasAdminFuerza, renderizarTablaAdmin, toggleSeleccionCampana, toggleSeleccionarTodas;
 
-        function actualizarPreciosPlanes() {
+         function actualizarPreciosPlanes() {
     const metodoSelect = document.getElementById("billing-method");
-    const plansContainer = document.getElementById("billing-plans-container");
-    if (!metodoSelect || !plansContainer) return;
+    const cardsWrapper = document.getElementById("cards-wrapper");
+    if (!metodoSelect || !cardsWrapper) return;
 
     const divisa = metodoSelect.value;
     
@@ -754,61 +858,60 @@
         "12_meses": 37.92
     };
 
-    // Función auxiliar para obtener el texto del precio según el método
-    const obtenerDetallesPlan = (planKey) => {
-        const eur = preciosEUR[planKey];
+    // Formateador rápido de precios según la divisa activa
+    const formatearPrecio = (eurValue) => {
         if (divisa === "stars") {
-            const stars = Math.round(eur / 0.0229);
-            return { precio: `${stars} ⭐`, beneficio: "Ahorro Criptográfico" };
+            return `${Math.round(eurValue / 0.0229)} ⭐️`;
         } else if (divisa === "usdt") {
-            return { precio: `${eur.toFixed(2)} USDT`, beneficio: "Pago Seguro Crypto" };
+            return `${eurValue.toFixed(2)} USDT`;
         } else {
-            return { precio: `${eur.toFixed(2)}€`, beneficio: "Pago Seguro Instantáneo" };
+            return `${eurValue.toFixed(2)}€`;
         }
     };
 
-    const planes = [
-        { id: "1_mes", nombre: "1 Mes", dcto: "¡Dcto. 5% inc!" },
-        { id: "3_meses", nombre: "3 Meses", dcto: "¡Dcto. 10% inc!", badge: "Recomendado" },
-        { id: "6_meses", nombre: "6 Meses", dcto: "¡Dcto. 15% inc!", badge: "Acceso Extendido" },
-        { id: "12_meses", nombre: "12 Meses", dcto: "¡Dcto. 20% inc!", badge: "Máxima Eficiencia" }
+    // Estructura de datos limpia con tus descuentos e indicadores visuales
+    const opcionesPlanes = [
+        { id: "1_mes", tiempo: "1 Mes", dcto: "-5% OFF", badge: "" },
+        { id: "3_meses", tiempo: "3 Meses", dcto: "-10% OFF", badge: "TOP" },
+        { id: "6_meses", tiempo: "6 Meses", dcto: "-15% OFF", badge: "Popular" },
+        { id: "12_meses", tiempo: "1 Año", dcto: "-20% OFF", badge: "Mejor Valor" }
     ];
 
-    let tarjetasHTML = "";
+    let htmlInyectar = "";
 
-    planes.forEach((p, index) => {
-        const detalles = obtenerDetallesPlan(p.id);
-        // El primero se marcará como seleccionado por defecto (checked)
-        const isChecked = index === 0 ? "checked" : "";
-        
-        tarjetasHTML += `
-            <label class="plan-card">
-                <input type="radio" name="billing-plan" value="${p.id}" ${isChecked} id="plan-${p.id}">
-                <div class="plan-card-content">
-                    ${p.badge ? `<span class="plan-badge">${p.badge}</span>` : ""}
-                    <h3 class="plan-title">${p.nombre}</h3>
-                    <p class="plan-price">${detalles.precio}</p>
-                    <span class="plan-discount">${p.dcto}</span>
-                    <span class="plan-info">${detalles.beneficio}</span>
-                </div>
-            </label>
+    opcionesPlanes.forEach(p => {
+        const precioFinal = formatearPrecio(preciosEUR[p.id]);
+        // Si tiene un badge, le añadimos una clase CSS especial para resaltar la tarjeta (featured)
+        const claseDestacada = p.badge ? "futuristic-card featured" : "futuristic-card";
+
+        htmlInyectar += `
+            <div class="${claseDestacada}">
+                ${p.badge ? `<span class="card-badge">${p.badge}</span>` : ""}
+                <h4 class="card-plan-name">Plan PRO</h4>
+                <div class="card-duration">${p.tiempo}</div>
+                <div class="card-price">${precioFinal}</div>
+                <div class="card-discount">${p.dcto}</div>
+            </div>
         `;
     });
 
-    plansContainer.innerHTML = tarjetasHTML;
+    cardsWrapper.innerHTML = htmlInyectar;
 }
 
-// Escuchar los cambios de método para actualizar las tarjetas inmediatamente en pantalla
+// Escuchar cambios de divisa y arranque inicial
 document.addEventListener("DOMContentLoaded", () => {
     const metodoSelect = document.getElementById("billing-method");
     if (metodoSelect) {
         metodoSelect.addEventListener("change", actualizarPreciosPlanes);
     }
-    // Renderizado inicial al cargar la página
     actualizarPreciosPlanes();
 });
+
 /// Función unificada que ejecuta la acción al presionar "MEJORAR CON PREMIUM"
-         function procesarPagoPremium(e) {
+         
+
+    // Función interna para redirección y cierre de la Mini App
+    function procesarPagoPremium(e) {
     if (e && e.preventDefault) e.preventDefault();
 
     const tg = window.Telegram ? window.Telegram.WebApp : null;
@@ -820,7 +923,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const metodoId = metodoSelect ? metodoSelect.value : "paypal"; 
     const botUsername = "ViralBoomBot"; 
 
-    // Mapeamos un único comando base por método de pago (Regla: No depende del plan seleccionado)
+    // Mapeamos un único comando base por método de pago (Regla: No depende de ninguna tarjeta o selección manual de tiempo)
     const comandosPorMetodo = {
         "stars": "/premium_stars",
         "paypal": "/premium_paypal",
@@ -837,10 +940,10 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     const metodoEstetico = nombresMetodos[metodoId] || "Pago";
 
-    // Texto informativo unificado
-    const mensajeInstrucciones = `📋 ¡Comando copiado al portapapeles!\n\nLa aplicación se cerrará ahora de forma segura.\n\nPara proceder con tu suscripción mediante ${metodoEstetico}, simplemente mantén presionado el cuadro de texto del chat, selecciona 'Pegar' y envía el comando que se acaba de generar.\n\nEl bot te responderá de inmediato con las opciones de 1, 3, 6 y 12 meses para pagar.`;
+    // Texto informativo unificado adaptado al nuevo diseño visual de las tarjetas estéticas
+    const mensajeInstrucciones = `📋 ¡Comando copiado al portapapeles!\n\nLa aplicación se cerrará ahora de forma segura.\n\nPara proceder con tu suscripción mediante ${metodoEstetico}, simplemente mantén presionado el cuadro de texto del chat, selecciona 'Pegar' y envía el comando que se acaba de generar.\n\nEl bot te responderá de inmediato con los botones para elegir el tiempo que viste en las tarjetas (1, 3, 6 o 12 meses).`;
 
-    // Intentamos copiar el comando al portapapeles
+    // Intentamos copiar el comando al portapapeles del dispositivo
     navigator.clipboard.writeText(comandoCopiar).then(() => {
         console.log("Comando copiado con éxito: " + comandoCopiar);
         
@@ -854,29 +957,39 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }).catch((err) => {
         console.error("No se pudo copiar automáticamente: ", err);
-        const mensajeFallback = `La aplicación se cerrará. Por favor, escribe manualmente el siguiente comando en el chat para proceder:\n\n${comandoCopiar}`;
+        const mensajeFallback = `La aplicación se cerrará. Por favor, escribe manualmente el siguiente comando en el chat para proceder con tu pago:\n\n${comandoCopiar}`;
         
         if (tg && typeof tg.showAlert === 'function') {
-            tg.showAlert(mensajeFallback, () => { redirigirYAbandonar(); });
+            tg.showAlert(mensajeFallback, () => {
+                redirigirYAbandonar();
+            });
         } else {
             alert(mensajeFallback);
             redirigirYAbandonar();
         }
     });
 
-    // Función interna para redirección y cierre de la Mini App
+    // Función interna encargada de llevar al usuario de vuelta al chat del bot y cerrar la interfaz limpiamente
     function redirigirYAbandonar() {
         const linkBot = `https://t.me/${botUsername}`;
         if (tg && typeof tg.openTelegramLink === 'function') {
-            tg.openTelegramLink(linkBot);
+            try {
+                tg.openTelegramLink(linkBot);
+            } catch (err) {
+                console.error("Error al abrir enlace interno:", err);
+                window.location.href = linkBot;
+            }
         } else {
             window.location.href = linkBot;
         }
+
+        // Cerramos la app para que el usuario caiga directo sobre la barra de chat del bot
         if (tg && typeof tg.close === 'function') {
             tg.close();
         }
     }
 }
+
         // Vinculamos las funciones globales al objeto window para los gestores onclick del HTML inline
         window.actualizarPreciosPlanes = actualizarPreciosPlanes;
         window.procesarPagoPremium = procesarPagoPremium;
