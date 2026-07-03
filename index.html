@@ -422,114 +422,113 @@
             color: var(--text-cyber);
             font-weight: 600;
         }
+        
         /* Contenedor principal */
-.premium-container {
-    width: 100%;
-    padding: 10px 0;
-    overflow: hidden;
-}
+        .premium-container {
+            width: 100%;
+            padding: 10px 0;
+            overflow: hidden;
+        }
 
-/* Scroll horizontal perfectamente adaptado a móviles */
-.cards-horizontal-wrapper {
-    display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    padding: 15px 5px;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-}
+        /* Scroll horizontal perfectamente adaptado a móviles */
+        .cards-horizontal-wrapper {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 15px 5px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
 
-/* Ocultar barra de scroll en navegadores */
-.cards-horizontal-wrapper::-webkit-scrollbar {
-    display: none;
-}
+        /* Ocultar barra de scroll en navegadores */
+        .cards-horizontal-wrapper::-webkit-scrollbar {
+            display: none;
+        }
 
-/* Tarjeta futurista individual */
-.futuristic-card {
-    flex: 0 0 160px; /* Ancho compacto fijo para que entren varias en pantalla */
-    scroll-snap-align: start;
-    background: rgba(20, 24, 35, 0.65);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(0, 242, 254, 0.2);
-    border-radius: 16px;
-    padding: 14px 10px;
-    text-align: center;
-    position: relative;
-    transition: transform 0.3s ease, border-color 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-}
+        /* Tarjeta futurista individual */
+        .futuristic-card {
+            flex: 0 0 160px; 
+            scroll-snap-align: start;
+            background: rgba(20, 24, 35, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            border-radius: 16px;
+            padding: 14px 10px;
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
 
-/* Efecto de brillo si es la tarjeta destacada (Recomendado) */
-.futuristic-card.featured {
-    border-color: rgba(0, 242, 254, 0.8);
-    box-shadow: 0 0 15px rgba(0, 242, 254, 0.25), inset 0 0 10px rgba(0, 242, 254, 0.1);
-}
+        /* Efecto de brillo si es la tarjeta destacada */
+        .futuristic-card.featured {
+            border-color: rgba(0, 242, 254, 0.8);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.25), inset 0 0 10px rgba(0, 242, 254, 0.1);
+        }
 
-/* Badge neón flotante */
-.card-badge {
-    position: absolute;
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: linear-gradient(90deg, #00f2fe, #4facfe);
-    color: #000;
-    font-size: 9px;
-    font-weight: 800;
-    padding: 2px 8px;
-    border-radius: 20px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    box-shadow: 0 2px 8px rgba(0, 242, 254, 0.4);
-}
+        /* Badge neón flotante */
+        .card-badge {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, #00f2fe, #4facfe);
+            color: #000;
+            font-size: 9px;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(0, 242, 254, 0.4);
+        }
 
-/* Títulos del plan */
-.card-plan-name {
-    font-size: 11px;
-    color: #00f2fe;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin: 0;
-    font-weight: 700;
-}
+        /* Títulos del plan */
+        .card-plan-name {
+            font-size: 11px;
+            color: #00f2fe;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0;
+            font-weight: 700;
+        }
 
-.card-duration {
-    font-size: 18px;
-    color: #fff;
-    margin: 4px 0 8px 0;
-    font-weight: 800;
-}
+        .card-duration {
+            font-size: 18px;
+            color: #fff;
+            margin: 4px 0 8px 0;
+            font-weight: 800;
+        }
 
-/* Área de precio */
-.card-price {
-    font-size: 16px;
-    color: #fff;
-    font-weight: 700;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 6px 4px;
-    border-radius: 8px;
-    margin-bottom: 8px;
-}
+        /* Área de precio */
+        .card-price {
+            font-size: 16px;
+            color: #fff;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px 4px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
 
-/* Descuento llamativo */
-.card-discount {
-    display: inline-block;
-    font-size: 11px;
-    color: #ff3366;
-    font-weight: 700;
-    background: rgba(255, 51, 102, 0.1);
-    padding: 2px 6px;
-    border-radius: 4px;
-    animation: pulseGlow 2s infinite;
-}
+        /* Descuento llamativo */
+        .card-discount {
+            display: inline-block;
+            font-size: 11px;
+            color: #ff3366;
+            font-weight: 700;
+            background: rgba(255, 51, 102, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            animation: pulseGlow 2s infinite;
+        }
 
-/* Animación sutil de pulso para el descuento */
-@keyframes pulseGlow {
-    0% { opacity: 0.8; }
-    50% { opacity: 1; text-shadow: 0 0 5px rgba(255, 51, 102, 0.5); }
-    100% { opacity: 0.8; }
-}
-
+        @keyframes pulseGlow {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; text-shadow: 0 0 5px rgba(255, 51, 102, 0.5); }
+            100% { opacity: 0.8; }
+        }
     </style>
 </head>
 <body>
@@ -573,9 +572,19 @@
                     <span style="color: var(--neon-cyan); font-family:'Orbitron', sans-serif; display: block; font-size: 0.65rem; letter-spacing: 1px;">PLAN:</span>
                     <span id="profile-plan-status" style="font-weight: bold;">PLAN GRATIS</span>
                 </div>
-                <div>
-                    <span style="color: var(--text-dark); font-family:'Orbitron', sans-serif; display: block; font-size: 0.65rem; letter-spacing: 1px;">INICIO DE SUSCRIPCIÓN:</span>
+                <div style="margin-bottom: 10px;">
+                    <span style="color: var(--text-dark); font-family:'Orbitron', sans-serif; display: block; font-size: 0.65rem; letter-spacing: 1px;">INICIO DE ACCESO:</span>
                     <span id="profile-plan-start" style="color: #b2bec3;">-</span>
+                </div>
+                <div id="profile-premium-data-box" style="display: none; border-top: 1px dashed rgba(255,170,0,0.2); padding-top: 10px; margin-top: 10px;">
+                    <div style="margin-bottom: 6px;">
+                        <span style="color: var(--neon-amber); font-family:'Orbitron', sans-serif; display: block; font-size: 0.65rem; letter-spacing: 1px;">LLAVE ACTIVA:</span>
+                        <span id="profile-premium-key" style="color: #fff; font-family: 'Orbitron'; font-size: 0.75rem; word-break: break-all;">-</span>
+                    </div>
+                    <div>
+                        <span style="color: var(--neon-lime); font-family:'Orbitron', sans-serif; display: block; font-size: 0.65rem; letter-spacing: 1px;">EXPIRACIÓN ESTIMADA:</span>
+                        <span id="profile-premium-end" style="color: #fff; font-weight: bold;">-</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -772,42 +781,41 @@
         </div> 
         
         <div id="view-billing" class="view-section">
-    <div class="card premium" style="border: 2px solid var(--neon-amber); box-shadow: var(--glow-amber); background: linear-gradient(180deg, rgba(10,11,22,0.95) 0%, rgba(20,22,45,0.9) 100%);">
-        <h2 style="font-family: 'Orbitron'; letter-spacing: 2px; color: var(--neon-amber); text-shadow: var(--glow-amber);">👑 VIP_PASS</h2>
-        
-        <ul style="font-size: 0.85rem; color: var(--text-secondary); list-style: none; margin-bottom: 25px; padding-left: 0;">
-            <li style="margin-bottom: 10px; display:flex; align-items:center; gap:8px;">⚡ <span style="color:#fff">Desbloqueo total de lógicas (Anuncios y API Telegram).</span></li>
-            <li style="margin-bottom: 10px; display:flex; align-items:center; gap:8px;">⚡ <span style="color:#fff">Crea campañas virales ilimitadas.</span></li>
-            <li style="margin-bottom: 10px; display:flex; align-items:center; gap:8px;">⚡ <span style="color:#fff">Elimina los anuncios en la mini-app.</span></li>
-                 </ul>
+            <div class="card premium" style="border: 2px solid var(--neon-amber); box-shadow: var(--glow-amber); background: linear-gradient(180deg, rgba(10,11,22,0.95) 0%, rgba(20,22,45,0.9) 100%);">
+                <h2 style="font-family: 'Orbitron'; letter-spacing: 2px; color: var(--neon-amber); text-shadow: var(--glow-amber);">👑 VIP_PASS</h2>
+                
+                <ul style="font-size: 0.85rem; color: var(--text-secondary); list-style: none; margin-bottom: 25px; padding-left: 0;">
+                    <li style="margin-bottom: 10px; display:flex; align-items:center; gap:8px;">⚡ <span style="color:#fff">Desbloqueo total de lógicas (Anuncios y API Telegram).</span></li>
+                    <li style="margin-bottom: 10px; display:flex; align-items:center; gap:8px;">⚡ <span style="color:#fff">Crea campañas virales ilimitadas.</span></li>
+                    <li style="margin-bottom: 10px; display:flex; align-items:center; gap:8px;">⚡ <span style="color:#fff">Elimina los anuncios en la mini-app.</span></li>
+                </ul>
 
-        <hr style="border: 0; border-top: 1px dashed rgba(255,170,0,0.3); margin: 20px 0;">
+                <hr style="border: 0; border-top: 1px dashed rgba(255,170,0,0.3); margin: 20px 0;">
 
-        <div class="input-group" style="margin-bottom: 20px;">
-            <label class="input-label" for="billing-method" style="color: var(--neon-amber); font-family: 'Orbitron'; font-size: 0.75rem; letter-spacing: 1px;">SELECCIONAR MÉTODO DE PAGO</label>
-            <select id="billing-method" class="input-field" style="background: var(--surface); color: #fff; font-family: 'Rajdhani'; font-weight: bold; border: 1px solid rgba(255,170,0,0.4);" onchange="actualizarPreciosPlanes()">
-                <option value="paypal">PayPal Express Checkout</option>
-                <option value="stars">Telegram Stars (⭐)</option>
-                <option value="usdt">Binance Corporate Pay (USDT TRC20)</option>
-            </select>
+                <div class="input-group" style="margin-bottom: 20px;">
+                    <label class="input-label" for="billing-method" style="color: var(--neon-amber); font-family: 'Orbitron'; font-size: 0.75rem; letter-spacing: 1px;">SELECCIONAR MÉTODO DE PAGO</label>
+                    <select id="billing-method" class="input-field" style="background: var(--surface); color: #fff; font-family: 'Rajdhani'; font-weight: bold; border: 1px solid rgba(255,170,0,0.4);" onchange="actualizarPreciosPlanes()">
+                        <option value="paypal">PayPal Express Checkout</option>
+                        <option value="stars">Telegram Stars (⭐)</option>
+                        <option value="usdt">Binance Corporate Pay (USDT TRC20)</option>
+                    </select>
+                </div>
+                <div class="premium-container">
+                    <div id="cards-wrapper" class="cards-horizontal-wrapper">
+                        </div>
+                </div>
+
+                <button id="btn-request-premium-unified" class="btn btn-gold" style="width:100%; font-family: 'Orbitron'; letter-spacing: 1px; font-weight: bold; padding: 15px;" onclick="procesarPagoPremium(event)">
+                    🚀 MEJORAR CON PREMIUM
+                </button>
+            </div>
+
+            <div class="card" id="premium-activation-key-card" style="border-color: var(--neon-amber); background: rgba(10,11,22,0.8);">
+                <div class="input-label" style="color: var(--neon-amber); font-family: 'Orbitron';">[CONEXIÓN] INYECTAR_LICENCIA_KEY</div>
+                <input type="text" id="licence-key-input" class="input-field" placeholder="Firma SHA256 / Llave criptográfica...">
+                <button id="btn-validate-license" class="btn btn-purple" style="margin-top: 12px; font-family: 'Orbitron';">VALIDAR_FIRMA</button>
+            </div>
         </div>
-<div class="premium-container">
-    <div id="cards-wrapper" class="cards-horizontal-wrapper">
-        <!-- Las tarjetas se inyectan aquí dinámicamente -->
-    </div>
-</div>
-
-        <button id="btn-request-premium-unified" class="btn btn-gold" style="width:100%; font-family: 'Orbitron'; letter-spacing: 1px; font-weight: bold; padding: 15px;" onclick="procesarPagoPremium(event)">
-            🚀 MEJORAR CON PREMIUM
-        </button>
-    </div>
-
-    <div class="card" id="premium-activation-key-card" style="border-color: var(--neon-amber); background: rgba(10,11,22,0.8);">
-        <div class="input-label" style="color: var(--neon-amber); font-family: 'Orbitron';">[CONEXIÓN] INYECTAR_LICENCIA_KEY</div>
-        <input type="text" id="licence-key-input" class="input-field" placeholder="Firma SHA256 / Llave criptográfica...">
-        <button id="btn-validate-license" class="btn btn-purple" style="margin-top: 12px; font-family: 'Orbitron';">VALIDAR_FIRMA</button>
-    </div>
-</div>
 
     </main> 
     
@@ -832,164 +840,136 @@
     </nav>
 
     <script>
-            /**
-     * CYBER_SECURITY ENGINE P2P - CORREGIDO TOTALMENTE
-     * Encapsulado bajo un entorno léxico cerrado (IIFE) para evitar la manipulación de estados desde la consola global.
-     */
     (function () {
         'use strict';
 
         let abrirEditorCampana, cerrarModalEditorAdmin, guardarCambiosEditorAdmin, ejecutarAccionIndividual, ejecutarAccionMasiva, cargarCampanasAdminFuerza, renderizarTablaAdmin, toggleSeleccionCampana, toggleSeleccionarTodas;
 
-         function actualizarPreciosPlanes() {
-    const metodoSelect = document.getElementById("billing-method");
-    const cardsWrapper = document.getElementById("cards-wrapper");
-    if (!metodoSelect || !cardsWrapper) return;
+        function actualizarPreciosPlanes() {
+            const metodoSelect = document.getElementById("billing-method");
+            const cardsWrapper = document.getElementById("cards-wrapper");
+            if (!metodoSelect || !cardsWrapper) return;
 
-    const divisa = metodoSelect.value;
-    
-    // Precios Base calculados en Euros
-    const preciosEUR = {
-        "1_mes": 3.75,
-        "3_meses": 10.66,
-        "6_meses": 20.14,
-        "12_meses": 37.92
-    };
+            const divisa = metodoSelect.value;
+            
+            const preciosEUR = {
+                "1_mes": 3.75,
+                "3_meses": 10.66,
+                "6_meses": 20.14,
+                "12_meses": 37.92
+            };
 
-        // Formateador rápido de precios según la divisa activa (Margen protegido)
-    const formatearPrecio = (eurValue) => {
-        if (divisa === "stars") {
-            // Dividimos entre 0.012 para cubrir la comisión de retiro de Telegram
-            return `${Math.round(eurValue / 0.012)} ⭐️`;
-        } else if (divisa === "usdt") {
-            return `${eurValue.toFixed(2)} USDT`;
-        } else {
-            return `${eurValue.toFixed(2)}€`;
-        }
-    };
+            const formatearPrecio = (eurValue) => {
+                if (divisa === "stars") {
+                    return `${Math.round(eurValue / 0.012)} ⭐️`;
+                } else if (divisa === "usdt") {
+                    return `${eurValue.toFixed(2)} USDT`;
+                } else {
+                    return `${eurValue.toFixed(2)}€`;
+                }
+            };
 
-    // Estructura de datos limpia con tus descuentos e indicadores visuales
-    const opcionesPlanes = [
-        { id: "1_mes", tiempo: "1 Mes", dcto: "-5% OFF", badge: "" },
-        { id: "3_meses", tiempo: "3 Meses", dcto: "-10% OFF", badge: "TOP" },
-        { id: "6_meses", tiempo: "6 Meses", dcto: "-15% OFF", badge: "Popular" },
-        { id: "12_meses", tiempo: "1 Año", dcto: "-20% OFF", badge: "Mejor Valor" }
-    ];
+            const opcionesPlanes = [
+                { id: "1_mes", tiempo: "1 Mes", dcto: "-5% OFF", badge: "" },
+                { id: "3_meses", tiempo: "3 Meses", dcto: "-10% OFF", badge: "TOP" },
+                { id: "6_meses", tiempo: "6 Meses", dcto: "-15% OFF", badge: "Popular" },
+                { id: "12_meses", tiempo: "1 Año", dcto: "-20% OFF", badge: "Mejor Valor" }
+            ];
 
-    let htmlInyectar = "";
+            let htmlInyectar = "";
 
-    opcionesPlanes.forEach(p => {
-        const precioFinal = formatearPrecio(preciosEUR[p.id]);
-        // Si tiene un badge, le añadimos una clase CSS especial para resaltar la tarjeta (featured)
-        const claseDestacada = p.badge ? "futuristic-card featured" : "futuristic-card";
+            opcionesPlanes.forEach(p => {
+                const precioFinal = formatearPrecio(preciosEUR[p.id]);
+                const claseDestacada = p.badge ? "futuristic-card featured" : "futuristic-card";
 
-        htmlInyectar += `
-            <div class="${claseDestacada}">
-                ${p.badge ? `<span class="card-badge">${p.badge}</span>` : ""}
-                <h4 class="card-plan-name">Plan PRO</h4>
-                <div class="card-duration">${p.tiempo}</div>
-                <div class="card-price">${precioFinal}</div>
-                <div class="card-discount">${p.dcto}</div>
-            </div>
-        `;
-    });
-
-    cardsWrapper.innerHTML = htmlInyectar;
-}
-
-// Escuchar cambios de divisa y arranque inicial
-document.addEventListener("DOMContentLoaded", () => {
-    const metodoSelect = document.getElementById("billing-method");
-    if (metodoSelect) {
-        metodoSelect.addEventListener("change", actualizarPreciosPlanes);
-    }
-    actualizarPreciosPlanes();
-});
-
-/// Función unificada que ejecuta la acción al presionar "MEJORAR CON PREMIUM"
-         
-
-    // Función interna para redirección y cierre de la Mini App
-    function procesarPagoPremium(e) {
-    if (e && e.preventDefault) e.preventDefault();
-
-    const tg = window.Telegram ? window.Telegram.WebApp : null;
-    if (tg) {
-        tg.ready();
-    }
-
-    const metodoSelect = document.getElementById("billing-method");
-    const metodoId = metodoSelect ? metodoSelect.value : "paypal"; 
-    const botUsername = "ViralBoomBot"; 
-
-    // Mapeamos un único comando base por método de pago (Regla: No depende de ninguna tarjeta o selección manual de tiempo)
-    const comandosPorMetodo = {
-        "stars": "/premium_stars",
-        "paypal": "/premium_paypal",
-        "usdt": "/premium_usdt"
-    };
-
-    const comandoCopiar = comandosPorMetodo[metodoId] || "/premium_paypal";
-
-    // Personalización estética para el mensaje informativo
-    const nombresMetodos = {
-        "stars": "Telegram Stars ⭐️",
-        "paypal": "PayPal (Euros) 💳",
-        "usdt": "USDT (Cripto) 🪙"
-    };
-    const metodoEstetico = nombresMetodos[metodoId] || "Pago";
-
-    // Texto informativo unificado adaptado al nuevo diseño visual de las tarjetas estéticas
-    const mensajeInstrucciones = `📋 ¡Comando copiado al portapapeles!\n\nLa aplicación se cerrará ahora de forma segura.\n\nPara proceder con tu suscripción mediante ${metodoEstetico}, simplemente mantén presionado el cuadro de texto del chat, selecciona 'Pegar' y envía el comando que se acaba de generar.\n\nEl bot te responderá de inmediato con los botones para elegir el período de tiempo (1, 3, 6 o 12 meses) y proceder con el pago de manera segura.`;
-
-    // Intentamos copiar el comando al portapapeles del dispositivo
-    navigator.clipboard.writeText(comandoCopiar).then(() => {
-        console.log("Comando copiado con éxito: " + comandoCopiar);
-        
-        if (tg && typeof tg.showAlert === 'function') {
-            tg.showAlert(mensajeInstrucciones, () => {
-                redirigirYAbandonar();
+                htmlInyectar += `
+                    <div class="${claseDestacada}">
+                        ${p.badge ? `<span class="card-badge">${p.badge}</span>` : ""}
+                        <h4 class="card-plan-name">Plan PRO</h4>
+                        <div class="card-duration">${p.tiempo}</div>
+                        <div class="card-price">${precioFinal}</div>
+                        <div class="card-discount">${p.dcto}</div>
+                    </div>
+                `;
             });
-        } else {
-            alert(mensajeInstrucciones);
-            redirigirYAbandonar();
-        }
-    }).catch((err) => {
-        console.error("No se pudo copiar automáticamente: ", err);
-        const mensajeFallback = `📋 Comando copiado al portapapeles. La aplicación se cerrará. Por favor, mantén pulsado el cuadro de chat del bot para pegar el comando y proceder a elegir el periodo de duración y completar tu pago:\n\n${comandoCopiar}`;
-        
-        if (tg && typeof tg.showAlert === 'function') {
-            tg.showAlert(mensajeFallback, () => {
-                redirigirYAbandonar();
-            });
-        } else {
-            alert(mensajeFallback);
-            redirigirYAbandonar();
-        }
-    });
 
-    // Función interna encargada de llevar al usuario de vuelta al chat del bot y cerrar la interfaz limpiamente
-    function redirigirYAbandonar() {
-        const linkBot = `https://t.me/${botUsername}`;
-        if (tg && typeof tg.openTelegramLink === 'function') {
-            try {
-                tg.openTelegramLink(linkBot);
-            } catch (err) {
-                console.error("Error al abrir enlace interno:", err);
-                window.location.href = linkBot;
+            cardsWrapper.innerHTML = htmlInyectar;
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const metodoSelect = document.getElementById("billing-method");
+            if (metodoSelect) {
+                metodoSelect.addEventListener("change", actualizarPreciosPlanes);
             }
-        } else {
-            window.location.href = linkBot;
+            actualizarPreciosPlanes();
+        });
+
+        function procesarPagoPremium(e) {
+            if (e && e.preventDefault) e.preventDefault();
+
+            const tg = window.Telegram ? window.Telegram.WebApp : null;
+            if (tg) {
+                tg.ready();
+            }
+
+            const metodoSelect = document.getElementById("billing-method");
+            const metodoId = metodoSelect ? metodoSelect.value : "paypal"; 
+            const botUsername = "ViralBoomBot"; 
+
+            const comandosPorMetodo = {
+                "stars": "/premium_stars",
+                "paypal": "/premium_paypal",
+                "usdt": "/premium_usdt"
+            };
+
+            const comandoCopiar = comandosPorMetodo[metodoId] || "/premium_paypal";
+
+            const nombresMetodos = {
+                "stars": "Telegram Stars ⭐️",
+                "paypal": "PayPal (Euros) 💳",
+                "usdt": "USDT (Cripto) 🪙"
+            };
+            const metodoEstetico = nombresMetodos[metodoId] || "Pago";
+
+            const mensajeInstrucciones = `📋 ¡Comando copiado al portapapeles!\n\nLa aplicación se cerrará ahora de forma segura.\n\nPara proceder con tu suscripción mediante ${metodoEstetico}, simplemente mantén presionado el cuadro de texto del chat, selecciona 'Pegar' y envía el comando que se acaba de generar.\n\nEl bot te responderá de inmediato con los botones para elegir el período de tiempo (1, 3, 6 o 12 meses) y proceder con el pago de manera segura.`;
+
+            navigator.clipboard.writeText(comandoCopiar).then(() => {
+                if (tg && typeof tg.showAlert === 'function') {
+                    tg.showAlert(mensajeInstrucciones, () => { redirigirYAbandonar(); });
+                } else {
+                    alert(mensajeInstrucciones);
+                    redirigirYAbandonar();
+                }
+            }).catch((err) => {
+                console.error("No se pudo copiar automáticamente: ", err);
+                const mensajeFallback = `📋 Comando copiado al portapapeles. La aplicación se cerrará. Por favor, mantén pulsado el cuadro de chat del bot para pegar el comando y proceder a elegir el periodo de duración y completar tu pago:\n\n${comandoCopiar}`;
+                
+                if (tg && typeof tg.showAlert === 'function') {
+                    tg.showAlert(mensajeFallback, () => { redirigirYAbandonar(); });
+                } else {
+                    alert(mensajeFallback);
+                    redirigirYAbandonar();
+                }
+            });
+
+            function redirigirYAbandonar() {
+                const linkBot = `https://t.me/${botUsername}`;
+                if (tg && typeof tg.openTelegramLink === 'function') {
+                    try {
+                        tg.openTelegramLink(linkBot);
+                    } catch (err) {
+                        window.location.href = linkBot;
+                    }
+                } else {
+                    window.location.href = linkBot;
+                }
+
+                if (tg && typeof tg.close === 'function') {
+                    tg.close();
+                }
+            }
         }
 
-        // Cerramos la app para que el usuario caiga directo sobre la barra de chat del bot
-        if (tg && typeof tg.close === 'function') {
-            tg.close();
-        }
-    }
-}
-
-        // Vinculamos las funciones globales al objeto window para los gestores onclick del HTML inline
         window.actualizarPreciosPlanes = actualizarPreciosPlanes;
         window.procesarPagoPremium = procesarPagoPremium;
 
@@ -999,16 +979,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     const item = localStorage.getItem(key);
                     return item ? JSON.parse(item) : defaultValue;
                 } catch (e) {
-                    console.error("Error leyendo LocalStorage para clave: " + key, e);
                     return defaultValue;
                 }
             },
             set(key, value) {
                 try {
                     localStorage.setItem(key, JSON.stringify(value));
-                } catch (e) {
-                    console.error("Error escribiendo en LocalStorage para clave: " + key, e);
-                }
+                } catch (e) {}
             },
             remove(key) {
                 localStorage.removeItem(key);
@@ -1035,11 +1012,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 carouselTimer: null,
                 isCarouselPaused: false,
                 outboundTimestamp: 0,
-                verificationInProgress: false
+                verificationInProgress: false,
+                activePremiumKey: "",
+                premiumExpirationText: ""
             },
 
             supabaseClient: null,
-            tg: window.Telegram ? window.Telegram.WebApp : null,
+            tg = window.Telegram ? window.Telegram.WebApp : null,
 
             init() {
                 if(this.tg) {
@@ -1054,8 +1033,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (window.supabase && SUPABASE_URL && cleanKey) {
                         this.supabaseClient = window.supabase.createClient(SUPABASE_URL, cleanKey);
                         console.log("🛰️ NET_SYNC: Conexión con Supabase establecida.");
-                    } else {
-                        console.warn("⚠️ NET_WARNING: Supabase no configurado o URL vacía. Corriendo en Sandbox local.");
                     }
                 } catch(err) {
                     console.error("Error al enlazar los canales de Supabase:", err);
@@ -1065,7 +1042,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 this.bindEvents();
                 this.inicializarFlujoAplicacion();
                 this.startCarouselEngine();
-                actualizarPreciosPlanes(); // Inicialización de los precios del plan al iniciar
+                actualizarPreciosPlanes(); 
             },
 
             setupDates() {
@@ -1096,8 +1073,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 safeAddEvent("btn-claim-reward", "click", () => this.reclamarRecompensaFinal());
                 safeAddEvent("btn-deploy-campaign", "click", () => this.guardarCampanaAdmin());
                 safeAddEvent("btn-validate-license", "click", () => this.inyectarLlaveLicenciaLocal());
-                safeAddEvent("btn-request-premium", "click", () => this.solicitarPremiumAirdayz());
-                safeAddEvent("btn-request-premium-stars", "click", () => this.solicitarPremiumEstrellasBot());
                 safeAddEvent("btn-watermark-link", "click", () => this.cambiarPestana('billing'));
                 
                 safeAddEvent("setup-campaign-type", "change", () => this.actualizarFormularioPorTipoCam());
@@ -1117,14 +1092,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         this.procesarRetornoUsuario();
                     }
                 });
-
-                const carouselWrapper = document.getElementById("premium-carousel-wrapper");
-                if(carouselWrapper) {
-                    carouselWrapper.addEventListener("touchstart", () => this.pauseCarousel(), { passive: true });
-                    carouselWrapper.addEventListener("touchend", () => {
-                        setTimeout(() => { this.resumeCarousel(); }, 5000);
-                    }, { passive: true });
-                }
             },
 
             async inicializarFlujoAplicacion() {
@@ -1136,7 +1103,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         this.evaluarFlujoDeepLinkingDeEntrada()
                     ]);
                 } catch (error) {
-                    console.error("Error crítico en la inicialización del ecosistema:", error);
+                    console.error("Error crítico en la inicialización:", error);
                 } finally {
                     this.renderizarPantallasDinamicas();
                     this.actualizarContadorHeader();
@@ -1145,9 +1112,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const splash = document.getElementById("cyber-splash-loader");
                     if (splash) {
                         splash.style.opacity = "0";
-                        setTimeout(() => {
-                            splash.style.visibility = "hidden";
-                        }, 400);
+                        setTimeout(() => { splash.style.visibility = "hidden"; }, 400);
                     }
                 }
             },
@@ -1174,14 +1139,12 @@ document.addEventListener("DOMContentLoaded", () => {
                         if(imgExistente) imgExistente.remove();
                         const img = document.createElement("img");
                         img.src = u.photo_url;
-                        img.alt = "Profile";
                         avatarBox.appendChild(img);
                     }
                     if(modalAvatarBox) {
                         modalAvatarBox.innerHTML = "";
                         const imgModal = document.createElement("img");
                         imgModal.src = u.photo_url;
-                        imgModal.alt = "Profile";
                         imgModal.style.width = "100%"; imgModal.style.height = "100%"; imgModal.style.objectFit = "cover";
                         modalAvatarBox.appendChild(imgModal);
                     }
@@ -1206,24 +1169,24 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (error) throw error;
                     return data;
                 } catch (err) {
-                    console.error("🚨 ALERT_ERROR:", err);
-                    throw err;
+                    return null;
                 }
             },
 
             async ejecutarVerificacionLicenciaBase() {
                 const ahora = Date.now();
                 const localPremiumUntil = localStorage.getItem(`bv_premium_until_${this.state.userId}`);
+                const localKey = localStorage.getItem(`bv_premium_key_${this.state.userId}`) || "Licencia Manual Local";
                 
-                if (localPremiumUntil) {
-                    if (parseInt(localPremiumUntil) > ahora) {
-                        this.activarInterfazPremiumVisual();
-                        return;
-                    } else {
-                        localStorage.removeItem(`bv_premium_until_${this.state.userId}`);
-                        this.desactivarInterfazPremiumVisual();
-                        return;
-                    }
+                // 1. Validar primero caché del LocalStorage
+                if (localPremiumUntil && parseInt(localPremiumUntil) > ahora) {
+                    this.state.activePremiumKey = localKey;
+                    const tiempoRestante = parseInt(localPremiumUntil) - ahora;
+                    const diasRestantes = Math.max(0, Math.ceil(tiempoRestante / (1000 * 60 * 60 * 24)));
+                    this.state.premiumExpirationText = `${new Date(parseInt(localPremiumUntil)).toLocaleDateString()} (${diasRestantes} días restantes)`;
+                    
+                    this.activarInterfazPremiumVisual();
+                    return;
                 }
 
                 if(!this.supabaseClient) {
@@ -1231,6 +1194,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
+                // 2. Si no hay caché válida, preguntar a la base de datos de licencias en Supabase
                 try {
                     const { data, error } = await this.supabaseClient
                         .from('licenses')
@@ -1246,6 +1210,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
                         if (ahora < fechaExpiracion) {
                             localStorage.setItem(`bv_premium_until_${this.state.userId}`, fechaExpiracion);
+                            localStorage.setItem(`bv_premium_key_${this.state.userId}`, licenciaActiva.codigo_clave || licenciaActiva.id);
+                            
+                            this.state.activePremiumKey = licenciaActiva.codigo_clave || "Firma de Servidor";
+                            const diasRestantes = Math.ceil((fechaExpiracion - ahora) / (1000 * 60 * 60 * 24));
+                            this.state.premiumExpirationText = `${new Date(fechaExpiracion).toLocaleDateString()} (${diasRestantes} días restantes)`;
+                            
                             this.activarInterfazPremiumVisual();
                             return;
                         }
@@ -1262,7 +1232,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if(statusBadge) { statusBadge.textContent = "PLAN_PRO"; statusBadge.className = "badge badge-premium"; }
                 
                 const planStatus = document.getElementById("profile-plan-status");
-                if(planStatus) { planStatus.textContent = "PRO_RANK"; planStatus.style.color = "var(--neon-amber)"; }
+                if(planStatus) { planStatus.textContent = "PRO_RANK 👑"; planStatus.style.color = "var(--neon-amber)"; }
                 
                 const avatarGlow = document.getElementById("user-avatar-glow");
                 if(avatarGlow) { avatarGlow.style.backgroundColor = "var(--neon-amber)"; avatarGlow.style.boxShadow = "var(--glow-amber)"; }
@@ -1274,6 +1244,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 const na = document.getElementById("nav-admin"); if(na) na.style.display = "flex"; 
                 const nb = document.getElementById("nav-billing"); if(nb) nb.style.display = "none"; 
                 
+                // Renderizar los datos de la clave en el perfil
+                const premiumBox = document.getElementById("profile-premium-data-box");
+                const pKeyLabel = document.getElementById("profile-premium-key");
+                const pEndLabel = document.getElementById("profile-premium-end");
+                
+                if (premiumBox) premiumBox.style.display = "block";
+                if (pKeyLabel) pKeyLabel.textContent = this.state.activePremiumKey || "Licencia Activa";
+                if (pEndLabel) pEndLabel.textContent = this.state.premiumExpirationText || "30 Días";
+
                 this.habilitarOpcionesPremiumAdmin();
                 this.pauseCarousel();
             },
@@ -1296,6 +1275,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 const na = document.getElementById("nav-admin"); if(na) na.style.display = "flex";   
                 const nb = document.getElementById("nav-billing"); if(nb) nb.style.display = "flex"; 
                 
+                const premiumBox = document.getElementById("profile-premium-data-box");
+                if (premiumBox) premiumBox.style.display = "none";
+
                 this.desactivarOpcionesPremiumAdmin();
             },
 
@@ -1330,9 +1312,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         const ml = document.getElementById("meta-loops"); if(ml) ml.textContent = this.state.referidosLogrados;
                         const mc = document.getElementById("meta-clicks"); if(mc) mc.textContent = Math.floor(this.state.referidosLogrados * 1.4);
                     }
-                } catch(e) {
-                    console.error("Error retrieving metrics:", e);
-                }
+                } catch(e) {}
 
                 const container = document.getElementById("admin-group-stats");
                 if(container) {
@@ -1351,9 +1331,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 try {
                     let base64Clean = startParam.replace(/-/g, '+').replace(/_/g, '/');
-                    while (base64Clean.length % 4) { 
-                        base64Clean += '='; 
-                    }
+                    while (base64Clean.length % 4) { base64Clean += '='; }
                     
                     const binaryString = atob(base64Clean);
                     const bytes = new Uint8Array(binaryString.length);
@@ -1365,18 +1343,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     if (payload && payload.secret_url) {
                         this.state.campañaActivaLocal = {
-                            titulo: payload.title, 
-                            desc: payload.description, 
-                            secreto: payload.secret_url,
-                            tipo: payload.type || "invitation", 
-                            requeridos: parseInt(payload.req_slots) || 3,
-                            tgTarget: payload.tg_target || "", 
-                            adValue: payload.ad_val || "", 
-                            adDuration: parseInt(payload.ad_dur) || 30,
-                            startDate: payload.s_date ? parseInt(payload.s_date) : null, 
-                            endDate: payload.e_date ? parseInt(payload.e_date) : null,
-                            ownerId: payload.owner,
-                            status: payload.status || 'activa'
+                            titulo: payload.title, desc: payload.description, secreto: payload.secret_url,
+                            tipo: payload.type || "invitation", requeridos: parseInt(payload.req_slots) || 3,
+                            tgTarget: payload.tg_target || "", adValue: payload.ad_val || "", adDuration: parseInt(payload.ad_dur) || 30,
+                            startDate: payload.s_date ? parseInt(payload.s_date) : null, endDate: payload.e_date ? parseInt(payload.e_date) : null,
+                            ownerId: payload.owner, status: payload.status || 'activa'
                         };
                         
                         Storage.set("campaña_local_backup", this.state.campañaActivaLocal);
@@ -1425,7 +1396,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         .eq('owner_id', this.state.userId);
 
                     if (existentes && existentes.length >= 1) {
-                        if(this.tg) this.tg.showAlert("🔒 LÍMITE ALCANZADO: Los usuarios gratuitos solo pueden publicar 1 campaña al mismo tiempo en la red. Consigue una Licencia Premium.");
+                        if(this.tg) this.tg.showAlert("🔒 LÍMITE ALCANZADO: Los usuarios gratuitos solo pueden publicar 1 campaña al mismo tiempo. Consigue una Licencia Premium.");
                         return;
                     }
                 }
@@ -1488,18 +1459,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     tgTarget: nuevaCampana.tg_target, adValue: nuevaCampana.ad_value, adDuration: adDur,
                     startDate: nuevaCampana.start_date ? new Date(nuevaCampana.start_date).getTime() : null, 
                     endDate: nuevaCampana.end_date ? new Date(nuevaCampana.end_date).getTime() : null, 
-                    ownerId: this.state.userId,
-                    status: nuevaCampana.status
+                    ownerId: this.state.userId, status: nuevaCampana.status
                 };
 
                 Storage.set("campaña_local_backup", this.state.campañaActivaLocal);
                 
                 try {
-                    if(this.tg) this.tg.showAlert("🚀 PROCESANDO TRANSMISIÓN: Subiendo metadatos...");
                     await this.dispararAlertaSegura("CAMPAÑA_DESPLEGADA", "El operador ha publicado un nuevo nodo P2P.");
-                } catch(alertErr) {
-                    console.warn(alertErr);
-                }
+                } catch(alertErr) {}
 
                 this.state.referidosLogrados = 0;
                 this.state.adCompleted = false;
@@ -1537,10 +1504,10 @@ document.addEventListener("DOMContentLoaded", () => {
                         
                         if (camp.ownerId === this.state.userId) {
                             if(msgTitle) msgTitle.textContent = "⏸️ PENDIENTE DE APROBACIÓN";
-                            if(msgDesc) msgDesc.textContent = "Tu nodo de distribución se encuentra temporalmente en pausa y en espera de validación por parte del Super Admin.";
+                            if(msgDesc) msgDesc.textContent = "Tu nodo de distribución se encuentra en espera de validación por parte del Super Admin.";
                         } else {
                             if(msgTitle) msgTitle.textContent = "🔒 CAMPAÑA SUSPENDIDA";
-                            if(msgDesc) msgDesc.textContent = "Este enlace de descarga P2P ha sido pausado por la administración. Los protocolos de sincronización y copia de enlace quedan deshabilitados.";
+                            if(msgDesc) msgDesc.textContent = "Este enlace de descarga P2P ha sido pausado por la administración.";
                         }
                     }
                     return;
@@ -1721,7 +1688,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 this.tg.showPopup({
                     title: "🔓 LINK_DESBLOQUEADO",
                     message: "Protocolo de desencriptación exitoso. Abre el túnel seguro hacia el destino de los datos.",
-                    buttons: [{type: "default", text: "REDIRECCIÓN CANAL"}]
+                    buttons: [{type: "default", text: "ABRIR ENLACE"}]
                 }, () => {
                     this.tg.openLink(this.state.campañaActivaLocal.secreto);
                 });
@@ -1744,30 +1711,34 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 const tiempoFuera = (Date.now() - this.state.outboundTimestamp) / 1000;
                 
-                if (tiempoFuera < 4) {
+                // Si el usuario regresa extremadamente rápido (menos de 3 segundos), asumimos que no le dio tiempo a interactuar
+                if (tiempoFuera < 3) {
                     this.state.verificationInProgress = false;
                     this.renderizarPantallasDinamicas();
                     if(this.tg) {
                         this.tg.showPopup({
                             title: "❌ VERIFICACIÓN_FALLIDA",
-                            message: "El tiempo de vinculación fue demasiado bajo. Asegúrate de unirte al canal antes de regresar.",
+                            message: "El tiempo de vinculación fue demasiado bajo. Asegúrate de unirte al canal o grupo de forma efectiva antes de regresar.",
                             buttons: [{type: "close"}]
                         });
                     }
                     return;
                 }
 
+                // Esperamos un pequeño colchón de 800ms para permitir que los clústeres de servidores de Telegram sincronicen la membresía
+                await new Promise(resolve => setTimeout(resolve, 800));
+
                 const verificadoCorrectamente = await this.verificarSuscripcionRealServidor();
                 this.state.verificationInProgress = false;
 
                 if (verificadoCorrectamente) {
                     this.state.tgChannelJoined = true;
-                    if(this.tg) this.tg.showAlert("⚡ VERIFICADO: El bot ha confirmado tu presencia en el canal / clúster.");
+                    if(this.tg) this.tg.showAlert("⚡ VERIFICADO: Se ha confirmado tu presencia en el canal / clúster.");
                 } else {
                     if(this.tg) {
                         this.tg.showPopup({
                             title: "❌ REGISTRO_NO_ENCONTRADO",
-                            message: "No se pudo comprobar tu suscripción real en el canal. Vuelve a intentarlo y únete de forma efectiva.",
+                            message: "No se pudo verificar tu suscripción en el canal. Asegúrate de haber presionado el botón 'UNIRME' en el chat de Telegram antes de volver.",
                             buttons: [{type: "close"}]
                         });
                     }
@@ -1780,14 +1751,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (!camp || !camp.tgTarget || !this.supabaseClient) return false;
 
                 try {
+                    // Limpieza del parámetro id del chat para enviarlo limpio a la RPC
+                    const cleanChatParam = camp.tgTarget.replace("https://t.me/", "").replace("@", "").trim();
+
                     const { data, error } = await this.supabaseClient.rpc('verificar_miembro_chat', {
-                        telegram_user_id: this.state.userId,
-                        chat_id_param: camp.tgTarget 
+                        telegram_user_id: parseFloat(this.state.userId),
+                        chat_id_param: cleanChatParam
                     });
 
-                    if (!error && data && data.ok === true) {
-                        const status = data.result.status;
-                        if (['creator', 'administrator', 'member'].includes(status)) {
+                    // Si el servidor responde de forma exitosa o si eres el propietario directo del canal ('creator'), abrimos el túnel
+                    if (!error && data) {
+                        if (data.ok === true && data.result) {
+                            const status = data.result.status;
+                            if (['creator', 'administrator', 'member'].includes(status)) {
+                                return true;
+                            }
+                        } else if (data.is_member === true || data.status === "member" || data.status === "creator") {
                             return true;
                         }
                     }
@@ -1822,14 +1801,61 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             },
 
-            inyectarLlaveLicenciaLocal() {
+            async inyectarLlaveLicenciaLocal() {
                 const input = document.getElementById("licence-key-input");
                 if(!input || !input.value.trim()) return;
-                if(this.tg) this.tg.showAlert("🔍 Validando firma...");
-                setTimeout(() => {
-                    this.activarInterfazPremiumVisual();
-                    if(this.tg) this.tg.showAlert("✅ LICENCIA EXPANDIDA: Acceso completo garantizado.");
-                }, 1000);
+                const llaveIngresada = input.value.trim();
+
+                if(this.tg) this.tg.showAlert("🔍 Sincronizando firma criptográfica con Supabase...");
+                
+                if (!this.supabaseClient) {
+                    // Fallback local en caso de desconexión de red
+                    setTimeout(() => {
+                        this.state.activePremiumKey = llaveIngresada;
+                        this.state.premiumExpirationText = `${new Date(Date.now() + 30*24*60*60*1000).toLocaleDateString()} (30 días locales)`;
+                        localStorage.setItem(`bv_premium_until_${this.state.userId}`, Date.now() + 30*24*60*60*1000);
+                        localStorage.setItem(`bv_premium_key_${this.state.userId}`, llaveIngresada);
+                        this.activarInterfazPremiumVisual();
+                    }, 800);
+                    return;
+                }
+
+                try {
+                    // Buscamos si la clave existe y está libre en Supabase
+                    const { data, error } = await this.supabaseClient
+                        .from('licenses')
+                        .select('*')
+                        .eq('codigo_clave', llaveIngresada)
+                        .eq('is_used', false);
+
+                    if (!error && data && data.length > 0) {
+                        const licencia = data[0];
+                        const tiempoExpiracion = Date.now() + (licencia.duration_days * 24 * 60 * 60 * 1000);
+
+                        // Marcamos la clave como utilizada por este usuario
+                        await this.supabaseClient
+                            .from('licenses')
+                            .update({
+                                is_used: true,
+                                used_by_tg_id: this.state.userId,
+                                activated_at: new Date().toISOString()
+                            })
+                            .eq('id', licencia.id);
+
+                        localStorage.setItem(`bv_premium_until_${this.state.userId}`, tiempoExpiracion);
+                        localStorage.setItem(`bv_premium_key_${this.state.userId}`, llaveIngresada);
+                        
+                        this.state.activePremiumKey = llaveIngresada;
+                        this.state.premiumExpirationText = `${new Date(tiempoExpiracion).toLocaleDateString()} (${licencia.duration_days} días)`;
+                        
+                        this.activarInterfazPremiumVisual();
+                        if(this.tg) this.tg.showAlert("👑 ¡MÓDULO DESBLOQUEADO!\nLicencia Premium validada y enlazada correctamente.");
+                    } else {
+                        if(this.tg) this.tg.showAlert("❌ FIRMA INVÁLIDA: El código ingresado no existe o ya ha sido reclamado por otra terminal.");
+                    }
+                } catch(err) {
+                    if(this.tg) this.tg.showAlert("⚠️ Error de conexión en cortafuegos.");
+                }
             },
 
             actualizarFormularioPorTipoCam() {
@@ -1856,9 +1882,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     });
                     
                     const botones = document.querySelectorAll('.nav-bar .nav-item');
-                    botones.forEach(el => {
-                        el.classList.remove('active');
-                    });
+                    botones.forEach(el => { el.classList.remove('active'); });
                     
                     const vistaObjetivo = document.getElementById(`view-${target}`);
                     const botonObjetivo = document.getElementById(`nav-${target}`);
@@ -1867,9 +1891,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         vistaObjetivo.classList.add('active');
                         vistaObjetivo.style.display = "block";
                     }
-                    if (botonObjetivo) {
-                        botonObjetivo.classList.add('active');
-                    }
+                    if (botonObjetivo) { botonObjetivo.classList.add('active'); }
                     
                     if(target === 'client') this.renderizarPantallasDinamicas();
 
@@ -1890,27 +1912,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (!inner) return;
 
                 const runCarouselTick = () => {
-                    if(this.state.isPremium || this.state.isCarouselPaused || document.hidden) {
-                        return;
-                    }
+                    if(this.state.isPremium || this.state.isCarouselPaused || document.hidden) { return; }
                     this.state.carouselIndex = (this.state.carouselIndex + 1) % 3;
                     inner.style.transform = `translateX(${this.state.carouselIndex * -100}%)`;
                 };
                 this.state.carouselTimer = setInterval(runCarouselTick, 4000);
             },
 
-            pauseCarousel() {
-                this.state.isCarouselPaused = true;
-            },
-
-            resumeCarousel() {
-                this.state.isCarouselPaused = false;
-            }
+            pauseCarousel() { this.state.isCarouselPaused = true; },
+            resumeCarousel() { this.state.isCarouselPaused = false; }
         };
 
-        document.addEventListener("DOMContentLoaded", () => {
-            App.init();
-        });
+        document.addEventListener("DOMContentLoaded", () => { App.init(); });
         
         /* ==========================================================
            NÚCLEO INDEPENDIENTE: CONTROL SUPER-ADMIN DE CAMPAÑAS
@@ -1918,12 +1931,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const AdminState = {
             campanas: [],
             seleccionadas: [], 
-            filtros: {
-                buscador: '',
-                orden: 'nuevas',
-                tipo: 'todas',
-                destacadas: 'todas'
-            }
+            filtros: { buscador: '', orden: 'nuevas', tipo: 'todas', destacadas: 'todas' }
         };
 
         abrirEditorCampana = function(campanaId) {
@@ -1986,17 +1994,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     App.renderizarPantallasDinamicas();
                 });
             }).catch(err => {
-                console.error(err);
                 alert("Error guardando los cambios de red: " + err.message);
             });
         };
 
         ejecutarAccionIndividual = function(campanaId, accion) {
             const db = App.supabaseClient;
-            if (!db) {
-                alert("La conexión con Supabase no está lista.");
-                return;
-            }
+            if (!db) { alert("La conexión con Supabase no está lista."); return; }
             if (!accion) return; 
 
             let promiseAction;
@@ -2044,32 +2048,25 @@ document.addEventListener("DOMContentLoaded", () => {
                     App.renderizarPantallasDinamicas();
                     App.actualizarContadorHeader();
                 }).catch(err => {
-                    console.error("Error en acción individual:", err);
-                    alert("Fallo al actualizar la Campaña individual: " + err.message);
+                    alert("Fallo al actualizar la Campaña: " + err.message);
                 });
             }
         };
 
         ejecutarAccionMasiva = function(accion) {
             const db = App.supabaseClient; 
-            if (!db) {
-                alert("La conexión con Supabase no está lista.");
-                return;
-            }
-            if (AdminState.seleccionadas.length === 0) {
-                alert("Por favor, selecciona al menos una campaña usando los checkboxes.");
-                return;
-            }
+            if (!db) { alert("La conexión con Supabase no está lista."); return; }
+            if (AdminState.seleccionadas.length === 0) { alert("Por favor, selecciona al menos una campaña."); return; }
 
             let textoAlerta = '';
             let objetoActualizacion = {};
 
             switch(accion) {
                 case 'ELIMINAR':
-                    textoAlerta = `⚠️ PASARÁ ESTO: Se eliminarán permanentemente ${AdminState.seleccionadas.length} campañas de la base de datos.`;
+                    textoAlerta = `⚠️ PASARÁ ESTO: Se eliminarán permanentemente ${AdminState.seleccionadas.length} campañas.`;
                     break;
                 case 'PAUSAR':
-                    textoAlerta = `⏸️ PASARÁ ESTO: Se pausarán ${AdminState.seleccionadas.length} campañas de la red.`;
+                    textoAlerta = `⏸️ PASARÁ ESTO: Se pausarán ${AdminState.seleccionadas.length} campañas.`;
                     objetoActualizacion = { status: 'en_pausa' };
                     break;
                 case 'PLAY':
@@ -2078,7 +2075,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     break;
             }
 
-            const confirmar = window.confirm(`${textoAlerta}\n\n¿Deseas continuar con los cambios masivos?`);
+            const confirmar = window.confirm(`${textoAlerta}\n\n¿Deseas continuar?`);
             if (!confirmar) return;
 
             let queryPromise;
@@ -2108,7 +2105,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 App.renderizarPantallasDinamicas();
                 App.actualizarContadorHeader();
             }).catch(err => {
-                console.error("Error en acción masiva:", err);
                 alert("Hubo un error al aplicar los cambios masivos: " + err.message);
             });
         };
@@ -2119,24 +2115,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 const { data, error } = await App.supabaseClient.from('campaigns').select('*');
                 if (!error && data) {
                     AdminState.campanas = data.map(c => ({
-                        id: c.id, 
-                        owner_id: c.owner_id,
-                        title: c.title,
-                        description: c.description,
-                        type: c.type,
-                        secret_url: c.secret_url,
-                        created_at: c.start_date || new Date().toISOString(),
-                        fecha_fin: c.end_date || new Date().toISOString(),
-                        status: c.status || 'activa',
-                        is_sponsored: c.is_sponsored || false,
-                        owner_name: "Nodo Terminal",
-                        owner_avatar: ""
+                        id: c.id, owner_id: c.owner_id, title: c.title, description: c.description,
+                        type: c.type, secret_url: c.secret_url, created_at: c.start_date || new Date().toISOString(),
+                        fecha_fin: c.end_date || new Date().toISOString(), status: c.status || 'activa',
+                        is_sponsored: c.is_sponsored || false, owner_name: "Nodo Terminal", owner_avatar: ""
                     }));
                     renderizarTablaAdmin();
                 }
-            } catch(e) {
-                console.error("Error loading campaigns into administrator:", e);
-            }
+            } catch(e) {}
         };
 
         renderizarTablaAdmin = function() {
@@ -2165,17 +2151,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 contenedor.innerHTML = `
                     <div class="admin-panel-container" style="padding: 20px; background: #0a0b16; color: #fff; font-family: 'Rajdhani', sans-serif; border: 1px solid rgba(0, 243, 255, 0.2); margin-top:20px;">
                         <h3 style="font-family:'Orbitron', sans-serif; font-size:1.1rem; color:var(--neon-cyan); margin-bottom:15px;">👑 PANEL - MONITOREO</h3>
-                        
                         <div class="admin-tools" style="margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
                             <input type="text" placeholder="🔍 Buscar ID Campaña..." id="admin-search-input" value="" style="padding: 8px; background: #05060f; color: #fff; border: 1px solid rgba(0,243,255,0.3); width:100%;">
                         </div>
-
                         <div class="masive-actions" style="background: #0d0f1d; padding: 10px; margin-bottom: 15px; border: 1px dashed var(--neon-amber); display: flex; gap: 10px; align-items: center; flex-wrap:wrap;">
                             <button id="btn-mass-play" style="background: #1b4322; color: #39ff14; padding: 6px 12px; border: 1px solid #39ff14; cursor: pointer; font-family:'Orbitron'; font-size:0.7rem;">▶ PLAY</button>
                             <button id="btn-mass-pause" style="background: #5c4308; color: #ffaa00; padding: 6px 12px; border: 1px solid #ffaa00; cursor: pointer; font-family:'Orbitron'; font-size:0.7rem;">⏸ PAUSA</button>
                             <button id="btn-mass-wipe" style="background: #421212; color: #ff3333; padding: 6px 12px; border: 1px solid #ff3333; cursor: pointer; font-family:'Orbitron'; font-size:0.7rem;">🗑️ ELIMINAR</button>
                         </div>
-
                         <div style="overflow-x: auto;">
                             <table style="width: 100%; border-collapse: collapse; text-align: left; font-size:0.85rem;">
                                 <thead>
@@ -2222,7 +2205,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         </td>
                         <td style="padding: 10px;">
                             <div class="btn-edit-trigger" data-id="${c.id}" style="font-weight: bold; color: var(--neon-cyan); cursor: pointer; text-decoration: underline; display: inline-block;">${c.title}</div>
-                            <div style="font-size: 11px; color: #8a2be2;">Tipo: ${c.type} | Cam_ID: ${c.id}</div>
+                            <div style="font-size: 11px; color: #8a2be2;">Tipo: ${c.type}</div>
                         </td>
                         <td style="padding: 10px;">
                             <select class="admin-action-select" data-id="${c.id}" style="background: ${c.status === 'activa' ? '#1b4322' : '#5c4308'}; color: #fff; border: 1px solid rgba(255,255,255,0.2); font-family: 'Orbitron'; font-size: 10px; padding: 4px; font-weight: bold; cursor:pointer;">
@@ -2237,40 +2220,26 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             document.querySelectorAll(".admin-row-checkbox").forEach(el => {
-                el.addEventListener("click", function() {
-                    toggleSeleccionCampana(this.getAttribute("data-id"));
-                });
+                el.addEventListener("click", function() { toggleSeleccionCampana(this.getAttribute("data-id")); });
             });
 
             document.querySelectorAll(".btn-edit-trigger").forEach(el => {
-                el.addEventListener("click", function() {
-                    abrirEditorCampana(this.getAttribute("data-id"));
-                });
+                el.addEventListener("click", function() { abrirEditorCampana(this.getAttribute("data-id")); });
             });
 
             document.querySelectorAll(".admin-action-select").forEach(el => {
-                el.addEventListener("change", function() {
-                    ejecutarAccionIndividual(this.getAttribute("data-id"), this.value);
-                });
+                el.addEventListener("change", function() { ejecutarAccionIndividual(this.getAttribute("data-id"), this.value); });
             });
         };
 
         toggleSeleccionCampana = function(id) {
             const index = AdminState.seleccionadas.indexOf(id);
-            if (index > -1) {
-                AdminState.seleccionadas.splice(index, 1);
-            } else {
-                AdminState.seleccionadas.push(id);
-            }
+            if (index > -1) { AdminState.seleccionadas.splice(index, 1); } else { AdminState.seleccionadas.push(id); }
             renderizarTablaAdmin();
         };
 
         toggleSeleccionarTodas = function(checked) {
-            if (checked) {
-                AdminState.seleccionadas = AdminState.campanas.map(c => c.id);
-            } else {
-                AdminState.seleccionadas = [];
-            }
+            if (checked) { AdminState.seleccionadas = AdminState.campanas.map(c => c.id); } else { AdminState.seleccionadas = []; }
             renderizarTablaAdmin();
         };
 
@@ -2279,7 +2248,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
     })();
-
     </script>
 </body>
 </html>
