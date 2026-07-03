@@ -1844,16 +1844,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 if(!input || !input.value.trim()) return;
                 const llaveIngresada = input.value.trim();
 
-                if(this.tg) this.tg.showAlert("🔍 Sincronizando firma criptográfica con base de datos...");
-                
-                if (!this.supabaseClient) {
+                if(!this.supabaseClient) {
                     setTimeout(() => {
                         this.state.activePremiumKey = llaveIngresada;
-                        this.state.premiumExpirationText = `${new Date(Date.now() + 30*24*60*60*1000).toLocaleDateString()} (Caché local de 30 días)`;
+                        this.state.premiumExpirationText = `${new Date(Date.now() + 30*24*60*60*1000).toLocaleDateString()} (Sandbox Local)`;
                         localStorage.setItem(`bv_premium_until_${this.state.userId}`, Date.now() + 30*24*60*60*1000);
                         localStorage.setItem(`bv_premium_key_${this.state.userId}`, llaveIngresada);
+                        
                         this.activarInterfazPremiumVisual();
-                    }, 800);
+                        
+                        if(this.tg && typeof this.tg.showAlert === 'function') {
+                            this.tg.showAlert("👑 ¡MÓDULO DESBLOQUEADO!\nLicencia Premium inyectada localmente.");
+                        }
+                    }, 300);
                     return;
                 }
 
@@ -1881,15 +1884,33 @@ document.addEventListener("DOMContentLoaded", () => {
                         localStorage.setItem(`bv_premium_key_${this.state.userId}`, llaveIngresada);
                         
                         this.state.activePremiumKey = llaveIngresada;
-                        this.state.premiumExpirationText = `${new Date(tiempoExpiracion).toLocaleDateString()} (${licencia.duration_days} días activos)`;
+                        const expDate = new Date(tiempoExpiracion);
+                        this.state.premiumExpirationText = expDate.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
                         
+                        // ACTUALIZACIÓN COGNITIVA CRÍTICA: Cambiamos inmediatamente el rango de la interfaz a PRO
                         this.activarInterfazPremiumVisual();
-                        if(this.tg) this.tg.showAlert("👑 ¡MÓDULO DESBLOQUEADO!\nLicencia Premium validada y enlazada correctamente.");
+
+                        // Actualizar los contenedores dentro del modal de perfil
+                        const pDataBox = document.getElementById("profile-premium-data-box");
+                        const pKeyLabel = document.getElementById("profile-premium-key");
+                        const pEndLabel = document.getElementById("profile-premium-end");
+                        if(pDataBox) pDataBox.style.display = "block";
+                        if(pKeyLabel) pKeyLabel.textContent = llaveIngresada;
+                        if(pEndLabel) pEndLabel.textContent = this.state.premiumExpirationText;
+
+                        if(this.tg && typeof this.tg.showAlert === 'function') {
+                            this.tg.showAlert("👑 ¡MÓDULO DESBLOQUEADO!\nLicencia Premium validada y vinculada en Supabase.");
+                        }
                     } else {
-                        if(this.tg) this.tg.showAlert("❌ FIRMA INVÁLIDA: El código ingresado no existe o ya ha sido reclamado por otra terminal.");
+                        if(this.tg && typeof this.tg.showAlert === 'function') {
+                            this.tg.showAlert("❌ FIRMA INVÁLIDA: La clave ingresada no existe en el clúster o ya fue reclamada.");
+                        }
                     }
                 } catch(err) {
-                    if(this.tg) this.tg.showAlert("⚠️ Error de conexión en cortafuegos.");
+                    console.error(err);
+                    if(this.tg && typeof this.tg.showAlert === 'function') {
+                        this.tg.showAlert("⚠️ Error de conexión al sincronizar con el servidor.");
+                    }
                 }
             },
 
