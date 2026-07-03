@@ -422,114 +422,113 @@
             color: var(--text-cyber);
             font-weight: 600;
         }
+        
         /* Contenedor principal */
-.premium-container {
-    width: 100%;
-    padding: 10px 0;
-    overflow: hidden;
-}
+        .premium-container {
+            width: 100%;
+            padding: 10px 0;
+            overflow: hidden;
+        }
 
-/* Scroll horizontal perfectamente adaptado a móviles */
-.cards-horizontal-wrapper {
-    display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    padding: 15px 5px;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-}
+        /* Scroll horizontal perfectamente adaptado a móviles */
+        .cards-horizontal-wrapper {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 15px 5px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
 
-/* Ocultar barra de scroll en navegadores */
-.cards-horizontal-wrapper::-webkit-scrollbar {
-    display: none;
-}
+        /* Ocultar barra de scroll en navegadores */
+        .cards-horizontal-wrapper::-webkit-scrollbar {
+            display: none;
+        }
 
-/* Tarjeta futurista individual */
-.futuristic-card {
-    flex: 0 0 160px; /* Ancho compacto fijo para que entren varias en pantalla */
-    scroll-snap-align: start;
-    background: rgba(20, 24, 35, 0.65);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(0, 242, 254, 0.2);
-    border-radius: 16px;
-    padding: 14px 10px;
-    text-align: center;
-    position: relative;
-    transition: transform 0.3s ease, border-color 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-}
+        /* Tarjeta futurista individual */
+        .futuristic-card {
+            flex: 0 0 160px; 
+            scroll-snap-align: start;
+            background: rgba(20, 24, 35, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            border-radius: 16px;
+            padding: 14px 10px;
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
 
-/* Efecto de brillo si es la tarjeta destacada (Recomendado) */
-.futuristic-card.featured {
-    border-color: rgba(0, 242, 254, 0.8);
-    box-shadow: 0 0 15px rgba(0, 242, 254, 0.25), inset 0 0 10px rgba(0, 242, 254, 0.1);
-}
+        /* Efecto de brillo si es la tarjeta destacada */
+        .futuristic-card.featured {
+            border-color: rgba(0, 242, 254, 0.8);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.25), inset 0 0 10px rgba(0, 242, 254, 0.1);
+        }
 
-/* Badge neón flotante */
-.card-badge {
-    position: absolute;
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: linear-gradient(90deg, #00f2fe, #4facfe);
-    color: #000;
-    font-size: 9px;
-    font-weight: 800;
-    padding: 2px 8px;
-    border-radius: 20px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    box-shadow: 0 2px 8px rgba(0, 242, 254, 0.4);
-}
+        /* Badge neón flotante */
+        .card-badge {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, #00f2fe, #4facfe);
+            color: #000;
+            font-size: 9px;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(0, 242, 254, 0.4);
+        }
 
-/* Títulos del plan */
-.card-plan-name {
-    font-size: 11px;
-    color: #00f2fe;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin: 0;
-    font-weight: 700;
-}
+        /* Títulos del plan */
+        .card-plan-name {
+            font-size: 11px;
+            color: #00f2fe;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0;
+            font-weight: 700;
+        }
 
-.card-duration {
-    font-size: 18px;
-    color: #fff;
-    margin: 4px 0 8px 0;
-    font-weight: 800;
-}
+        .card-duration {
+            font-size: 18px;
+            color: #fff;
+            margin: 4px 0 8px 0;
+            font-weight: 800;
+        }
 
-/* Área de precio */
-.card-price {
-    font-size: 16px;
-    color: #fff;
-    font-weight: 700;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 6px 4px;
-    border-radius: 8px;
-    margin-bottom: 8px;
-}
+        /* Área de precio */
+        .card-price {
+            font-size: 16px;
+            color: #fff;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px 4px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
 
-/* Descuento llamativo */
-.card-discount {
-    display: inline-block;
-    font-size: 11px;
-    color: #ff3366;
-    font-weight: 700;
-    background: rgba(255, 51, 102, 0.1);
-    padding: 2px 6px;
-    border-radius: 4px;
-    animation: pulseGlow 2s infinite;
-}
+        /* Descuento llamativo */
+        .card-discount {
+            display: inline-block;
+            font-size: 11px;
+            color: #ff3366;
+            font-weight: 700;
+            background: rgba(255, 51, 102, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            animation: pulseGlow 2s infinite;
+        }
 
-/* Animación sutil de pulso para el descuento */
-@keyframes pulseGlow {
-    0% { opacity: 0.8; }
-    50% { opacity: 1; text-shadow: 0 0 5px rgba(255, 51, 102, 0.5); }
-    100% { opacity: 0.8; }
-}
-
+        @keyframes pulseGlow {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; text-shadow: 0 0 5px rgba(255, 51, 102, 0.5); }
+            100% { opacity: 0.8; }
+        }
     </style>
 </head>
 <body>
@@ -573,9 +572,19 @@
                     <span style="color: var(--neon-cyan); font-family:'Orbitron', sans-serif; display: block; font-size: 0.65rem; letter-spacing: 1px;">PLAN:</span>
                     <span id="profile-plan-status" style="font-weight: bold;">PLAN GRATIS</span>
                 </div>
-                <div>
+                <div style="margin-bottom: 10px;">
                     <span style="color: var(--text-dark); font-family:'Orbitron', sans-serif; display: block; font-size: 0.65rem; letter-spacing: 1px;">INICIO DE SUSCRIPCIÓN:</span>
                     <span id="profile-plan-start" style="color: #b2bec3;">-</span>
+                </div>
+                <div id="profile-premium-data-box" style="display: none; border-top: 1px dashed rgba(255,170,0,0.2); padding-top: 10px; margin-top: 10px;">
+                    <div style="margin-bottom: 6px;">
+                        <span style="color: var(--neon-amber); font-family:'Orbitron', sans-serif; display: block; font-size: 0.65rem; letter-spacing: 1px;">LLAVE ACTIVA:</span>
+                        <span id="profile-premium-key" style="color: #fff; font-family: 'Orbitron'; font-size: 0.75rem; word-break: break-all;">-</span>
+                    </div>
+                    <div>
+                        <span style="color: var(--neon-lime); font-family:'Orbitron', sans-serif; display: block; font-size: 0.65rem; letter-spacing: 1px;">EXPIRACIÓN ESTIMADA:</span>
+                        <span id="profile-premium-end" style="color: #fff; font-weight: bold;">-</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -793,8 +802,7 @@
         </div>
 <div class="premium-container">
     <div id="cards-wrapper" class="cards-horizontal-wrapper">
-        <!-- Las tarjetas se inyectan aquí dinámicamente -->
-    </div>
+        </div>
 </div>
 
         <button id="btn-request-premium-unified" class="btn btn-gold" style="width:100%; font-family: 'Orbitron'; letter-spacing: 1px; font-weight: bold; padding: 15px;" onclick="procesarPagoPremium(event)">
@@ -1744,18 +1752,21 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 const tiempoFuera = (Date.now() - this.state.outboundTimestamp) / 1000;
                 
-                if (tiempoFuera < 4) {
+                if (tiempoFuera < 3) {
                     this.state.verificationInProgress = false;
                     this.renderizarPantallasDinamicas();
                     if(this.tg) {
                         this.tg.showPopup({
                             title: "❌ VERIFICACIÓN_FALLIDA",
-                            message: "El tiempo de vinculación fue demasiado bajo. Asegúrate de unirte al canal antes de regresar.",
+                            message: "El tiempo de vinculación fue demasiado bajo. Asegúrate de unirte al canal o grupo de forma efectiva antes de regresar.",
                             buttons: [{type: "close"}]
                         });
                     }
                     return;
                 }
+
+                // Esperamos un colchón reactivo de 800ms para asegurar la consistencia de datos de Telegram en los clústeres
+                await new Promise(resolve => setTimeout(resolve, 800));
 
                 const verificadoCorrectamente = await this.verificarSuscripcionRealServidor();
                 this.state.verificationInProgress = false;
@@ -1767,7 +1778,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     if(this.tg) {
                         this.tg.showPopup({
                             title: "❌ REGISTRO_NO_ENCONTRADO",
-                            message: "No se pudo comprobar tu suscripción real en el canal. Vuelve a intentarlo y únete de forma efectiva.",
+                            message: "No se pudo comprobar tu suscripción real en el clúster. Vuelve a intentarlo y presiona unirme en la barra oficial.",
                             buttons: [{type: "close"}]
                         });
                     }
@@ -1780,14 +1791,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (!camp || !camp.tgTarget || !this.supabaseClient) return false;
 
                 try {
+                    const cleanChatParam = camp.tgTarget.replace("https://t.me/", "").replace("@", "").trim();
+
                     const { data, error } = await this.supabaseClient.rpc('verificar_miembro_chat', {
-                        telegram_user_id: this.state.userId,
-                        chat_id_param: camp.tgTarget 
+                        telegram_user_id: parseFloat(this.state.userId),
+                        chat_id_param: cleanChatParam
                     });
 
-                    if (!error && data && data.ok === true) {
-                        const status = data.result.status;
-                        if (['creator', 'administrator', 'member'].includes(status)) {
+                    if (!error && data) {
+                        if (data.ok === true && data.result) {
+                            const status = data.result.status;
+                            if (['creator', 'administrator', 'member'].includes(status)) {
+                                return true;
+                            }
+                        } else if (data.is_member === true || data.status === "member" || data.status === "creator") {
                             return true;
                         }
                     }
@@ -1822,14 +1839,58 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             },
 
-            inyectarLlaveLicenciaLocal() {
+            async inyectarLlaveLicenciaLocal() {
                 const input = document.getElementById("licence-key-input");
                 if(!input || !input.value.trim()) return;
-                if(this.tg) this.tg.showAlert("🔍 Validando firma...");
-                setTimeout(() => {
-                    this.activarInterfazPremiumVisual();
-                    if(this.tg) this.tg.showAlert("✅ LICENCIA EXPANDIDA: Acceso completo garantizado.");
-                }, 1000);
+                const llaveIngresada = input.value.trim();
+
+                if(this.tg) this.tg.showAlert("🔍 Sincronizando firma criptográfica con base de datos...");
+                
+                if (!this.supabaseClient) {
+                    setTimeout(() => {
+                        this.state.activePremiumKey = llaveIngresada;
+                        this.state.premiumExpirationText = `${new Date(Date.now() + 30*24*60*60*1000).toLocaleDateString()} (Caché local de 30 días)`;
+                        localStorage.setItem(`bv_premium_until_${this.state.userId}`, Date.now() + 30*24*60*60*1000);
+                        localStorage.setItem(`bv_premium_key_${this.state.userId}`, llaveIngresada);
+                        this.activarInterfazPremiumVisual();
+                    }, 800);
+                    return;
+                }
+
+                try {
+                    const { data, error } = await this.supabaseClient
+                        .from('licenses')
+                        .select('*')
+                        .eq('codigo_clave', llaveIngresada)
+                        .eq('is_used', false);
+
+                    if (!error && data && data.length > 0) {
+                        const licencia = data[0];
+                        const tiempoExpiracion = Date.now() + (licencia.duration_days * 24 * 60 * 60 * 1000);
+
+                        await this.supabaseClient
+                            .from('licenses')
+                            .update({
+                                is_used: true,
+                                used_by_tg_id: this.state.userId,
+                                activated_at: new Date().toISOString()
+                            })
+                            .eq('id', licencia.id);
+
+                        localStorage.setItem(`bv_premium_until_${this.state.userId}`, tiempoExpiracion);
+                        localStorage.setItem(`bv_premium_key_${this.state.userId}`, llaveIngresada);
+                        
+                        this.state.activePremiumKey = llaveIngresada;
+                        this.state.premiumExpirationText = `${new Date(tiempoExpiracion).toLocaleDateString()} (${licencia.duration_days} días activos)`;
+                        
+                        this.activarInterfazPremiumVisual();
+                        if(this.tg) this.tg.showAlert("👑 ¡MÓDULO DESBLOQUEADO!\nLicencia Premium validada y enlazada correctamente.");
+                    } else {
+                        if(this.tg) this.tg.showAlert("❌ FIRMA INVÁLIDA: El código ingresado no existe o ya ha sido reclamado por otra terminal.");
+                    }
+                } catch(err) {
+                    if(this.tg) this.tg.showAlert("⚠️ Error de conexión en cortafuegos.");
+                }
             },
 
             actualizarFormularioPorTipoCam() {
