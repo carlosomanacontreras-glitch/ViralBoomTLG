@@ -2232,6 +2232,2240 @@
         }
 
         // CORREGIDO: Estructura HTML de la tabla arreglada y adición de #admin-table-body
+        <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bomba Viral SaaS - Neo P2P Growth Engine</title>
+    
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;600;700&display=swap');
+
+        /* ==========================================
+           1. VARIABLES Y CONFIGURACIÓN DEL SISTEMA
+           ========================================== */
+        :root {
+            --bg-cyber: #030308;
+            --bg-card: rgba(10, 11, 22, 0.95); 
+            --surface: #05060f;
+            --surface-secondary: #0d0f1d;
+            
+            --neon-cyan: #00f3ff;
+            --neon-amber: #ffaa00;
+            --neon-lime: #39ff14;
+            
+            --text-cyber: #e0e6ed;
+            --text-secondary: #94a3b8;
+            --text-dark: #636e72;
+            
+            --glow-cyan: 0 0 8px rgba(0, 243, 255, 0.35);
+            --glow-amber: 0 0 8px rgba(255, 170, 0, 0.35);
+            
+            --z-low: 10;
+            --z-medium: 100;
+            --z-high: 500;
+            --z-sticky: 1000;
+            --z-modal: 2000;
+            --z-loader: 9999;
+        }
+
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            font-family: 'Rajdhani', sans-serif; 
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body { 
+            background-color: var(--bg-cyber); 
+            background-image: 
+                linear-gradient(rgba(0, 243, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 243, 255, 0.02) 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: var(--text-cyber); 
+            padding: 16px 16px 160px 16px; 
+            padding-top: 95px; 
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            z-index: var(--z-low);
+            opacity: 0.4;
+            pointer-events: none;
+            background-size: 100% 4px, 6px 100%;
+        }
+
+        /* ==========================================
+           PANTALLAS DE CARGA
+           ========================================== */
+        .cyber-loader-screen {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--bg-cyber);
+            z-index: var(--z-loader);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        
+        .loader-glitch-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            color: var(--neon-cyan);
+            text-shadow: var(--glow-cyan);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .spinner-matrix {
+            width: 40px;
+            height: 40px;
+            border: 2px solid transparent;
+            border-top-color: var(--neon-cyan);
+            border-bottom-color: var(--neon-amber);
+            border-radius: 50%;
+            animation: spinMatrix 1s linear infinite;
+        }
+
+        @keyframes spinMatrix {
+            0% { transform: rotate(0deg); filter: hue-rotate(0deg); }
+            100% { transform: rotate(360deg); filter: hue-rotate(90deg); }
+        }
+
+        .transit-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(3, 3, 8, 0.85);
+            z-index: calc(var(--z-sticky) - 5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+            backdrop-filter: blur(4px);
+        }
+
+        /* ==========================================
+           2. COMPONENTES DE LAYOUT Y CONTENEDORES
+           ========================================== */
+        .main-container { max-width: 460px; margin: auto; position: relative; z-index: calc(var(--z-low) + 10); }
+        
+        .sticky-header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: var(--z-sticky);
+            background: rgba(3, 3, 8, 0.95);
+            padding: 12px 16px;
+            border-bottom: 2px solid var(--neon-cyan);
+            box-shadow: 0 2px 10px rgba(0, 243, 255, 0.15);
+        }
+
+        .header-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            clip-path: polygon(0 0, 95% 0, 100% 30%, 100% 100%, 5% 100%, 0 70%);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .header-card:hover {
+            border-color: var(--neon-cyan);
+            box-shadow: var(--glow-cyan);
+        }
+
+        .user-avatar-container {
+            width: 42px; height: 42px;
+            border-radius: 4px;
+            position: relative;
+            background: var(--surface-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            color: var(--neon-cyan);
+            border: 1px solid var(--neon-cyan);
+            box-shadow: var(--glow-cyan);
+            overflow: hidden;
+        }
+
+        .user-avatar-container img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0; left: 0; z-index: 1;
+        }
+
+        .avatar-glow-indicator {
+            position: absolute;
+            bottom: 0; right: 0;
+            width: 10px; height: 10px;
+            background: var(--neon-lime);
+            box-shadow: 0 0 6px var(--neon-lime);
+            z-index: 2;
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        }
+
+        /* ==========================================
+           3. MODALES
+           ========================================== */
+        .profile-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(1, 1, 3, 0.96); 
+            z-index: var(--z-modal);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+
+        .profile-modal.active { display: flex; opacity: 1; }
+
+        .profile-card {
+            background: var(--bg-card);
+            border: 2px solid var(--neon-amber);
+            box-shadow: var(--glow-amber);
+            clip-path: polygon(0 0, 85% 0, 100% 15%, 100% 100%, 15% 100%, 0 85%);
+            width: 100%;
+            max-width: 380px;
+            padding: 30px 24px;
+            text-align: center;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 10px; right: 15px;
+            font-size: 1.8rem;
+            color: var(--neon-amber);
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: var(--glow-amber);
+        }
+
+        /* ==========================================
+           4. TARJETAS Y ELEMENTOS DE FORMULARIO
+           ========================================== */
+        .card { 
+            background: var(--bg-card); 
+            border: 1px solid rgba(0, 243, 255, 0.15); 
+            padding: 20px; 
+            margin-bottom: 20px; 
+            position: relative; 
+            clip-path: polygon(0 0, 92% 0, 100% 12%, 100% 100%, 8% 100%, 0 88%);
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .card.premium { 
+            border-color: var(--neon-amber); 
+            box-shadow: 0 0 10px rgba(255, 170, 0, 0.1); 
+        }
+        .card.premium::before { background: var(--neon-amber); box-shadow: 0 0 8px var(--neon-amber); }
+
+        .card.viral-active { 
+            border-color: var(--neon-lime); 
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.1); 
+        }
+        .card.viral-active::before { background: var(--neon-lime); box-shadow: 0 0 8px var(--neon-lime); }
+
+        h2 { 
+            font-family: 'Orbitron', sans-serif; 
+            font-size: 1.15rem; 
+            font-weight: 900; 
+            margin-bottom: 14px; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px; }
+
+        .input-group { margin-bottom: 16px; }
+        .input-label { 
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1.5px; 
+            color: var(--neon-cyan); 
+            margin-bottom: 8px; 
+            display: block; 
+            font-weight: bold; 
+        }
+
+        .input-field { 
+            width: 100%; 
+            background: rgba(5, 6, 15, 0.95); 
+            border: 1px solid rgba(0, 243, 255, 0.3); 
+            color: #fff; 
+            padding: 12px 14px; 
+            font-size: 0.9rem; 
+            outline: none; 
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .input-field:focus { 
+            border-color: var(--neon-amber); 
+            box-shadow: var(--glow-amber);
+        }
+
+        .input-field:disabled { opacity: 0.4; cursor: not-allowed; border-color: var(--text-dark); }
+
+        .btn { 
+            width: 100%; 
+            background: transparent; 
+            border: 1px solid var(--neon-cyan); 
+            color: var(--neon-cyan); 
+            padding: 14px; 
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700; 
+            font-size: 0.85rem; 
+            text-transform: uppercase; 
+            cursor: pointer; 
+            transition: background-color 0.2s ease, box-shadow 0.2s ease; 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 8px; 
+            letter-spacing: 1.5px;
+            position: relative;
+        }
+
+        .btn:hover { 
+            background: rgba(0, 243, 255, 0.08); 
+            box-shadow: var(--glow-cyan);
+        }
+
+        .btn-purple { border-color: var(--neon-amber); color: var(--neon-amber); }
+        .btn-purple:hover { background: rgba(255, 170, 0, 0.08); box-shadow: var(--glow-amber); }
+
+        .btn-gold { border-color: var(--neon-amber); color: var(--neon-amber); }
+        .btn-gold:hover { background: rgba(255, 170, 0, 0.08); box-shadow: var(--glow-amber); }
+
+        .btn-disabled { border-color: #222533 !important; color: #444966 !important; cursor: not-allowed; pointer-events: none; background: transparent !important; box-shadow: none !important; text-shadow: none !important;}
+
+        .progress-container { background: var(--surface); border: 1px solid rgba(0, 243, 255, 0.2); height: 14px; width: 100%; position: relative; margin: 15px 0; overflow: hidden; }
+        .progress-bar { background: linear-gradient(90deg, var(--neon-amber), var(--neon-lime)); height: 100%; width: 0%; transition: width 0.4s ease-out; }
+
+        .badge { 
+            background: rgba(0, 243, 255, 0.1); 
+            color: var(--neon-cyan); 
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.65rem; 
+            padding: 4px 8px; 
+            border: 1px solid var(--neon-cyan);
+            font-weight: bold; 
+            text-transform: uppercase;
+        }
+        .badge-premium { background: rgba(255, 170, 0, 0.1); color: var(--neon-amber); border: 1px solid var(--neon-amber); }
+
+        /* ==========================================
+           5. SECCIONES DE VISTA Y NAVEGACIÓN
+           ========================================== */
+        .view-section { 
+            display: none; 
+        }
+        .view-section.active { 
+            display: block; 
+        }
+
+        .nav-bar { 
+            position: fixed; bottom: 0; left: 0; right: 0; height: 65px; 
+            background: rgba(5, 6, 15, 0.98); 
+            border-top: 2px solid var(--neon-cyan); 
+            display: flex; justify-content: space-around; align-items: center; 
+            z-index: var(--z-sticky); 
+            box-shadow: 0 -3px 10px rgba(0, 243, 255, 0.2);
+        }
+
+        .nav-item { 
+            background: none; border: none; 
+            color: var(--text-dark); 
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem; font-weight: bold; cursor: pointer; 
+            display: flex; flex-direction: column; align-items: center; gap: 6px; 
+            width: 100%; height: 100%; justify-content: center;
+            transition: color 0.2s ease;
+            letter-spacing: 1px;
+        }
+
+        .nav-item.active { color: var(--neon-cyan); text-shadow: var(--glow-cyan); }
+        .nav-item.active.gold-user { color: var(--neon-amber); text-shadow: var(--glow-amber); }
+
+        .watermark { text-align: center; font-size: 0.75rem; color: var(--text-dark); margin-top: 25px; padding: 12px; border-top: 1px dashed rgba(0,243,255,0.1); letter-spacing: 1px;}
+        .watermark a { color: var(--neon-amber); text-decoration: none; font-weight: bold; text-shadow: var(--glow-amber);}
+
+        /* ==========================================
+           6. PUBLICIDAD Y CAROUSEL
+           ========================================== */
+        .adv-carousel-wrapper { position: fixed; bottom: 65px; left: 0; right: 0; background: #030308; border-top: 1px solid rgba(255,170,0,0.3); overflow: hidden; height: 75px; z-index: calc(var(--z-sticky) - 10); display: none; }
+        .adv-carousel-inner { display: flex; width: 100%; height: 100%; transition: transform 0.3s ease-out; will-change: transform; }
+        .adv-slide { min-width: 100%; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 0 20px; text-align: center; font-size: 0.85rem; font-weight: bold; color: #a5b1c2; background: linear-gradient(90deg, var(--surface) 0%, var(--surface-secondary) 100%); }
+
+        .dynamic-ad-container { background: rgba(255,170,0,0.03); border: 1px dashed var(--neon-amber); padding: 14px; margin-bottom: 14px; text-align: center; }
+        .countdown-timer { font-family: 'Orbitron', sans-serif; font-size: 1.3rem; font-weight: bold; color: var(--neon-amber); margin-top: 6px; letter-spacing: 2px; text-shadow: var(--glow-amber); }
+        
+        /* Contenedor de Fechas en NET_NODES */
+        .campaign-timestamps {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            background: rgba(5, 6, 15, 0.6);
+            border: 1px solid rgba(0, 243, 255, 0.1);
+            padding: 10px;
+            margin-bottom: 15px;
+            font-size: 0.8rem;
+        }
+        .timestamp-box span {
+            display: block;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.65rem;
+            color: var(--text-dark);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .timestamp-box var {
+            font-style: normal;
+            color: var(--text-cyber);
+            font-weight: 600;
+        }
+        
+        /* Contenedor principal */
+        .premium-container {
+            width: 100%;
+            padding: 10px 0;
+            overflow: hidden;
+        }
+
+        /* Scroll horizontal perfectamente adaptado a móviles */
+        .cards-horizontal-wrapper {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 15px 5px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Ocultar barra de scroll en navegadores */
+        .cards-horizontal-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Tarjeta futurista individual */
+        .futuristic-card {
+            flex: 0 0 160px; 
+            scroll-snap-align: start;
+            background: rgba(20, 24, 35, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            border-radius: 16px;
+            padding: 14px 10px;
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Efecto de brillo si es la tarjeta destacada */
+        .futuristic-card.featured {
+            border-color: rgba(0, 242, 254, 0.8);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.25), inset 0 0 10px rgba(0, 242, 254, 0.1);
+        }
+
+        /* Badge neón flotante */
+        .card-badge {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, #00f2fe, #4facfe);
+            color: #000;
+            font-size: 9px;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(0, 242, 254, 0.4);
+        }
+
+        /* Títulos del plan */
+        .card-plan-name {
+            font-size: 11px;
+            color: #00f2fe;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .card-duration {
+            font-size: 18px;
+            color: #fff;
+            margin: 4px 0 8px 0;
+            font-weight: 800;
+        }
+
+        /* Área de precio */
+        .card-price {
+            font-size: 16px;
+            color: #fff;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px 4px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        /* Descuento llamativo */
+        .card-discount {
+            display: inline-block;
+            font-size: 11px;
+            color: #ff3366;
+            font-weight: 700;
+            background: rgba(255, 51, 102, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            animation: pulseGlow 2s infinite;
+        }
+
+        @keyframes pulseGlow {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; text-shadow: 0 0 5px rgba(255, 51, 102, 0.5); }
+            100% { opacity: 0.8; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="cyber-splash-loader" class="cyber-loader-screen">
+        <div class="loader-glitch-text">Sincronizando Red P2P...</div>
+        <div class="spinner-matrix"></div>
+    </div>
+
+    <div id="section-transit-overlay" class="transit-overlay">
+        <div class="spinner-matrix" style="width:25px; height:25px;"></div>
+    </div>
+
+    <div class="sticky-header">
+        <div class="header-card" id="btn-header-profile">
+            <div style="display: flex; align-items: center; gap: 14px;">
+                <div class="user-avatar-container" id="user-avatar-box">
+                    <span id="avatar-fallback">U</span>
+                    <div id="user-avatar-glow" class="avatar-glow-indicator"></div>
+                </div>
+                <div>
+                    <div id="user-display-name" style="font-family:'Orbitron', sans-serif; font-weight: bold; font-size: 0.95rem; letter-spacing: 0.5px;">SYSTEM_USER</div>
+                    <div id="header-campaign-counter" style="font-size: 0.75rem; color: var(--text-dark); margin-top: 2px;">MIS CAMPAÑAS: 0</div>
+                </div>
+            </div>
+            <span id="status-badge" class="badge">PLAN GRATIS</span>
+        </div>
+    </div>
+
+    <div id="modal-perfil-usuario" class="profile-modal">
+        <div class="profile-card">
+            <button class="close-modal" id="btn-close-profile-modal" aria-label="Cerrar modal de perfil">&times;</button>
+            <div class="user-avatar-container" id="modal-avatar-box" style="width: 75px; height: 75px; margin: 0 auto 16px; font-size: 1.6rem;">
+                <span id="modal-avatar-fallback">U</span>
+            </div>
+            <h3 id="modal-user-title" style="font-family:'Orbitron', sans-serif; font-size: 1.3rem; font-weight: bold; margin-bottom: 6px;">UNKNOWN_ID</h3>
+            <p id="modal-user-id" style="font-size: 0.8rem; color: var(--text-dark); margin-bottom: 20px;">ID: -</p>
+            
+            <div style="background: rgba(5,6,15,0.9); border: 1px solid rgba(255,170,0,0.3); padding: 16px; text-align: left; font-size: 0.85rem;">
+                <div style="margin-bottom: 10px;">
+                    <span style="color: var(--neon-cyan); font-family:'Orbitron', sans-serif; display: block; font-size: 0.65rem; letter-spacing: 1px;">PLAN:</span>
+                    <span id="profile-plan-status" style="font-weight: bold;">PLAN GRATIS</span>
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <span style="color: var(--text-dark); font-family:'Orbitron', sans-serif; display: block; font-size: 0.65rem; letter-spacing: 1px;">INICIO DE SUSCRIPCIÓN:</span>
+                    <span id="profile-plan-start" style="color: #b2bec3;">-</span>
+                </div>
+                <div id="profile-premium-data-box" style="display: none; border-top: 1px dashed rgba(255,170,0,0.2); padding-top: 10px; margin-top: 10px;">
+                    <div style="margin-bottom: 6px;">
+                        <span style="color: var(--neon-amber); font-family:'Orbitron', sans-serif; display: block; font-size: 0.65rem; letter-spacing: 1px;">LLAVE ACTIVA:</span>
+                        <span id="profile-premium-key" style="color: #fff; font-family: 'Orbitron'; font-size: 0.75rem; word-break: break-all;">-</span>
+                    </div>
+                    <div>
+                        <span style="color: var(--neon-lime); font-family:'Orbitron', sans-serif; display: block; font-size: 0.65rem; letter-spacing: 1px;">EXPIRACIÓN ESTIMADA:</span>
+                        <span id="profile-premium-end" style="color: #fff; font-weight: bold;">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-editor-admin" class="profile-modal">
+        <div class="profile-card" style="max-width: 420px; text-align: left; border-color: var(--neon-cyan); box-shadow: var(--glow-cyan); clip-path: none;">
+            <button class="close-modal" id="btn-close-editor-modal" style="color: var(--neon-cyan); text-shadow: var(--glow-cyan);">&times;</button>
+            <h3 style="font-family:'Orbitron', sans-serif; font-size: 1.1rem; font-weight: bold; margin-bottom: 15px; color: var(--neon-cyan); text-transform: uppercase;">✏️ EDITAR CAMPAÑA</h3>
+            
+            <input type="hidden" id="edit-campaign-id">
+            
+            <div class="input-group">
+                <label class="input-label">IDENTIFICADOR</label>
+                <input type="text" id="edit-title" class="input-field">
+            </div>
+            <div class="input-group">
+                <label class="input-label">INSTRUCCIONES</label>
+                <input type="text" id="edit-desc" class="input-field">
+            </div>
+            <div class="input-group">
+                <label class="input-label">URL_DESTINO</label>
+                <input type="text" id="edit-secret" class="input-field">
+            </div>
+            <div class="input-group">
+                <label class="input-label">TIPO DE CAMPAÑA</label>
+                <select id="edit-campaign-type" class="input-field" style="background:#05060f;">
+                    <option value="invitation">P2P Clones Propagation (Unlimited/Free)</option>
+                    <option value="ad_text">👑 Stream Gate: Dynamic Text + Link</option>
+                    <option value="ad_image">👑 Stream Gate: Img + Hologram Banner</option>
+                    <option value="ad_video">👑 Stream Gate: Video Cyber Feed</option>
+                    <option value="sub_channel">👑 Telegram API: Channel Join</option>
+                    <option value="join_group">👑 Telegram API: Group Injection</option>
+                </select>
+            </div>
+            
+            <button id="btn-save-edit-admin" class="btn" style="margin-top: 10px;">💾 GUARDAR CAMBIOS</button>
+        </div>
+    </div>
+
+    <main class="main-container">
+
+        <div id="view-client" class="view-section active">
+            <div id="card-no-campaign" class="card">
+                <h2>🎯 NO_HAY_CAMPAÑAS_ACTIVAS</h2>
+                <p>Inicializa este sistema a través de un nodo de encriptación P2P verificado en Telegram o genera una nueva firma desde la Consola de Administración.</p>
+            </div>
+
+            <div id="card-campaign-status-msg" class="card" style="display:none; border-color: var(--neon-amber);">
+                <h2 id="status-msg-title">⏳ CAMPAÑA SUSPENDIDA</h2>
+                <p id="status-msg-desc">Este nodo de descarga temporal no ha cumplido el rango de tiempo de apertura estipulado o se encuentra expirado.</p>
+            </div>
+
+            <div id="card-viral-unlock" class="card viral-active" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <h2 id="viral-title">🎁 CONTENIDO BLOQUEADO</h2>
+                    <span class="badge" id="viral-type-badge">SEGURO</span>
+                </div>
+                <p id="viral-desc">Completa los protocolos requeridos por la estación emisora para descifrar el destino final.</p>
+
+                <div id="step-dynamic-ad" class="dynamic-ad-container" style="display: none;">
+                    <span class="input-label" style="color: var(--neon-amber);">SPONSORED_STREAM_REQ</span>
+                    <div id="ad-content-render" style="margin: 10px 0; font-size: 0.9rem;">Sincronizando flujo de datos...</div>
+                    <div id="ad-countdown-box">
+                        <div style="font-size: 0.7rem; color: var(--text-dark); font-family:'Orbitron',sans-serif;">TERMINAL_DECRYPTION_IN:</div>
+                        <div id="ad-timer" class="countdown-timer">30s</div>
+                    </div>
+                </div>
+
+                <div id="step-channel" class="input-group" style="background: rgba(5,6,15,0.5); padding: 14px; margin-bottom: 12px; display:none; border-left: 2px solid var(--neon-amber);">
+                    <span class="input-label" id="tg-step-label" style="color: var(--neon-amber);">SUSCRIPCIÓN CANAL</span>
+                    <p id="tg-step-desc" style="font-size: 0.8rem; margin-bottom: 10px;">Únete a esta comunidad para desbloquear el contenido.</p>
+                    <button id="btn-join-channel" class="btn btn-purple" style="padding: 8px 14px; font-size: 0.8rem;">UNIRME AHORA</button>
+                </div>
+
+                <div id="step-referrals" class="input-group" style="background: rgba(5,6,15,0.5); padding: 14px; border-left: 2px solid var(--neon-lime); display: none;">
+                    <span class="input-label" style="color: var(--neon-lime);">PROPAGACIÓN_P2P</span>
+                    <p style="font-size: 0.8rem; margin-bottom: 6px;">Comparte tu enlace. Los invitados deben abrir la app</p>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-top: 12px; font-weight: bold; font-family:'Orbitron',sans-serif;">
+                        <span>CONECTADOS:</span>
+                        <span id="progress-text">0 / 3</span>
+                    </div>
+                    <div class="progress-container">
+                        <div id="progress-bar-fill" class="progress-bar"></div>
+                    </div>
+                </div>
+
+                <div class="campaign-timestamps">
+                    <div class="timestamp-box">
+                        <span>🗓️ Inicio</span>
+                        <var id="client-start-date">-</var>
+                    </div>
+                    <div class="timestamp-box">
+                        <span>⌛ Expira</span>
+                        <var id="client-end-date">-</var>
+                    </div>
+                </div>
+                <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 12px;">
+                    <button id="btn-share-viral" class="btn">🔗 COMPARTIR_LINK</button>
+                    <button id="btn-claim-reward" class="btn btn-gold btn-disabled">⌛ PROCESANDO VALIDACIÓN...</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-admin" class="view-section">
+            <div class="card" id="admin-creator-card">
+                <h2>⚡ CREAR CAMPAÑA</h2>
+                <p>Configura compuertas lógicas avanzadas en la red para el filtrado y viralización automatizada de archivos.</p>
+                
+                <div class="input-group">
+                    <label class="input-label" for="setup-title">NOMBRE DE LA CAMPAÑA</label>
+                    <input type="text" id="setup-title" class="input-field" placeholder="Ej: CYBER_DOCS_2026">
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="setup-desc">INSTRUCCIONES</label>
+                    <input type="text" id="setup-desc" class="input-field" placeholder="Ej: Realiza los desvíos obligatorios de red para desbloquear.">
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="setup-secret">URL DE DESTINO</label>
+                    <input type="text" id="setup-secret" class="input-field" placeholder="Ej: https://mega.nz/file/quantum...">
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;" class="input-group">
+                    <div>
+                        <label class="input-label" for="setup-start-date">INICIO</label>
+                        <input type="datetime-local" id="setup-start-date" class="input-field" style="font-size:0.8rem;">
+                    </div>
+                    <div>
+                        <label class="input-label" for="setup-end-date">FINALIZA</label>
+                        <input type="datetime-local" id="setup-end-date" class="input-field" style="font-size:0.8rem;">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label" for="setup-campaign-type">TIPO DE CAMPAÑA</label>
+                    <select id="setup-campaign-type" class="input-field" style="background:#05060f;">
+                        <option value="invitation">P2P Clones Propagation (Unlimited/Free)</option>
+                        <option value="ad_text" id="opt-ad_text">👑 Stream Gate: Text Dinámico + Link</option>
+                        <option value="ad_image" id="opt-ad_image">👑 Stream Gate: Img + Hologram Banner</option>
+                        <option value="ad_video" id="opt-ad_video">👑 Stream Gate: Video Cyber</option>
+                        <option value="sub_channel" id="opt-sub_channel">👑 Telegram API: Suscripción Canal</option>
+                        <option value="join_group" id="opt-join_group">👑 Telegram API: Unirse Grupo</option>
+                    </select>
+                </div>
+
+                <div id="group-opt-invitation" class="input-group">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <label class="input-label" for="setup-req-count">INVITADOS NECESARIOS</label>
+                        <span id="req-limit-hint" style="font-size: 0.7rem; color: var(--neon-amber); font-weight: bold; font-family:'Orbitron',sans-serif;">MAX 3</span>
+                    </div>
+                    <input type="number" id="setup-req-count" class="input-field" value="3" min="1" max="10">
+                </div>
+
+                <div id="group-opt-telegram" class="input-group" style="display:none;">
+                    <label class="input-label" for="setup-tg-target">USUARIO (SIN @ O LINK DIRECTO)</label>
+                    <input type="text" id="setup-tg-target" class="input-field" placeholder="Ej: CyberNetworkNet">
+                </div>
+
+                <div id="group-opt-ad" class="input-group" style="display:none;">
+                    <label class="input-label" for="setup-ad-value">CONTENIDO BLOQUEADO: (Texto, link o URL de vídeo)</label>
+                    <input type="text" id="setup-ad-value" class="input-field" placeholder="Texto, link de imagen o URL de vídeo raw...">
+                    
+                    <div style="margin-top:12px;">
+                        <label class="input-label" for="setup-ad-duration">DURACIÓN DEL BLOQUEO (SEGUNDOS)</label>
+                        <input type="number" id="setup-ad-duration" class="input-field" value="30" min="5">
+                    </div>
+                </div>
+
+                <button id="btn-deploy-campaign" class="btn btn-purple">🚀 PUBLICAR CAMPAÑA</button>
+            </div>
+
+            <div class="card" id="analytics-box">
+                <h2>📊 PROPAGATION_METRICS</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px;">
+                    <div style="background: var(--surface); padding: 12px; border: 1px solid rgba(0,243,255,0.1); text-align: center;">
+                        <div style="font-size: 0.7rem; color: var(--text-dark); font-family:'Orbitron',sans-serif;">TOTAL_CLICKS</div>
+                        <div style="font-size: 1.4rem; font-weight: bold; color: var(--neon-cyan); font-family:'Orbitron',sans-serif;" id="meta-clicks">0</div>
+                    </div>
+                    <div style="background: var(--surface); padding: 12px; border: 1px solid rgba(255,170,0,0.1); text-align: center;">
+                        <div style="font-size: 0.7rem; color: var(--text-dark); font-family:'Orbitron',sans-serif;">TOTAL_LOOPS</div>
+                        <div style="font-size: 1.4rem; font-weight: bold; color: var(--neon-amber); font-family:'Orbitron',sans-serif;" id="meta-loops">0</div>
+                    </div>
+                </div>
+                
+                <div class="input-label" style="margin-top: 18px; margin-bottom: 6px; display: flex; justify-content: space-between;">
+                    <span>📍 CONVERSION_NODES:</span>
+                    <span id="geo-premium-badge" style="font-size:0.65rem; color:var(--neon-amber); display:none; font-family:'Orbitron',sans-serif;">👑 LIVE_FEED</span>
+                </div>
+                <div id="admin-group-stats" style="background: var(--surface); padding: 12px; font-size: 0.8rem; color: var(--text-dark); border: 1px solid rgba(255,255,255,0.03); min-height: 40px;">
+                    <span id="group-stats-placeholder">Awaiting datastream package requests...</span>
+                </div>
+            </div>
+            <div id="super-admin-panel" style="margin-top: 20px;"></div>
+        </div> 
+        
+        <div id="view-billing" class="view-section">
+    <div class="card premium" style="border: 2px solid var(--neon-amber); box-shadow: var(--glow-amber); background: linear-gradient(180deg, rgba(10,11,22,0.95) 0%, rgba(20,22,45,0.9) 100%);">
+        <h2 style="font-family: 'Orbitron'; letter-spacing: 2px; color: var(--neon-amber); text-shadow: var(--glow-amber);">👑 VIP_PASS</h2>
+        
+        <ul style="font-size: 0.85rem; color: var(--text-secondary); list-style: none; margin-bottom: 25px; padding-left: 0;">
+            <li style="margin-bottom: 10px; display:flex; align-items:center; gap:8px;">⚡ <span style="color:#fff">Desbloqueo total de lógicas (Anuncios y API Telegram).</span></li>
+            <li style="margin-bottom: 10px; display:flex; align-items:center; gap:8px;">⚡ <span style="color:#fff">Crea campañas virales ilimitadas.</span></li>
+            <li style="margin-bottom: 10px; display:flex; align-items:center; gap:8px;">⚡ <span style="color:#fff">Elimina los anuncios en la mini-app.</span></li>
+                 </ul>
+
+        <hr style="border: 0; border-top: 1px dashed rgba(255,170,0,0.3); margin: 20px 0;">
+
+        <div class="input-group" style="margin-bottom: 20px;">
+            <label class="input-label" for="billing-method" style="color: var(--neon-amber); font-family: 'Orbitron'; font-size: 0.75rem; letter-spacing: 1px;">SELECCIONAR MÉTODO DE PAGO</label>
+            <select id="billing-method" class="input-field" style="background: var(--surface); color: #fff; font-family: 'Rajdhani'; font-weight: bold; border: 1px solid rgba(255,170,0,0.4);" onchange="actualizarPreciosPlanes()">
+                <option value="paypal">PayPal Express Checkout</option>
+                <option value="stars">Telegram Stars (⭐)</option>
+                <option value="usdt">Binance Corporate Pay (USDT TRC20)</option>
+            </select>
+        </div>
+<div class="premium-container">
+    <div id="cards-wrapper" class="cards-horizontal-wrapper">
+        </div>
+</div>
+
+        <button id="btn-request-premium-unified" class="btn btn-gold" style="width:100%; font-family: 'Orbitron'; letter-spacing: 1px; font-weight: bold; padding: 15px;" onclick="procesarPagoPremium(event)">
+            🚀 MEJORAR CON PREMIUM
+        </button>
+    </div>
+
+    <div class="card" id="premium-activation-key-card" style="border-color: var(--neon-amber); background: rgba(10,11,22,0.8);">
+        <div class="input-label" style="color: var(--neon-amber); font-family: 'Orbitron';">[CONEXIÓN] INYECTAR_LICENCIA_KEY</div>
+        <input type="text" id="licence-key-input" class="input-field" placeholder="Firma SHA256 / Llave criptográfica...">
+        <button id="btn-validate-license" class="btn btn-purple" style="margin-top: 12px; font-family: 'Orbitron';">VALIDAR_FIRMA</button>
+    </div>
+</div>
+
+    </main> 
+    
+    <div id="premium-carousel-wrapper" class="adv-carousel-wrapper">
+        <div id="adv-carousel-inner" class="adv-carousel-inner">
+            <div class="adv-slide" style="border-left: 4px solid var(--neon-amber);">🔥 OVERRIDE: Gana +$50 USDT diarios en nuestro Bot Quant Trading. Desliza feed.</div>
+            <div class="adv-slide" style="border-left: 4px solid var(--neon-cyan);">🚀 NET_BOOST: Multiplica canales orgánicamente con algoritmos automatizados Pro.</div>
+            <div class="adv-slide" style="border-left: 4px solid var(--neon-amber);">💎 UPGRADE: Inyecta el pase de Licencia Premium y limpia este feed comercial hoy.</div>
+        </div>
+    </div>
+
+    <nav class="nav-bar">
+        <button id="nav-client" class="nav-item active">
+            <span>🎯</span>CAMPAÑA
+        </button>
+        <button id="nav-admin" class="nav-item">
+            <span>⚡</span>CONSOLA
+        </button>
+        <button id="nav-billing" class="nav-item">
+            <span>👑</span>LICENCIA
+        </button>
+    </nav>
+
+    <script>
+        /**
+ * CYBER_SECURITY ENGINE P2P - CORREGIDO TOTALMENTE
+ * Encapsulado bajo un entorno léxico cerrado (IIFE) para evitar la manipulación de estados desde la consola global.
+ */
+(function () {
+    'use strict';
+
+    let abrirEditorCampana, cerrarModalEditorAdmin, guardarCambiosEditorAdmin, ejecutarAccionIndividual, ejecutarAccionMasiva, cargarCampanasAdminFuerza, renderizarTablaAdmin, toggleSeleccionCampana, toggleSeleccionarTodas;
+
+    function actualizarPreciosPlanes() {
+        const metodoSelect = document.getElementById("billing-method");
+        const cardsWrapper = document.getElementById("cards-wrapper");
+        if (!metodoSelect || !cardsWrapper) return;
+
+        const divisa = metodoSelect.value;
+        
+        // Precios Base calculados en Euros
+        const preciosEUR = {
+            "1_mes": 3.75,
+            "3_meses": 10.66,
+            "6_meses": 20.14,
+            "12_meses": 37.92
+        };
+
+        // Formateador rápido de precios según la divisa activa (Margen protegido)
+        const formatearPrecio = (eurValue) => {
+            if (divisa === "stars") {
+                return `${Math.round(eurValue / 0.012)} ⭐️`;
+            } else if (divisa === "usdt") {
+                return `${eurValue.toFixed(2)} USDT`;
+            } else {
+                return `${eurValue.toFixed(2)}€`;
+            }
+        };
+
+        const opcionesPlanes = [
+            { id: "1_mes", tiempo: "1 Mes", dcto: "-5% OFF", badge: "" },
+            { id: "3_meses", tiempo: "3 Meses", dcto: "-10% OFF", badge: "TOP" },
+            { id: "6_meses", tiempo: "6 Meses", dcto: "-15% OFF", badge: "Popular" },
+            { id: "12_meses", tiempo: "1 Año", dcto: "-20% OFF", badge: "Mejor Valor" }
+        ];
+
+        let htmlInyectar = "";
+
+        opcionesPlanes.forEach(p => {
+            const precioFinal = formatearPrecio(preciosEUR[p.id]);
+            const claseDestacada = p.badge ? "futuristic-card featured" : "futuristic-card";
+
+            htmlInyectar += `
+                <div class="${claseDestacada}">
+                    ${p.badge ? `<span class="card-badge">${p.badge}</span>` : ""}
+                    <h4 class="card-plan-name">Plan PRO</h4>
+                    <div class="card-duration">${p.tiempo}</div>
+                    <div class="card-price">${precioFinal}</div>
+                    <div class="card-discount">${p.dcto}</div>
+                </div>
+            `;
+        });
+
+        cardsWrapper.innerHTML = htmlInyectar;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const metodoSelect = document.getElementById("billing-method");
+        if (metodoSelect) {
+            metodoSelect.addEventListener("change", actualizarPreciosPlanes);
+        }
+        actualizarPreciosPlanes();
+    });
+
+    function procesarPagoPremium(e) {
+        if (e && e.preventDefault) e.preventDefault();
+
+        const tg = window.Telegram ? window.Telegram.WebApp : null;
+        if (tg) {
+            tg.ready();
+        }
+
+        const metodoSelect = document.getElementById("billing-method");
+        const metodoId = metodoSelect ? metodoSelect.value : "paypal"; 
+        const botUsername = "ViralBoomBot"; 
+
+        const comandosPorMetodo = {
+            "stars": "/premium_stars",
+            "paypal": "/premium_paypal",
+            "usdt": "/premium_usdt"
+        };
+
+        const comandoCopiar = comandosPorMetodo[metodoId] || "/premium_paypal";
+
+        const nombresMetodos = {
+            "stars": "Telegram Stars ⭐️",
+            "paypal": "PayPal (Euros) 💳",
+            "usdt": "USDT (Cripto) 🪙"
+        };
+        const metodoEstetico = nombresMetodos[metodoId] || "Pago";
+
+        const mensajeInstrucciones = `📋 ¡Comando copiado al portapapeles!\n\nLa aplicación se cerrará ahora de forma segura.\n\nPara proceder con tu suscripción mediante ${metodoEstetico}, simplemente mantén presionado el cuadro de texto del chat, selecciona 'Pegar' y envía el comando que se acaba de generar.\n\nEl bot te responderá de inmediato con los botones para elegir el período de tiempo (1, 3, 6 o 12 meses) y proceder con el pago de manera segura.`;
+
+        navigator.clipboard.writeText(comandoCopiar).then(() => {
+            console.log("Comando copiado con éxito: " + comandoCopiar);
+            
+            if (tg && typeof tg.showAlert === 'function') {
+                tg.showAlert(mensajeInstrucciones, () => {
+                    redirigirYAbandonar();
+                });
+            } else {
+                alert(mensajeInstrucciones);
+                redirigirYAbandonar();
+            }
+        }).catch((err) => {
+            console.error("No se pudo copiar automáticamente: ", err);
+            const mensajeFallback = `📋 Comando copiado al portapapeles. La aplicación se cerrará. Por favor, mantén pulsado el cuadro de chat del bot para pegar el comando y proceder a elegir el periodo de duración y completar tu pago:\n\n${comandoCopiar}`;
+            
+            if (tg && typeof tg.showAlert === 'function') {
+                tg.showAlert(mensajeFallback, () => {
+                    redirigirYAbandonar();
+                });
+            } else {
+                alert(mensajeFallback);
+                redirigirYAbandonar();
+            }
+        });
+
+        function redirigirYAbandonar() {
+            const linkBot = `https://t.me/${botUsername}`;
+            if (tg && typeof tg.openTelegramLink === 'function') {
+                try {
+                    tg.openTelegramLink(linkBot);
+                } catch (err) {
+                    console.error("Error al abrir enlace interno:", err);
+                    window.location.href = linkBot;
+                }
+            } else {
+                window.location.href = linkBot;
+            }
+
+            if (tg && typeof tg.close === 'function') {
+                tg.close();
+            }
+        }
+    }
+
+    window.actualizarPreciosPlanes = actualizarPreciosPlanes;
+    window.procesarPagoPremium = procesarPagoPremium;
+
+    const Storage = {
+        get(key, defaultValue) {
+            try {
+                const item = localStorage.getItem(key);
+                return item ? JSON.parse(item) : defaultValue;
+            } catch (e) {
+                console.error("Error leyendo LocalStorage para clave: " + key, e);
+                return defaultValue;
+            }
+        },
+        set(key, value) {
+            try {
+                localStorage.setItem(key, JSON.stringify(value));
+            } catch (e) {
+                console.error("Error escribiendo en LocalStorage para clave: " + key, e);
+            }
+        },
+        remove(key) {
+            localStorage.removeItem(key);
+        }
+    };
+
+    const App = {
+        state: {
+            isPremium: false,
+            userId: "99999999", 
+            username: "sin_alias",
+            firstName: "Developer",
+            chatInstance: "global_context",
+            campañaActivaLocal: null,
+            referidosLogrados: 0,
+            clicsTotalesEnlace: 0,
+            groupStats: {},
+            adTimerInterval: null,
+            adSecondsLeft: 30,
+            adCompleted: false,
+            firstTimeLoginDate: "",
+            tgChannelJoined: false,
+            carouselIndex: 0,
+            carouselTimer: null,
+            isCarouselPaused: false,
+            outboundTimestamp: 0,
+            verificationInProgress: false
+        },
+
+        supabaseClient: null,
+        tg: window.Telegram ? window.Telegram.WebApp : null,
+
+        init() {
+            if(this.tg) {
+                this.tg.ready();
+                this.tg.expand();
+            }
+
+            const SUPABASE_URL = "https://hdvmoeugbbuxvdeoprks.supabase.co"; 
+            const cleanKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhkdm1vZXVnYmJ1eHZkZW9wcmtzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3NjM5OTEsImV4cCI6MjA5ODMzOTk5MX0.6Qx4LsduzdjHcDcFtGPQrq3tnxQndMAmG-PS2Iay6SU";
+            
+            try {
+                if (window.supabase && SUPABASE_URL && cleanKey) {
+                    this.supabaseClient = window.supabase.createClient(SUPABASE_URL, cleanKey);
+                    console.log("🛰️ NET_SYNC: Conexión con Supabase establecida.");
+                } else {
+                    console.warn("⚠️ NET_WARNING: Supabase no configurado o URL vacía. Corriendo en Sandbox local.");
+                }
+            } catch(err) {
+                console.error("Error al enlazar los canales de Supabase:", err);
+            }
+
+            this.setupDates();
+            this.bindEvents();
+            this.inicializarFlujoAplicacion();
+            this.startCarouselEngine();
+            actualizarPreciosPlanes();
+        },
+
+        setupDates() {
+            let savedFirstDate = Storage.get("bv_first_login", null);
+            if (!savedFirstDate) {
+                const hoy = new Date();
+                savedFirstDate = hoy.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                Storage.set("bv_first_login", savedFirstDate);
+            }
+            this.state.firstTimeLoginDate = savedFirstDate;
+            
+            const labelStart = document.getElementById("profile-plan-start");
+            if(labelStart) labelStart.textContent = savedFirstDate;
+
+            this.state.campañaActivaLocal = Storage.get("campaña_local_backup", null);
+        },
+
+        bindEvents() {
+            const safeAddEvent = (id, type, callback) => {
+                const el = document.getElementById(id);
+                if (el) el.addEventListener(type, callback);
+            };
+
+            safeAddEvent("btn-header-profile", "click", () => this.abrirModalPerfil());
+            safeAddEvent("btn-close-profile-modal", "click", (e) => this.cerrarModalPerfil(e));
+            safeAddEvent("btn-join-channel", "click", () => this.abrirSpaceRequisito());
+            safeAddEvent("btn-share-viral", "click", () => this.compartirEnlaceReferido());
+            safeAddEvent("btn-claim-reward", "click", () => this.reclamarRecompensaFinal());
+            safeAddEvent("btn-deploy-campaign", "click", () => this.guardarCampanaAdmin());
+            safeAddEvent("btn-validate-license", "click", () => this.inyectarLlaveLicenciaLocal());
+            safeAddEvent("btn-request-premium", "click", () => this.solicitarPremiumAirdayz());
+            safeAddEvent("btn-request-premium-stars", "click", () => this.solicitarPremiumEstrellasBot());
+            safeAddEvent("btn-watermark-link", "click", () => this.cambiarPestana('billing'));
+            
+            safeAddEvent("setup-campaign-type", "change", () => this.actualizarFormularioPorTipoCam());
+
+            safeAddEvent("nav-client", "click", () => this.cambiarPestana('client'));
+            safeAddEvent("nav-admin", "click", () => this.cambiarPestana('admin'));
+            safeAddEvent("nav-billing", "click", () => this.cambiarPestana('billing'));
+
+            safeAddEvent("btn-close-editor-modal", "click", () => cerrarModalEditorAdmin());
+            safeAddEvent("btn-save-edit-admin", "click", () => guardarCambiosEditorAdmin());
+
+            document.addEventListener("visibilitychange", () => {
+                if (document.hidden) {
+                    this.pauseCarousel();
+                } else {
+                    this.resumeCarousel();
+                    this.procesarRetornoUsuario();
+                }
+            });
+
+            const carouselWrapper = document.getElementById("premium-carousel-wrapper");
+            if(carouselWrapper) {
+                carouselWrapper.addEventListener("touchstart", () => this.pauseCarousel(), { passive: true });
+                carouselWrapper.addEventListener("touchend", () => {
+                    setTimeout(() => { this.resumeCarousel(); }, 5000);
+                }, { passive: true });
+            }
+        },
+
+        async inicializarFlujoAplicacion() {
+            try {
+                this.inicializarDatosUsuarioTelegram();
+                await Promise.allSettled([
+                    this.ejecutarVerificacionLicenciaBase(),
+                    this.recuperarEstadisticasBD(),
+                    this.evaluarFlujoDeepLinkingDeEntrada()
+                ]);
+            } catch (error) {
+                console.error("Error crítico en la inicialización del ecosistema:", error);
+            } finally {
+                this.renderizarPantallasDinamicas();
+                this.actualizarContadorHeader();
+                this.actualizarFormularioPorTipoCam();
+
+                const splash = document.getElementById("cyber-splash-loader");
+                if (splash) {
+                    splash.style.opacity = "0";
+                    setTimeout(() => {
+                        splash.style.visibility = "hidden";
+                    }, 400);
+                }
+            }
+        },
+
+        inicializarDatosUsuarioTelegram() {
+            if(!this.tg) return;
+            const u = this.tg.initDataUnsafe?.user;
+            if(u) {
+                this.state.userId = u.id.toString();
+                this.state.username = u.username || "sin_alias";
+                this.state.firstName = u.first_name || "Usuario";
+                this.state.chatInstance = this.tg.initDataUnsafe?.chat_instance || "direct_chat";
+            }
+
+            const nameDisplay = document.getElementById("user-display-name");
+            if(nameDisplay) nameDisplay.textContent = this.state.firstName.toUpperCase();
+            
+            const avatarBox = document.getElementById("user-avatar-box");
+            const modalAvatarBox = document.getElementById("modal-avatar-box");
+            
+            if (u && u.photo_url) {
+                if(avatarBox) {
+                    const imgExistente = avatarBox.querySelector("img");
+                    if(imgExistente) imgExistente.remove();
+                    const img = document.createElement("img");
+                    img.src = u.photo_url;
+                    img.alt = "Profile";
+                    avatarBox.appendChild(img);
+                }
+                if(modalAvatarBox) {
+                    modalAvatarBox.innerHTML = "";
+                    const imgModal = document.createElement("img");
+                    imgModal.src = u.photo_url;
+                    imgModal.alt = "Profile";
+                    imgModal.style.width = "100%"; imgModal.style.height = "100%"; imgModal.style.objectFit = "cover";
+                    modalAvatarBox.appendChild(imgModal);
+                }
+            } else {
+                const inicial = this.state.firstName.charAt(0).toUpperCase();
+                const fallback = document.getElementById("avatar-fallback");
+                const modalFallback = document.getElementById("modal-avatar-fallback");
+                if(fallback) fallback.textContent = inicial;
+                if(modalFallback) modalFallback.textContent = inicial;
+            }
+        },
+
+        async dispararAlertaSegura(accion, mensaje) {
+            if (!this.supabaseClient) return;
+            try {
+                const { data, error } = await this.supabaseClient.rpc('disparar_alerta_bot', {
+                    user_id: this.state.userId,
+                    username: this.state.username,
+                    accion: accion,
+                    mensaje: mensaje
+                });
+                if (error) throw error;
+                return data;
+            } catch (err) {
+                console.error("🚨 ALERT_ERROR:", err);
+                throw err;
+            }
+        },
+
+        async ejecutarVerificacionLicenciaBase() {
+            const ahora = Date.now();
+            const localPremiumUntil = localStorage.getItem(`bv_premium_until_${this.state.userId}`);
+            
+            if (localPremiumUntil) {
+                if (parseInt(localPremiumUntil) > ahora) {
+                    this.activarInterfazPremiumVisual();
+                    return;
+                } else {
+                    localStorage.removeItem(`bv_premium_until_${this.state.userId}`);
+                    localStorage.removeItem(`bv_premium_key_${this.state.userId}`);
+                    this.desactivarInterfazPremiumVisual();
+                    return;
+                }
+            }
+
+            if(!this.supabaseClient) {
+                this.desactivarInterfazPremiumVisual();
+                return;
+            }
+
+            try {
+                const { data, error } = await this.supabaseClient
+                    .from('licenses')
+                    .select('*')
+                    .eq('used_by_tg_id', this.state.userId)
+                    .eq('is_used', true);
+
+                if (!error && data && data.length > 0) {
+                    const licenciaActiva = data[0];
+                    const fechaActivacion = new Date(licenciaActiva.activated_at).getTime();
+                    const diasEnMilisegundos = licenciaActiva.duration_days * 24 * 60 * 60 * 1000;
+                    const fechaExpiracion = fechaActivacion + diasEnMilisegundos;
+
+                    if (ahora < fechaExpiracion) {
+                        localStorage.setItem(`bv_premium_until_${this.state.userId}`, fechaExpiracion);
+                        this.activarInterfazPremiumVisual();
+                        return;
+                    }
+                }
+            } catch(e) {
+                console.error("Fallo al consultar licencias:", e);
+            }
+            this.desactivarInterfazPremiumVisual();
+        },
+
+        activarInterfazPremiumVisual() {
+            this.state.isPremium = true;
+            const statusBadge = document.getElementById("status-badge");
+            if(statusBadge) { statusBadge.textContent = "PLAN_PRO"; statusBadge.className = "badge badge-premium"; }
+            
+            const planStatus = document.getElementById("profile-plan-status");
+            if(planStatus) { planStatus.textContent = "PRO_RANK"; planStatus.style.color = "var(--neon-amber)"; }
+            
+            const avatarGlow = document.getElementById("user-avatar-glow");
+            if(avatarGlow) { avatarGlow.style.backgroundColor = "var(--neon-amber)"; avatarGlow.style.boxShadow = "var(--glow-amber)"; }
+            
+            const cw = document.getElementById("premium-carousel-wrapper"); if(cw) cw.style.display = "none";
+            const akc = document.getElementById("premium-activation-key-card"); if(akc) akc.style.display = "none";
+            
+            const nc = document.getElementById("nav-client"); if(nc) nc.style.display = "flex";
+            const na = document.getElementById("nav-admin"); if(na) na.style.display = "flex"; 
+            const nb = document.getElementById("nav-billing"); if(nb) nb.style.display = "none"; 
+            
+            this.habilitarOpcionesPremiumAdmin();
+            this.pauseCarousel();
+        },
+
+        desactivarInterfazPremiumVisual() {
+            this.state.isPremium = false;
+            const statusBadge = document.getElementById("status-badge");
+            if(statusBadge) { statusBadge.textContent = "PLAN_GRATIS"; statusBadge.className = "badge"; }
+            
+            const planStatus = document.getElementById("profile-plan-status");
+            if(planStatus) { planStatus.textContent = "PLAN_GRATIS"; planStatus.style.color = "var(--text-cyber)"; }
+            
+            const avatarGlow = document.getElementById("user-avatar-glow");
+            if(avatarGlow) { avatarGlow.style.backgroundColor = "var(--neon-lime)"; avatarGlow.style.boxShadow = "0 0 6px var(--neon-lime)"; }
+            
+            const cw = document.getElementById("premium-carousel-wrapper"); if(cw) cw.style.display = "block";
+            const akc = document.getElementById("premium-activation-key-card"); if(akc) akc.style.display = "block";
+            
+            const nc = document.getElementById("nav-client"); if(nc) nc.style.display = "flex";
+            const na = document.getElementById("nav-admin"); if(na) na.style.display = "flex";   
+            const nb = document.getElementById("nav-billing"); if(nb) nb.style.display = "flex"; 
+            
+            this.desactivarOpcionesPremiumAdmin();
+        },
+
+        habilitarOpcionesPremiumAdmin() {
+            ["ad_text", "ad_image", "ad_video", "sub_channel", "join_group"].forEach(id => {
+                const opt = document.getElementById(`opt-${id}`);
+                if(opt) { opt.disabled = false; opt.textContent = opt.textContent.replace(" 🔒 Pro", ""); }
+            });
+            const dur = document.getElementById("setup-ad-duration"); if(dur) dur.disabled = false;
+        },
+
+        desactivarOpcionesPremiumAdmin() {
+            ["ad_text", "ad_image", "ad_video", "sub_channel", "join_group"].forEach(id => {
+                const opt = document.getElementById(`opt-${id}`);
+                if(opt && !opt.textContent.includes("🔒 Pro")) { opt.disabled = true; opt.textContent += " 🔒 Pro"; }
+            });
+            const dur = document.getElementById("setup-ad-duration"); if(dur) dur.disabled = true;
+        },
+
+        async recuperarEstadisticasBD() {
+            if (!this.state.campañaActivaLocal || !this.supabaseClient) return;
+            const ownerId = this.state.campañaActivaLocal.ownerId;
+
+            try {
+                const { count, error } = await this.supabaseClient
+                    .from('referrals')
+                    .select('*', { count: 'exact', head: true })
+                    .eq('campaign_owner_id', ownerId);
+
+                if (!error) {
+                    this.state.referidosLogrados = count || 0;
+                    const ml = document.getElementById("meta-loops"); if(ml) ml.textContent = this.state.referidosLogrados;
+                    const mc = document.getElementById("meta-clicks"); if(mc) mc.textContent = Math.floor(this.state.referidosLogrados * 1.4);
+                }
+            } catch(e) {
+                console.error("Error retrieving metrics:", e);
+            }
+
+            const container = document.getElementById("admin-group-stats");
+            if(container) {
+                if (this.state.referidosLogrados > 0) {
+                    container.innerHTML = `<div style="display:flex; justify-content:space-between; font-family:'Orbitron',sans-serif;"><span>DATA_STREAM_FEED:</span> <span style="color:var(--neon-lime)">• CLOUD_SYNC_ON</span></div>`;
+                } else {
+                    container.textContent = "Awaiting datastream package requests...";
+                }
+            }
+        },
+
+        async evaluarFlujoDeepLinkingDeEntrada() {
+            if (!this.tg) return;
+            const startParam = this.tg.initDataUnsafe?.start_param;
+            if (!startParam) return;
+
+            try {
+                let base64Clean = startParam.replace(/-/g, '+').replace(/_/g, '/');
+                while (base64Clean.length % 4) { 
+                    base64Clean += '='; 
+                }
+                
+                const binaryString = atob(base64Clean);
+                const bytes = new Uint8Array(binaryString.length);
+                for (let i = 0; i < binaryString.length; i++) {
+                    bytes[i] = binaryString.charCodeAt(i);
+                }
+                const decodedText = new TextDecoder('utf-8').decode(bytes);
+                const payload = JSON.parse(decodedText);
+
+                if (payload && payload.secret_url) {
+                    this.state.campañaActivaLocal = {
+                        titulo: payload.title, 
+                        desc: payload.description, 
+                        secreto: payload.secret_url,
+                        tipo: payload.type || "invitation", 
+                        requeridos: parseInt(payload.req_slots) || 3,
+                        tgTarget: payload.tg_target || "", 
+                        adValue: payload.ad_val || "", 
+                        adDuration: parseInt(payload.ad_dur) || 30,
+                        startDate: payload.s_date ? parseInt(payload.s_date) : null, 
+                        endDate: payload.e_date ? parseInt(payload.e_date) : null,
+                        ownerId: payload.owner,
+                        status: payload.status || 'activa'
+                    };
+                    
+                    Storage.set("campaña_local_backup", this.state.campañaActivaLocal);
+
+                    if (payload.owner && payload.owner !== this.state.userId && this.supabaseClient) {
+                        await this.supabaseClient.from('referrals').insert([
+                            { campaign_owner_id: payload.owner, referred_user_id: this.state.userId }
+                        ]);
+                    }
+                }
+            } catch (e) {
+                console.error("Error decoding link nodes:", e);
+            }
+        },
+
+        async guardarCampanaAdmin() {
+            const t = document.getElementById("setup-title").value.trim();
+            const d = document.getElementById("setup-desc").value.trim();
+            const s = document.getElementById("setup-secret").value.trim();
+            const type = document.getElementById("setup-campaign-type").value;
+            
+            const sDateRaw = document.getElementById("setup-start-date").value;
+            const eDateRaw = document.getElementById("setup-end-date").value;
+
+            const startDateISO = sDateRaw ? new Date(sDateRaw).toISOString() : null;
+            const endDateISO = eDateRaw ? new Date(eDateRaw).toISOString() : null;
+
+            if(!t || !s) {
+                if(this.tg) this.tg.showAlert("❌ Identificador de Recurso y Enlace de Destino obligatorios.");
+                return;
+            }
+            if(!this.supabaseClient) {
+                if(this.tg) this.tg.showAlert("❌ Error de comunicación: Base de datos no vinculada.");
+                return;
+            }
+
+            if (!this.state.isPremium && (type === "sub_channel" || type === "join_group" || type.startsWith("ad_"))) {
+                if(this.tg) this.tg.showAlert("🔒 PROTOCOLO RESTRINGIDO: El tipo de campaña seleccionado requiere una suscripción Premium activa.");
+                return;
+            }
+
+            if (!this.state.isPremium) {
+                const { data: existentes } = await this.supabaseClient
+                    .from('campaigns')
+                    .select('id')
+                    .eq('owner_id', this.state.userId);
+
+                if (existentes && existentes.length >= 1) {
+                    if(this.tg) this.tg.showAlert("🔒 LÍMITE ALCANZADO: Los usuarios gratuitos solo pueden publicar 1 campaña al mismo tiempo en la red. Consigue una Licencia Premium.");
+                    return;
+                }
+            }
+            
+            let r = parseInt(document.getElementById("setup-req-count").value) || 3;
+            const adDur = parseInt(document.getElementById("setup-ad-duration").value) || 30;
+
+            let tgTargetFinal = "";
+            let adValueFinal = "";
+            let reqSlotsFinal = 0;
+            let adDurationFinal = 0;
+
+            if (type === "invitation") {
+                reqSlotsFinal = r;
+            } else if (type === "sub_channel" || type === "join_group") {
+                tgTargetFinal = document.getElementById("setup-tg-target").value.trim();
+                if (!tgTargetFinal) {
+                    if(this.tg) this.tg.showAlert("❌ USUARIO/CANAL es obligatorio para este protocolo.");
+                    return;
+                }
+                tgTargetFinal = tgTargetFinal.replace("https://t.me/", "").replace("@", "");
+            } else if (type.startsWith("ad_")) {
+                adValueFinal = document.getElementById("setup-ad-value").value.trim();
+                adDurationFinal = adDur;
+                if (!adValueFinal) {
+                    if(this.tg) this.tg.showAlert("❌ STREAM_VALUE_DATA_SOURCE no puede estar vacío.");
+                    return;
+                }
+            }
+
+            const nuevaCampana = {
+                id: this.state.userId + "_" + Date.now(), 
+                owner_id: this.state.userId, 
+                title: t, 
+                description: d, 
+                secret_url: s, 
+                type: type, 
+                req_slots: reqSlotsFinal,
+                tg_target: tgTargetFinal, 
+                ad_value: adValueFinal,
+                ad_duration: adDurationFinal, 
+                start_date: startDateISO, 
+                end_date: endDateISO,
+                status: 'activa'
+            };
+
+            try {
+                const { error } = await this.supabaseClient.from('campaigns').upsert([nuevaCampana]);
+                if (error) {
+                    if(this.tg) this.tg.showAlert("❌ Error de Supabase:\n" + error.message);
+                    return;
+                }
+            } catch (catchError) {
+                if(this.tg) this.tg.showAlert("🚨 Fallo de Red Crítico:\n" + catchError.message);
+                return;
+            }
+
+            this.state.campañaActivaLocal = {
+                titulo: t, desc: d, secreto: s, tipo: type, requeridos: r,
+                tgTarget: nuevaCampana.tg_target, adValue: nuevaCampana.ad_value, adDuration: adDur,
+                startDate: nuevaCampana.start_date ? new Date(nuevaCampana.start_date).getTime() : null, 
+                endDate: nuevaCampana.end_date ? new Date(nuevaCampana.end_date).getTime() : null, 
+                ownerId: this.state.userId,
+                status: nuevaCampana.status
+            };
+
+            Storage.set("campaña_local_backup", this.state.campañaActivaLocal);
+            
+            try {
+                if(this.tg) this.tg.showAlert("🚀 PROCESANDO TRANSMISIÓN: Subiendo metadatos...");
+                await this.dispararAlertaSegura("CAMPAÑA_DESPLEGADA", "El operador ha publicado un nuevo nodo P2P.");
+            } catch(alertErr) {
+                console.warn(alertErr);
+            }
+
+            this.state.referidosLogrados = 0;
+            this.state.adCompleted = false;
+            this.state.tgChannelJoined = false;
+            this.state.verificationInProgress = false;
+            if(this.state.adTimerInterval) { clearInterval(this.state.adTimerInterval); this.state.adTimerInterval = null; }
+            
+            this.renderizarPantallasDinamicas();
+            this.actualizarContadorHeader();
+            this.cambiarPestana('client');
+        },
+
+        renderizarPantallasDinamicas() {
+            const camp = this.state.campañaActivaLocal;
+            const cardNoCam = document.getElementById("card-no-campaign");
+            const cardUnlock = document.getElementById("card-viral-unlock");
+            const cardStatusMsg = document.getElementById("card-campaign-status-msg");
+
+            if(!camp) {
+                if(cardNoCam) cardNoCam.style.display = "block";
+                if(cardUnlock) cardUnlock.style.display = "none";
+                if(cardStatusMsg) cardStatusMsg.style.display = "none";
+                return;
+            }
+
+            if (camp.status === 'en_pausa') {
+                if(cardNoCam) cardNoCam.style.display = "none";
+                if(cardUnlock) cardUnlock.style.display = "none";
+                if(cardStatusMsg) {
+                    cardStatusMsg.style.display = "block";
+                    cardStatusMsg.style.borderColor = "var(--neon-amber)";
+                    
+                    const msgTitle = document.getElementById("status-msg-title");
+                    const msgDesc = document.getElementById("status-msg-desc");
+                    
+                    if (camp.ownerId === this.state.userId) {
+                        if(msgTitle) msgTitle.textContent = "⏸️ PENDIENTE DE APROBACIÓN";
+                        if(msgDesc) msgDesc.textContent = "Tu nodo de distribución se encuentra temporalmente en pausa y en espera de validación por parte del Super Admin.";
+                    } else {
+                        if(msgTitle) msgTitle.textContent = "🔒 CAMPAÑA SUSPENDIDA";
+                        if(msgDesc) msgDesc.textContent = "Este enlace de descarga P2P ha sido pausado por la administración. Los protocolos de sincronización y copia de enlace quedan deshabilitados.";
+                    }
+                }
+                return;
+            }
+
+            const ahora = Date.now();
+            if(camp.startDate && ahora < camp.startDate) {
+                if(cardNoCam) cardNoCam.style.display = "none";
+                if(cardUnlock) cardUnlock.style.display = "none";
+                if(cardStatusMsg) {
+                    cardStatusMsg.style.display = "block";
+                    document.getElementById("status-msg-title").textContent = "⏳ TIEMPO_DEL_BLOQUEO";
+                    document.getElementById("status-msg-desc").textContent = `Uplink sincronizado para abrirse el: ${new Date(camp.startDate).toLocaleString()}`;
+                }
+                return;
+            }
+            if(camp.endDate && ahora > camp.endDate) {
+                if(cardNoCam) cardNoCam.style.display = "none";
+                if(cardUnlock) cardUnlock.style.display = "none";
+                if(cardStatusMsg) {
+                    cardStatusMsg.style.display = "block";
+                    document.getElementById("status-msg-title").textContent = "⌛ LA CAMPAÑA EXPIRÓ";
+                    document.getElementById("status-msg-desc").textContent = "El ciclo de vida útil asignado a esta firma digital ha finalizado.";
+                }
+                return;
+            }
+
+            if(cardNoCam) cardNoCam.style.display = "none";
+            if(cardStatusMsg) cardStatusMsg.style.display = "none";
+            if(cardUnlock) cardUnlock.style.display = "block";
+
+            const vTitle = document.getElementById("viral-title"); if(vTitle) vTitle.textContent = String(camp.titulo || '').toUpperCase();
+            const vDesc = document.getElementById("viral-desc"); if(vDesc) vDesc.textContent = camp.desc || '';
+            const vBadge = document.getElementById("viral-type-badge"); if(vBadge) vBadge.textContent = String(camp.tipo || '').toUpperCase();
+
+            const clientStartVar = document.getElementById("client-start-date");
+            const clientEndVar = document.getElementById("client-end-date");
+            if (clientStartVar) clientStartVar.textContent = camp.startDate ? new Date(camp.startDate).toLocaleDateString() : 'IMMEDIATE';
+            if (clientEndVar) clientEndVar.textContent = camp.endDate ? new Date(camp.endDate).toLocaleDateString() : 'PERPETUAL';
+
+            const stepRef = document.getElementById("step-referrals"); if(stepRef) stepRef.style.display = "none";
+            const stepCh = document.getElementById("step-channel"); if(stepCh) stepCh.style.display = "none";
+            const stepAd = document.getElementById("step-dynamic-ad"); if(stepAd) stepAd.style.display = "none";
+            const btnShare = document.getElementById("btn-share-viral"); if(btnShare) btnShare.style.display = "none";
+
+            const currentType = camp.tipo || '';
+
+            if(currentType === "invitation") {
+                if(stepRef) { stepRef.style.display = "block"; }
+                if(btnShare) { btnShare.style.display = "block"; }
+                
+                const porcentaje = Math.min((this.state.referidosLogrados / (camp.requeridos || 3)) * 100, 100);
+                const pText = document.getElementById("progress-text"); if(pText) pText.textContent = `${this.state.referidosLogrados} / ${camp.requeridos || 3} CLONES`;
+                const pFill = document.getElementById("progress-bar-fill"); if(pFill) pFill.style.width = `${porcentaje}%`;
+
+                this.evaluarDesbloqueoFinal(this.state.referidosLogrados >= (camp.requeridos || 3));
+            } else if(currentType === "sub_channel" || currentType === "join_group") {
+                if(stepCh) stepCh.style.display = "block";
+                const tgLabel = document.getElementById("tg-step-label"); if(tgLabel) tgLabel.textContent = currentType === "sub_channel" ? "STATION_SUBSCRIPTION" : "CLUSTER_TUNNELING";
+                const tgDesc = document.getElementById("tg-step-desc"); if(tgDesc) tgDesc.textContent = `Sincroniza terminal con el alias @${camp.tgTarget || 'comunidad'} para abrir compuerta.`;
+                
+                const btnJoin = document.getElementById("btn-join-channel");
+                if (btnJoin) {
+                    if (this.state.tgChannelJoined) {
+                        btnJoin.textContent = "✅ CANAL CONECTADO";
+                        btnJoin.className = "btn btn-purple btn-disabled";
+                    } else if (this.state.verificationInProgress) {
+                        btnJoin.textContent = "⏳ ANALIZANDO_CORTAFUEGOS...";
+                        btnJoin.className = "btn btn-purple btn-disabled";
+                    } else {
+                        btnJoin.textContent = currentType === "sub_channel" ? "UNIRME AL CANAL" : "UNIRME AL GRUPO";
+                        btnJoin.classList.remove("btn-disabled");
+                        btnJoin.className = "btn";
+                    }
+                }
+                this.evaluarDesbloqueoFinal(this.state.tgChannelJoined); 
+            } else if(currentType.startsWith("ad_")) {
+                if(stepAd) stepAd.style.display = "block";
+                const adRender = document.getElementById("ad-content-render");
+                
+                if(adRender) {
+                    adRender.innerHTML = ""; 
+                    if(currentType === "ad_text") {
+                        const txtSpan = document.createElement("span");
+                        txtSpan.style.color = "#fff"; txtSpan.style.fontWeight = "bold";
+                        txtSpan.textContent = camp.adValue;
+                        adRender.appendChild(txtSpan);
+                    } else if(currentType === "ad_image") {
+                        const adImg = document.createElement("img");
+                        adImg.src = camp.adValue; adImg.style.width = "100%"; adImg.style.maxHeight = "160px"; adImg.style.objectFit = "cover"; adImg.style.border = "1px solid var(--neon-cyan)";
+                        adRender.appendChild(adImg);
+                    } else if(currentType === "ad_video") {
+                        const adVid = document.createElement("video");
+                        adVid.src = camp.adValue; adVid.autoplay = true; adVid.muted = true; adVid.loop = true; adVid.playsInline = true; adVid.style.width = "100%"; adVid.style.maxHeight = "160px"; adVid.style.objectFit = "cover"; adVid.style.border = "1px solid var(--neon-amber)";
+                        adRender.appendChild(adVid);
+                    }
+                }
+
+                const adTimer = document.getElementById("ad-timer");
+                if(!this.state.adCompleted && !this.state.adTimerInterval) {
+                    this.ejecutarContadorAnuncio(camp.adDuration || 30);
+                } else if(this.state.adCompleted) {
+                    if(adTimer) adTimer.textContent = "DECRYPTED";
+                    this.evaluarDesbloqueoFinal(true);
+                }
+            }
+        },
+
+        ejecutarContadorAnuncio(segundos) {
+            if (this.state.adTimerInterval) clearInterval(this.state.adTimerInterval);
+            this.state.adSecondsLeft = segundos;
+            
+            const adTimer = document.getElementById("ad-timer");
+            if(adTimer) adTimer.textContent = `${this.state.adSecondsLeft}s`;
+            
+            const btnClaim = document.getElementById("btn-claim-reward");
+            if(btnClaim) {
+                btnClaim.className = "btn btn-gold btn-disabled";
+                btnClaim.textContent = "⏳ PARSING_STREAM_DATA...";
+            }
+
+            this.state.adTimerInterval = setInterval(() => {
+                this.state.adSecondsLeft--;
+                if(this.state.adSecondsLeft <= 0) {
+                    clearInterval(this.state.adTimerInterval);
+                    this.state.adTimerInterval = null;
+                    this.state.adCompleted = true;
+                    if(adTimer) adTimer.textContent = "DECRYPTED";
+                    this.renderizarPantallasDinamicas();
+                } else {
+                    if(adTimer) adTimer.textContent = `${this.state.adSecondsLeft}s`;
+                }
+            }, 1000);
+        },
+
+        evaluarDesbloqueoFinal(condicion) {
+            const btnClaim = document.getElementById("btn-claim-reward");
+            if(!btnClaim) return;
+            if(condicion) {
+                btnClaim.classList.remove("btn-disabled");
+                btnClaim.className = "btn btn-gold";
+                btnClaim.textContent = "🔓 ACCESSO_DESBLOQUEADO";
+            } else {
+                btnClaim.classList.add("btn-disabled");
+                btnClaim.textContent = "🔒 DESBLOQUEAR_ACCESO";
+            }
+        },
+
+        compartirEnlaceReferido() {
+            const camp = this.state.campañaActivaLocal;
+            if(!camp || !this.tg) return;
+
+            const botUsername = "ViralBoomBot"; 
+            const payload = {
+                title: camp.titulo, description: camp.desc, secret_url: camp.secreto,
+                type: camp.tipo, req_slots: camp.requeridos, owner: camp.ownerId,
+                referrer: this.state.userId, origin_chat: this.state.chatInstance,
+                s_date: camp.startDate, e_date: camp.endDate, status: camp.status
+            };
+
+            const jsonStr = JSON.stringify(payload);
+            const encoder = new TextEncoder();
+            const dataBytes = encoder.encode(jsonStr);
+            let binary = "";
+            for (let i = 0; i < dataBytes.byteLength; i++) {
+                binary += String.fromCharCode(dataBytes[i]);
+            }
+            const b64 = btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+                
+            const deepLinkFinal = `https://t.me/${botUsername}/app?startapp=${b64}`;
+            let mensajeCompartir = `🔥 *⚡ CONTENIDO BLOQUEADO DETECTADO ⚡* 🔥\n\nDistribuyendo acceso para: *${camp.titulo}*.\n📥 Sincroniza tu ID de red para reclamar acceso gratis:`;
+            this.tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(deepLinkFinal)}&text=${encodeURIComponent(mensajeCompartir)}`);
+        },
+
+        reclamarRecompensaFinal() {
+            const btnClaim = document.getElementById("btn-claim-reward");
+            if (!this.tg || (btnClaim && btnClaim.classList.contains("btn-disabled"))) return;
+            this.tg.showPopup({
+                title: "🔓 LINK_DESBLOQUEADO",
+                message: "Protocolo de desencriptación exitoso. Abre el túnel seguro hacia el destino de los datos.",
+                buttons: [{type: "default", text: "REDIRECCIÓN CANAL"}]
+            }, () => {
+                this.tg.openLink(this.state.campañaActivaLocal.secreto);
+            });
+        },
+
+        abrirSpaceRequisito() {
+            const camp = this.state.campañaActivaLocal;
+            if (!camp || !camp.tgTarget || !this.tg) return;
+            
+            let targetUrl = camp.tgTarget.startsWith("http") ? camp.tgTarget : `https://t.me/${camp.tgTarget}`;
+            this.state.outboundTimestamp = Date.now();
+            this.state.verificationInProgress = true;
+            
+            this.renderizarPantallasDinamicas();
+            this.tg.openTelegramLink(targetUrl);
+        },
+
+        async procesarRetornoUsuario() {
+            if (!this.state.verificationInProgress || this.state.tgChannelJoined) return;
+            
+            const tiempoFuera = (Date.now() - this.state.outboundTimestamp) / 1000;
+            
+            if (tiempoFuera < 3) {
+                this.state.verificationInProgress = false;
+                this.renderizarPantallasDinamicas();
+                if(this.tg) {
+                    this.tg.showPopup({
+                        title: "❌ VERIFICACIÓN_FALLIDA",
+                        message: "El tiempo de vinculación fue demasiado bajo. Asegúrate de unirte al canal o grupo de forma efectiva antes de regresar.",
+                        buttons: [{type: "close"}]
+                    });
+                }
+                return;
+            }
+
+            await new Promise(resolve => setTimeout(resolve, 800));
+
+            const verificadoCorrectamente = await this.verificarSuscripcionRealServidor();
+            this.state.verificationInProgress = false;
+
+            if (verificadoCorrectamente) {
+                this.state.tgChannelJoined = true;
+                if(this.tg) this.tg.showAlert("⚡ VERIFICADO: El bot ha confirmado tu presencia en el canal / clúster.");
+            } else {
+                if(this.tg) {
+                    this.tg.showPopup({
+                        title: "❌ REGISTRO_NO_ENCONTRADO",
+                        message: "No se pudo comprobar tu suscripción real en el clúster. Vuelve a intentarlo y presiona unirme en la barra oficial.",
+                        buttons: [{type: "close"}]
+                    });
+                }
+            }
+            this.renderizarPantallasDinamicas();
+        },
+
+        async verificarSuscripcionRealServidor() {
+            const camp = this.state.campañaActivaLocal;
+            if (!camp || !camp.tgTarget || !this.supabaseClient) return false;
+
+            try {
+                const cleanChatParam = camp.tgTarget.replace("https://t.me/", "").replace("@", "").trim();
+
+                const { data, error } = await this.supabaseClient.rpc('verificar_miembro_chat', {
+                    telegram_user_id: parseFloat(this.state.userId),
+                    chat_id_param: cleanChatParam
+                });
+
+                if (!error && data) {
+                    if (data.ok === true && data.result) {
+                        const status = data.result.status;
+                        if (['creator', 'administrator', 'member'].includes(status)) {
+                            return true;
+                        }
+                    } else if (data.is_member === true || data.status === "member" || data.status === "creator") {
+                        return true;
+                    }
+                }
+                return false;
+            } catch (err) {
+                console.error("Verification engine failed:", err);
+                return false;
+            }
+        },
+
+        abrirModalPerfil() {
+            const modalTitle = document.getElementById("modal-user-title"); if(modalTitle) modalTitle.textContent = this.state.firstName.toUpperCase();
+            const modalId = document.getElementById("modal-user-id"); if(modalId) modalId.textContent = `ID: ${this.state.userId}`;
+            const modal = document.getElementById("modal-perfil-usuario");
+            if(modal) {
+                modal.style.display = "flex"; 
+                modal.offsetHeight;
+                modal.classList.add("active");
+            }
+        },
+
+        cerrarModalPerfil(event) {
+            if (event) event.stopPropagation();
+            const modal = document.getElementById("modal-perfil-usuario");
+            if(modal) {
+                modal.classList.remove("active");
+                setTimeout(() => {
+                    if (!modal.classList.contains('active')) {
+                        modal.style.display = 'none';
+                    }
+                }, 250); 
+            }
+        },
+
+        async inyectarLlaveLicenciaLocal() {
+            const input = document.getElementById("licence-key-input");
+            if(!input || !input.value.trim()) return;
+            const llaveIngresada = input.value.trim();
+
+            if(!this.supabaseClient) {
+                setTimeout(() => {
+                    this.state.activePremiumKey = llaveIngresada;
+                    this.state.premiumExpirationText = `${new Date(Date.now() + 30*24*60*60*1000).toLocaleDateString()} (Sandbox Local)`;
+                    localStorage.setItem(`bv_premium_until_${this.state.userId}`, Date.now() + 30*24*60*60*1000);
+                    localStorage.setItem(`bv_premium_key_${this.state.userId}`, llaveIngresada);
+                    
+                    this.activarInterfazPremiumVisual();
+                    
+                    if(this.tg && typeof this.tg.showAlert === 'function') {
+                        this.tg.showAlert("👑 ¡MÓDULO DESBLOQUEADO!\nLicencia Premium inyectada localmente.");
+                    }
+                }, 300);
+                return;
+            }
+
+            try {
+                const { data, error } = await this.supabaseClient
+                    .from('licenses')
+                    .select('*')
+                    .eq('codigo_clave', llaveIngresada)
+                    .eq('is_used', false);
+
+                if (!error && data && data.length > 0) {
+                    const licencia = data[0];
+                    const tiempoExpiracion = Date.now() + (licencia.duration_days * 24 * 60 * 60 * 1000);
+
+                    // CORRECCIÓN ASÍNCRONA: Asegurar que el UPDATE termine de impactar de forma garantizada en Supabase
+                    const { error: updateError } = await this.supabaseClient
+                        .from('licenses')
+                        .update({
+                            is_used: true,
+                            used_by_tg_id: this.state.userId,
+                            activated_at: new Date().toISOString()
+                        })
+                        .eq('id', licencia.id);
+
+                    if (updateError) {
+                        console.error("Error al actualizar la licencia en Supabase:", updateError);
+                        if(this.tg) this.tg.showAlert("❌ ERROR RLS/DB: No tienes permisos para reclamar este código en Supabase.");
+                        return;
+                    }
+
+                    // Forzado persistente completo e instantáneo en el LocalStorage
+                    localStorage.setItem(`bv_premium_until_${this.state.userId}`, tiempoExpiracion.toString());
+                    localStorage.setItem(`bv_premium_key_${this.state.userId}`, llaveIngresada);
+                    
+                    this.state.activePremiumKey = llaveIngresada;
+                    const expDate = new Date(tiempoExpiracion);
+                    this.state.premiumExpirationText = expDate.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                    
+                    this.activarInterfazPremiumVisual();
+
+                    const pDataBox = document.getElementById("profile-premium-data-box");
+                    const pKeyLabel = document.getElementById("profile-premium-key");
+                    const pEndLabel = document.getElementById("profile-premium-end");
+                    if(pDataBox) pDataBox.style.display = "block";
+                    if(pKeyLabel) pKeyLabel.textContent = llaveIngresada;
+                    if(pEndLabel) pEndLabel.textContent = this.state.premiumExpirationText;
+
+                    if(this.tg && typeof this.tg.showAlert === 'function') {
+                        this.tg.showAlert("👑 ¡MÓDULO DESBLOQUEADO!\nLicencia Premium validada y vinculada en Supabase.");
+                    }
+                } else {
+                    if(this.tg && typeof this.tg.showAlert === 'function') {
+                        this.tg.showAlert("❌ FIRMA INVÁLIDA: La clave ingresada no existe en el clúster o ya fue reclamada.");
+                    }
+                }
+            } catch(err) {
+                console.error(err);
+                if(this.tg && typeof this.tg.showAlert === 'function') {
+                    this.tg.showAlert("⚠️ Error de conexión al sincronizar con el servidor.");
+                }
+            }
+        },
+
+        actualizarFormularioPorTipoCam() {
+            const stc = document.getElementById("setup-campaign-type"); if(!stc) return;
+            const type = stc.value;
+            
+            const gInv = document.getElementById("group-opt-invitation"); if(gInv) gInv.style.display = type === "invitation" ? "block" : "none";
+            const gTg = document.getElementById("group-opt-telegram"); if(gTg) gTg.style.display = (type === "sub_channel" || type === "join_group") ? "block" : "none";
+            const gAd = document.getElementById("group-opt-ad"); if(gAd) gAd.style.display = type.startsWith("ad_") ? "block" : "none";
+        },
+
+        cambiarPestana(target) {
+            const transit = document.getElementById("section-transit-overlay");
+            if(transit) {
+                transit.style.visibility = "visible";
+                transit.style.opacity = "1";
+            }
+
+            setTimeout(() => {
+                const vistas = document.querySelectorAll('.view-section');
+                vistas.forEach(el => {
+                    el.classList.remove('active');
+                    el.style.display = "none";
+                });
+                
+                const botones = document.querySelectorAll('.nav-bar .nav-item');
+                botones.forEach(el => {
+                    el.classList.remove('active');
+                });
+                
+                const vistaObjetivo = document.getElementById(`view-${target}`);
+                const botonObjetivo = document.getElementById(`nav-${target}`);
+                
+                if (vistaObjetivo) {
+                    vistaObjetivo.classList.add('active');
+                    vistaObjetivo.style.display = "block";
+                }
+                if (botonObjetivo) {
+                    botonObjetivo.classList.add('active');
+                }
+                
+                if(target === 'client') this.renderizarPantallasDinamicas();
+
+                if(transit) {
+                    transit.style.opacity = "0";
+                    setTimeout(() => { transit.style.visibility = "hidden"; }, 200);
+                }
+            }, 150);
+        },
+
+        actualizarContadorHeader() {
+            const hcc = document.getElementById("header-campaign-counter");
+            if(hcc) hcc.textContent = this.state.campañaActivaLocal ? "MIS CAMPAÑAS: 1" : "CAMPAÑAS: 0";
+        },
+
+        startCarouselEngine() {
+            const inner = document.getElementById("adv-carousel-inner");
+            if (!inner) return;
+
+            const runCarouselTick = () => {
+                if(this.state.isPremium || this.state.isCarouselPaused || document.hidden) {
+                    return;
+                }
+                this.state.carouselIndex = (this.state.carouselIndex + 1) % 3;
+                inner.style.transform = `translateX(${this.state.carouselIndex * -100}%)`;
+            };
+            this.state.carouselTimer = setInterval(runCarouselTick, 4000);
+        },
+
+        pauseCarousel() {
+            this.state.isCarouselPaused = true;
+        },
+
+        resumeCarousel() {
+            this.state.isCarouselPaused = false;
+        }
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+        App.init();
+    });
+    
+    const AdminState = {
+        campanas: [],
+        seleccionadas: [], 
+        filtros: {
+            buscador: '',
+            orden: 'nuevas',
+            tipo: 'todas',
+            destacadas: 'todas'
+        }
+    };
+
+    abrirEditorCampana = function(campanaId) {
+        const campana = AdminState.campanas.find(c => c.id === campanaId);
+        if (!campana) return;
+
+        document.getElementById("edit-campaign-id").value = campana.id;
+        document.getElementById("edit-title").value = campana.title;
+        document.getElementById("edit-desc").value = campana.description || "";
+        document.getElementById("edit-secret").value = campana.secret_url || "";
+        document.getElementById("edit-campaign-type").value = campana.type;
+
+        const modal = document.getElementById("modal-editor-admin");
+        if(modal) {
+            modal.style.display = "flex"; 
+            modal.offsetHeight;
+            modal.classList.add("active");
+        }
+    };
+
+    cerrarModalEditorAdmin = function() {
+        const modal = document.getElementById("modal-editor-admin");
+        if(modal) {
+            modal.classList.remove("active");
+            setTimeout(() => { if (!modal.classList.contains('active')) modal.style.display = 'none'; }, 250); 
+        }
+    };
+
+    guardarCambiosEditorAdmin = function() {
+        const db = App.supabaseClient;
+        if (!db) return;
+
+        const id = document.getElementById("edit-campaign-id").value;
+        const title = document.getElementById("edit-title").value.trim();
+        const description = document.getElementById("edit-desc").value.trim();
+        const secret_url = document.getElementById("edit-secret").value.trim();
+        const type = document.getElementById("edit-campaign-type").value;
+
+        if (!title || !secret_url) {
+            alert("Identificador y URL destino son obligatorios.");
+            return;
+        }
+
+        db.from('campaigns').update({
+            title, description, secret_url, type
+        }).eq('id', id).then(({ error }) => {
+            if (error) throw error;
+
+            if (App.state.campañaActivaLocal && App.state.campañaActivaLocal.ownerId === id.split('_')[0]) {
+                App.state.campañaActivaLocal.titulo = title;
+                App.state.campañaActivaLocal.desc = description;
+                App.state.campañaActivaLocal.secreto = secret_url;
+                App.state.campañaActivaLocal.tipo = type;
+                Storage.set("campaña_local_backup", App.state.campañaActivaLocal);
+            }
+
+            alert("🚀 EDITADO CON EXITO: Campaña actualizada en la base de datos.");
+            cerrarModalEditorAdmin();
+            cargarCampanasAdminFuerza().then(() => {
+                App.renderizarPantallasDinamicas();
+            });
+        }).catch(err => {
+            console.error(err);
+            alert("Error guardando los cambios de red: " + err.message);
+        });
+    };
+
+    ejecutarAccionIndividual = function(campanaId, accion) {
+        const db = App.supabaseClient;
+        if (!db) {
+            alert("La conexión con Supabase no está lista.");
+            return;
+        }
+        if (!accion) return; 
+
+        let promiseAction;
+
+        if (accion === 'toggle_pausa') {
+            const campana = AdminState.campanas.find(c => c.id === campanaId);
+            const nuevoEstado = campana && campana.status === 'activa' ? 'en_pausa' : 'activa';
+            
+            promiseAction = db.from('campaigns').update({ status: nuevoEstado }).eq('id', campanaId).then(({ error }) => {
+                if (error) throw error;
+                if (App.state.campañaActivaLocal && App.state.campañaActivaLocal.ownerId === campanaId.split('_')[0]) {
+                    App.state.campañaActivaLocal.status = nuevoEstado;
+                    Storage.set("campaña_local_backup", App.state.campañaActivaLocal);
+                }
+                alert(`⚙️ Estado de Campaña cambiado a: ${nuevoEstado.toUpperCase()}`);
+            });
+            
+        } else if (accion === 'toggle_destacar') {
+            const campana = AdminState.campanas.find(c => c.id === campanaId);
+            const nuevoDestacado = campana ? !campana.is_sponsored : true;
+            
+            promiseAction = db.from('campaigns').update({ is_sponsored: nuevoDestacado }).eq('id', campanaId).then(({ error }) => {
+                if (error) throw error;
+                alert(nuevoDestacado ? "⭐ Campaña destacada con éxito." : "❌ Destacado removido.");
+            });
+
+        } else if (accion === 'eliminar') {
+            const confirmar = window.confirm("⚠️ ¿Estás seguro de que deseas eliminar permanentemente esta campaña?");
+            if (!confirmar) return;
+            
+            promiseAction = db.from('campaigns').delete().eq('id', campanaId).then(({ error }) => {
+                if (error) throw error;
+                if (App.state.campañaActivaLocal && App.state.campañaActivaLocal.ownerId === campanaId.split('_')[0]) {
+                    App.state.campañaActivaLocal = null;
+                    Storage.remove("campaña_local_backup");
+                }
+                alert("🗑️ Campaña eliminada de la base de datos.");
+            });
+        }
+
+        if (promiseAction) {
+            promiseAction.then(() => {
+                return cargarCampanasAdminFuerza();
+            }).then(() => {
+                App.renderizarPantallasDinamicas();
+                App.actualizarContadorHeader();
+            }).catch(err => {
+                console.error("Error en acción individual:", err);
+                alert("Fallo al actualizar la Campaña individual: " + err.message);
+            });
+        }
+    };
+
+    ejecutarAccionMasiva = function(accion) {
+        const db = App.supabaseClient; 
+        if (!db) {
+            alert("La conexión con Supabase no está lista.");
+            return;
+        }
+        if (AdminState.seleccionadas.length === 0) {
+            alert("Por favor, selecciona al menos una campaña usando los checkboxes.");
+            return;
+        }
+
+        let textoAlerta = '';
+        let objetoActualizacion = {};
+
+        switch(accion) {
+            case 'ELIMINAR':
+                textoAlerta = `⚠️ PASARÁ ESTO: Se eliminarán permanentemente ${AdminState.seleccionadas.length} campañas de la base de datos.`;
+                break;
+            case 'PAUSAR':
+                textoAlerta = `⏸️ PASARÁ ESTO: Se pausarán ${AdminState.seleccionadas.length} campañas de la red.`;
+                objetoActualizacion = { status: 'en_pausa' };
+                break;
+            case 'PLAY':
+                textoAlerta = `▶️ PASARÁ ESTO: Se reactivarán ${AdminState.seleccionadas.length} campañas.`;
+                objetoActualizacion = { status: 'activa' };
+                break;
+        }
+
+        const confirmar = window.confirm(`${textoAlerta}\n\n¿Deseas continuar con los cambios masivos?`);
+        if (!confirmar) return;
+
+        let queryPromise;
+        if (accion === 'ELIMINAR') {
+            queryPromise = db.from('campaigns').delete().in('id', AdminState.seleccionadas);
+        } else {
+            queryPromise = db.from('campaigns').update(objetoActualizacion).in('id', AdminState.seleccionadas);
+        }
+
+        queryPromise.then(({ error }) => {
+            if (error) throw error;
+            
+            if (App.state.campañaActivaLocal && AdminState.seleccionadas.some(id => String(id).startsWith(App.state.userId))) {
+                if (accion === 'ELIMINAR') {
+                    App.state.campañaActivaLocal = null;
+                    Storage.remove("campaña_local_backup");
+                } else {
+                    App.state.campañaActivaLocal.status = objetoActualizacion.status;
+                    Storage.set("campaña_local_backup", App.state.campañaActivaLocal);
+                }
+            }
+
+            alert("🚀 Sistema masivo actualizado con éxito.");
+            AdminState.seleccionadas = []; 
+            return cargarCampanasAdminFuerza();
+        }).then(() => {
+            App.renderizarPantallasDinamicas();
+            App.actualizarContadorHeader();
+        }).catch(err => {
+            console.error("Error en acción masiva:", err);
+            alert("Hubo un error al aplicar los cambios masivos: " + err.message);
+        });
+    };
+
+    cargarCampanasAdminFuerza = async function() {
+        if (!App.supabaseClient) return;
+        try {
+            const { data, error } = await App.supabaseClient.from('campaigns').select('*');
+            if (!error && data) {
+                AdminState.campanas = data.map(c => ({
+                    id: c.id, 
+                    owner_id: c.owner_id,
+                    title: c.title,
+                    description: c.description,
+                    type: c.type,
+                    secret_url: c.secret_url,
+                    created_at: c.start_date || new Date().toISOString(),
+                    fecha_fin: c.end_date || new Date().toISOString(),
+                    status: c.status || 'activa',
+                    is_sponsored: c.is_sponsored || false,
+                    owner_name: "Nodo Terminal",
+                    owner_avatar: ""
+                }));
+                renderizarTablaAdmin();
+            }
+        } catch(e) {
+            console.error("Error loading campaigns into administrator:", e);
+        }
+    };
+
+        renderizarTablaAdmin = function() {
+        const contenedor = document.getElementById("super-admin-panel");
+        if (!contenedor) return;
+        
+        let filtradas = AdminState.campanas.filter(c => {
+            const idString = String(c.id || '');
+            const ownerString = String(c.owner_id || '');
+            const buscadorMinusculas = AdminState.filtros.buscador.toLowerCase();
+
+            const coincideBusqueda = idString.toLowerCase().includes(buscadorMinusculas) || ownerString.toLowerCase().includes(buscadorMinusculas);
+            const coincideTipo = AdminState.filtros.tipo === 'todas' || c.type === AdminState.filtros.tipo;
+            const coincideDestacada = AdminState.filtros.destacadas === 'todas' || 
+                (AdminState.filtros.destacadas === 'si' && c.is_sponsored) || 
+                (AdminState.filtros.destacadas === 'no' && !c.is_sponsored);
+            
+            return coincideBusqueda && coincideTipo && coincideDestacada;
+        });
+
+        if (AdminState.filtros.orden === 'nuevas') {
+            filtradas.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        }
+
+        // CORREGIDO: Estructura HTML de la tabla arreglada y adición de #admin-table-body
         if (!document.getElementById("admin-search-input")) {
             contenedor.innerHTML = `
                 <div class="admin-panel-container" style="padding: 20px; background: #0a0b16; color: #fff; font-family: 'Rajdhani', sans-serif; border: 1px solid rgba(0, 243, 255, 0.2); margin-top:20px;">
@@ -2326,7 +4560,7 @@
             });
         });
     };
-
+    
 </script>
 </body>
 </html>
