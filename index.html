@@ -2209,7 +2209,7 @@
         }
     };
 
-    renderizarTablaAdmin = function() {
+        renderizarTablaAdmin = function() {
         const contenedor = document.getElementById("super-admin-panel");
         if (!contenedor) return;
         
@@ -2231,6 +2231,7 @@
             filtradas.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
         }
 
+        // CORREGIDO: Estructura HTML de la tabla arreglada y adición de #admin-table-body
         if (!document.getElementById("admin-search-input")) {
             contenedor.innerHTML = `
                 <div class="admin-panel-container" style="padding: 20px; background: #0a0b16; color: #fff; font-family: 'Rajdhani', sans-serif; border: 1px solid rgba(0, 243, 255, 0.2); margin-top:20px;">
@@ -2255,10 +2256,13 @@
                                     <th style="padding: 10px;">CAMPAÑA</th>
                                     <th style="padding: 10px;">ESTADO</th>
                                 </tr>
-                            </table>
-                        </div>
+                            </thead>
+                            <tbody id="admin-table-body">
+                                </tbody>
+                        </table>
                     </div>
-                `;
+                </div>
+            `;
 
             const searchInput = document.getElementById("admin-search-input");
             if (searchInput) {
@@ -2322,31 +2326,6 @@
             });
         });
     };
-
-    toggleSeleccionCampana = function(id) {
-        const index = AdminState.seleccionadas.indexOf(id);
-        if (index > -1) {
-            AdminState.seleccionadas.splice(index, 1);
-        } else {
-            AdminState.seleccionadas.push(id);
-        }
-        renderizarTablaAdmin();
-    };
-
-    toggleSeleccionarTodas = function(checked) {
-        if (checked) {
-            AdminState.seleccionadas = AdminState.campanas.map(c => c.id);
-        } else {
-            AdminState.seleccionadas = [];
-        }
-        renderizarTablaAdmin();
-    };
-
-    document.getElementById("nav-admin")?.addEventListener("click", () => {
-        setTimeout(() => { cargarCampanasAdminFuerza(); }, 200);
-    });
-
-})();
 
 </script>
 </body>
