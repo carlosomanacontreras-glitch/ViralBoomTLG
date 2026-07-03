@@ -4515,6 +4515,9 @@
             document.getElementById("btn-mass-wipe").addEventListener("click", () => ejecutarAccionMasiva('ELIMINAR'));
         }
 
+                // ... (Tu código de contenedor.innerHTML igual)
+
+        // 1. RENDERIZAR TBODY
         const tbody = document.getElementById("admin-table-body");
         if (tbody) {
             tbody.innerHTML = filtradas.map(c => `
@@ -4542,25 +4545,30 @@
             `).join('');
         }
 
-        document.querySelectorAll(".admin-row-checkbox").forEach(el => {
-            el.addEventListener("click", function() {
-                toggleSeleccionCampana(this.getAttribute("data-id"));
-            });
-        });
+        // CORREGIDO: Delegación de eventos en el tbody para evitar bucles de memoria
+        if (tbody && !tbody.dataset.listenerSet) {
+            tbody.dataset.listenerSet = "true"; // Evita duplicar este mega-listener
 
-        document.querySelectorAll(".btn-edit-trigger").forEach(el => {
-            el.addEventListener("click", function() {
-                abrirEditorCampana(this.getAttribute("data-id"));
+            tbody.addEventListener("click", function(e) {
+                // Click en Checkbox
+                if (e.target.classList.contains("admin-row-checkbox")) {
+                    toggleSeleccionCampana(e.target.getAttribute("data-id"));
+                }
+                // Click en Editar Titulo
+                if (e.target.classList.contains("btn-edit-trigger")) {
+                    abrirEditorCampana(e.target.getAttribute("data-id"));
+                }
             });
-        });
 
-        document.querySelectorAll(".admin-action-select").forEach(el => {
-            el.addEventListener("change", function() {
-                ejecutarAccionIndividual(this.getAttribute("data-id"), this.value);
+            tbody.addEventListener("change", function(e) {
+                // Cambio en el Select de acciones
+                if (e.target.classList.contains("admin-action-select")) {
+                    ejecutarAccionIndividual(e.target.getAttribute("data-id"), e.target.value);
+                }
             });
-        });
-    };
-    
+        }
+    }; // Fin de tu función principal
+
 </script>
 </body>
 </html>
