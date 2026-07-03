@@ -858,10 +858,11 @@
         "12_meses": 37.92
     };
 
-    // Formateador rápido de precios según la divisa activa
+        // Formateador rápido de precios según la divisa activa (Margen protegido)
     const formatearPrecio = (eurValue) => {
         if (divisa === "stars") {
-            return `${Math.round(eurValue / 0.0229)} ⭐️`;
+            // Dividimos entre 0.012 para cubrir la comisión de retiro de Telegram
+            return `${Math.round(eurValue / 0.012)} ⭐️`;
         } else if (divisa === "usdt") {
             return `${eurValue.toFixed(2)} USDT`;
         } else {
