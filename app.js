@@ -2,7 +2,7 @@
  * CYBER_SECURITY ENGINE P2P
  * Encapsulado bajo un entorno léxico cerrado (IIFE) para evitar la manipulación de estados desde la consola global.
  */
-(function () {
+( function () {
     'use strict';
 
     // Declaración interna de funciones globales del módulo Admin para que sean accesibles mediante los eventos controlados
@@ -834,7 +834,7 @@
     }
 }
 
-        solicitarPremiumEstrellasBot() {
+    () {
             if (!this.tg) return;
 
             const planSelect = document.getElementById("billing-plan-select");
